@@ -7,14 +7,65 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF10022B2B247BCC0011A4DC /* LanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10022A2B247BCC0011A4DC /* LanguageModel.swift */; };
+		FF1002302B2482BA0011A4DC /* ChatMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10022F2B2482BA0011A4DC /* ChatMessageView.swift */; };
+		FF1002322B2483A20011A4DC /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002312B2483A20011A4DC /* Colours.swift */; };
+		FF1002342B248BA90011A4DC /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002332B248BA90011A4DC /* Message.swift */; };
+		FF1002362B24A0880011A4DC /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002352B24A0880011A4DC /* Conversation.swift */; };
+		FF1002392B24BBF20011A4DC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002382B24BBF20011A4DC /* MainView.swift */; };
+		FF10023C2B24F4790011A4DC /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = FF10023B2B24F4790011A4DC /* OllamaKit */; };
+		FF10023E2B24F4900011A4DC /* OllamaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10023D2B24F4900011A4DC /* OllamaService.swift */; };
+		FF1002402B24F7320011A4DC /* SideBarMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10023F2B24F7320011A4DC /* SideBarMenuView.swift */; };
+		FF1002442B25BB730011A4DC /* ConversationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002432B25BB730011A4DC /* ConversationStore.swift */; };
+		FF1002462B25BCE70011A4DC /* LanguageModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002452B25BCE70011A4DC /* LanguageModelStore.swift */; };
+		FF10024A2B25BE740011A4DC /* LanguageModelSD.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002492B25BE740011A4DC /* LanguageModelSD.swift */; };
+		FF10024C2B25BEA00011A4DC /* MessageSD.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10024B2B25BEA00011A4DC /* MessageSD.swift */; };
+		FF10024E2B25C2A70011A4DC /* ConversationSD.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10024D2B25C2A70011A4DC /* ConversationSD.swift */; };
+		FF1002502B25C79F0011A4DC /* SwiftDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10024F2B25C79F0011A4DC /* SwiftDataService.swift */; };
+		FF1002522B2609980011A4DC /* ModelContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002512B2609970011A4DC /* ModelContext.swift */; };
+		FF1002542B261D460011A4DC /* MessageListVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002532B261D460011A4DC /* MessageListVIew.swift */; };
+		FF10025A2B2624C40011A4DC /* ConversationHistoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002592B2624C40011A4DC /* ConversationHistoryListView.swift */; };
+		FF10025C2B2625BE0011A4DC /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10025B2B2625BE0011A4DC /* SidebarView.swift */; };
+		FF10025E2B2648460011A4DC /* ConversationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10025D2B2648460011A4DC /* ConversationState.swift */; };
+		FF1002602B26499B0011A4DC /* ConversationStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10025F2B26499B0011A4DC /* ConversationStatusView.swift */; };
+		FF1002662B2653EE0011A4DC /* ActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = FF1002652B2653EE0011A4DC /* ActivityIndicatorView */; };
+		FF1002682B2668790011A4DC /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002672B2668790011A4DC /* Date.swift */; };
+		FF10026A2B2731C60011A4DC /* ModelSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002692B2731C60011A4DC /* ModelSelector.swift */; };
+		FF10026D2B2751760011A4DC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10026C2B2751760011A4DC /* SettingsView.swift */; };
+		FF1002732B276EC10011A4DC /* AppColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002722B276EC10011A4DC /* AppColorScheme.swift */; };
 		FFEC32912B24779A003E5C04 /* EnchantedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC32902B24779A003E5C04 /* EnchantedApp.swift */; };
 		FFEC32932B24779A003E5C04 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC32922B24779A003E5C04 /* ContentView.swift */; };
 		FFEC32952B24779A003E5C04 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC32942B24779A003E5C04 /* Item.swift */; };
 		FFEC32972B24779B003E5C04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFEC32962B24779B003E5C04 /* Assets.xcassets */; };
 		FFEC329B2B24779B003E5C04 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFEC329A2B24779B003E5C04 /* Preview Assets.xcassets */; };
+		FFEC32AA2B24797C003E5C04 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC32A92B24797C003E5C04 /* ChatView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FF10022A2B247BCC0011A4DC /* LanguageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageModel.swift; sourceTree = "<group>"; };
+		FF10022F2B2482BA0011A4DC /* ChatMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageView.swift; sourceTree = "<group>"; };
+		FF1002312B2483A20011A4DC /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
+		FF1002332B248BA90011A4DC /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		FF1002352B24A0880011A4DC /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		FF1002382B24BBF20011A4DC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		FF10023D2B24F4900011A4DC /* OllamaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamaService.swift; sourceTree = "<group>"; };
+		FF10023F2B24F7320011A4DC /* SideBarMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarMenuView.swift; sourceTree = "<group>"; };
+		FF1002432B25BB730011A4DC /* ConversationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationStore.swift; sourceTree = "<group>"; };
+		FF1002452B25BCE70011A4DC /* LanguageModelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageModelStore.swift; sourceTree = "<group>"; };
+		FF1002492B25BE740011A4DC /* LanguageModelSD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageModelSD.swift; sourceTree = "<group>"; };
+		FF10024B2B25BEA00011A4DC /* MessageSD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSD.swift; sourceTree = "<group>"; };
+		FF10024D2B25C2A70011A4DC /* ConversationSD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationSD.swift; sourceTree = "<group>"; };
+		FF10024F2B25C79F0011A4DC /* SwiftDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataService.swift; sourceTree = "<group>"; };
+		FF1002512B2609970011A4DC /* ModelContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelContext.swift; sourceTree = "<group>"; };
+		FF1002532B261D460011A4DC /* MessageListVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListVIew.swift; sourceTree = "<group>"; };
+		FF1002592B2624C40011A4DC /* ConversationHistoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationHistoryListView.swift; sourceTree = "<group>"; };
+		FF10025B2B2625BE0011A4DC /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		FF10025D2B2648460011A4DC /* ConversationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationState.swift; sourceTree = "<group>"; };
+		FF10025F2B26499B0011A4DC /* ConversationStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationStatusView.swift; sourceTree = "<group>"; };
+		FF1002672B2668790011A4DC /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		FF1002692B2731C60011A4DC /* ModelSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSelector.swift; sourceTree = "<group>"; };
+		FF10026C2B2751760011A4DC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		FF1002722B276EC10011A4DC /* AppColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColorScheme.swift; sourceTree = "<group>"; };
 		FFEC328D2B24779A003E5C04 /* Enchanted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enchanted.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFEC32902B24779A003E5C04 /* EnchantedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnchantedApp.swift; sourceTree = "<group>"; };
 		FFEC32922B24779A003E5C04 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -22,6 +73,7 @@
 		FFEC32962B24779B003E5C04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FFEC32982B24779B003E5C04 /* Enchanted.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Enchanted.entitlements; sourceTree = "<group>"; };
 		FFEC329A2B24779B003E5C04 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FFEC32A92B24797C003E5C04 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,12 +81,86 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF1002662B2653EE0011A4DC /* ActivityIndicatorView in Frameworks */,
+				FF10023C2B24F4790011A4DC /* OllamaKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FF10022C2B2481790011A4DC /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				FF10022F2B2482BA0011A4DC /* ChatMessageView.swift */,
+				FF1002532B261D460011A4DC /* MessageListVIew.swift */,
+				FF10025F2B26499B0011A4DC /* ConversationStatusView.swift */,
+				FF1002692B2731C60011A4DC /* ModelSelector.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		FF1002372B24BBDD0011A4DC /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				FF1002382B24BBF20011A4DC /* MainView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		FF1002412B25BAAE0011A4DC /* SwiftData */ = {
+			isa = PBXGroup;
+			children = (
+				FF1002482B25BE580011A4DC /* Models */,
+			);
+			path = SwiftData;
+			sourceTree = "<group>";
+		};
+		FF1002422B25BAC50011A4DC /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				FF1002432B25BB730011A4DC /* ConversationStore.swift */,
+				FF1002452B25BCE70011A4DC /* LanguageModelStore.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		FF1002482B25BE580011A4DC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FF1002492B25BE740011A4DC /* LanguageModelSD.swift */,
+				FF10024B2B25BEA00011A4DC /* MessageSD.swift */,
+				FF10024D2B25C2A70011A4DC /* ConversationSD.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FF1002552B2624790011A4DC /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				FF1002562B2624800011A4DC /* Components */,
+				FF10025B2B2625BE0011A4DC /* SidebarView.swift */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
+		FF1002562B2624800011A4DC /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				FF10023F2B24F7320011A4DC /* SideBarMenuView.swift */,
+				FF1002592B2624C40011A4DC /* ConversationHistoryListView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		FF10026B2B2751630011A4DC /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				FF10026C2B2751760011A4DC /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		FFEC32842B24779A003E5C04 = {
 			isa = PBXGroup;
 			children = (
@@ -54,12 +180,16 @@
 		FFEC328F2B24779A003E5C04 /* Enchanted */ = {
 			isa = PBXGroup;
 			children = (
-				FFEC32902B24779A003E5C04 /* EnchantedApp.swift */,
-				FFEC32922B24779A003E5C04 /* ContentView.swift */,
-				FFEC32942B24779A003E5C04 /* Item.swift */,
-				FFEC32962B24779B003E5C04 /* Assets.xcassets */,
 				FFEC32982B24779B003E5C04 /* Enchanted.entitlements */,
+				FFEC32962B24779B003E5C04 /* Assets.xcassets */,
+				FFEC32A12B24783B003E5C04 /* Application */,
+				FFEC32A22B247858003E5C04 /* Extensions */,
+				FFEC32A32B24786D003E5C04 /* Models */,
 				FFEC32992B24779B003E5C04 /* Preview Content */,
+				FFEC32A42B247874003E5C04 /* Services */,
+				FF1002422B25BAC50011A4DC /* Stores */,
+				FF1002412B25BAAE0011A4DC /* SwiftData */,
+				FFEC32A52B247879003E5C04 /* UI */,
 			);
 			path = Enchanted;
 			sourceTree = "<group>";
@@ -70,6 +200,75 @@
 				FFEC329A2B24779B003E5C04 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FFEC32A12B24783B003E5C04 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				FFEC32902B24779A003E5C04 /* EnchantedApp.swift */,
+				FFEC32922B24779A003E5C04 /* ContentView.swift */,
+				FFEC32942B24779A003E5C04 /* Item.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		FFEC32A22B247858003E5C04 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FF1002312B2483A20011A4DC /* Colours.swift */,
+				FF1002512B2609970011A4DC /* ModelContext.swift */,
+				FF1002672B2668790011A4DC /* Date.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FFEC32A32B24786D003E5C04 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FF10022A2B247BCC0011A4DC /* LanguageModel.swift */,
+				FF1002332B248BA90011A4DC /* Message.swift */,
+				FF1002352B24A0880011A4DC /* Conversation.swift */,
+				FF10025D2B2648460011A4DC /* ConversationState.swift */,
+				FF1002722B276EC10011A4DC /* AppColorScheme.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FFEC32A42B247874003E5C04 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				FF10023D2B24F4900011A4DC /* OllamaService.swift */,
+				FF10024F2B25C79F0011A4DC /* SwiftDataService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		FFEC32A52B247879003E5C04 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				FFEC32A72B247896003E5C04 /* Views */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		FFEC32A72B247896003E5C04 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FFEC32A82B24795A003E5C04 /* Chat */,
+				FF1002372B24BBDD0011A4DC /* Main */,
+				FF10026B2B2751630011A4DC /* Settings */,
+				FF1002552B2624790011A4DC /* Sidebar */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FFEC32A82B24795A003E5C04 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				FF10022C2B2481790011A4DC /* Components */,
+				FFEC32A92B24797C003E5C04 /* ChatView.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -88,6 +287,10 @@
 			dependencies = (
 			);
 			name = Enchanted;
+			packageProductDependencies = (
+				FF10023B2B24F4790011A4DC /* OllamaKit */,
+				FF1002652B2653EE0011A4DC /* ActivityIndicatorView */,
+			);
 			productName = Enchanted;
 			productReference = FFEC328D2B24779A003E5C04 /* Enchanted.app */;
 			productType = "com.apple.product-type.application";
@@ -116,6 +319,10 @@
 				Base,
 			);
 			mainGroup = FFEC32842B24779A003E5C04;
+			packageReferences = (
+				FF10023A2B24F4790011A4DC /* XCRemoteSwiftPackageReference "OllamaKit" */,
+				FF1002642B2653EE0011A4DC /* XCRemoteSwiftPackageReference "ActivityIndicatorView" */,
+			);
 			productRefGroup = FFEC328E2B24779A003E5C04 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -142,9 +349,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF1002442B25BB730011A4DC /* ConversationStore.swift in Sources */,
+				FF1002602B26499B0011A4DC /* ConversationStatusView.swift in Sources */,
+				FF10024C2B25BEA00011A4DC /* MessageSD.swift in Sources */,
+				FF10023E2B24F4900011A4DC /* OllamaService.swift in Sources */,
+				FF1002302B2482BA0011A4DC /* ChatMessageView.swift in Sources */,
+				FF1002322B2483A20011A4DC /* Colours.swift in Sources */,
+				FF10026A2B2731C60011A4DC /* ModelSelector.swift in Sources */,
+				FF1002682B2668790011A4DC /* Date.swift in Sources */,
+				FF10022B2B247BCC0011A4DC /* LanguageModel.swift in Sources */,
+				FF1002462B25BCE70011A4DC /* LanguageModelStore.swift in Sources */,
+				FF10025C2B2625BE0011A4DC /* SidebarView.swift in Sources */,
+				FF1002392B24BBF20011A4DC /* MainView.swift in Sources */,
+				FF10024A2B25BE740011A4DC /* LanguageModelSD.swift in Sources */,
+				FF1002362B24A0880011A4DC /* Conversation.swift in Sources */,
+				FF1002402B24F7320011A4DC /* SideBarMenuView.swift in Sources */,
+				FFEC32AA2B24797C003E5C04 /* ChatView.swift in Sources */,
 				FFEC32932B24779A003E5C04 /* ContentView.swift in Sources */,
+				FF1002342B248BA90011A4DC /* Message.swift in Sources */,
 				FFEC32952B24779A003E5C04 /* Item.swift in Sources */,
+				FF1002502B25C79F0011A4DC /* SwiftDataService.swift in Sources */,
+				FF10025A2B2624C40011A4DC /* ConversationHistoryListView.swift in Sources */,
+				FF10026D2B2751760011A4DC /* SettingsView.swift in Sources */,
+				FF1002542B261D460011A4DC /* MessageListVIew.swift in Sources */,
+				FF10024E2B25C2A70011A4DC /* ConversationSD.swift in Sources */,
 				FFEC32912B24779A003E5C04 /* EnchantedApp.swift in Sources */,
+				FF1002522B2609980011A4DC /* ModelContext.swift in Sources */,
+				FF1002732B276EC10011A4DC /* AppColorScheme.swift in Sources */,
+				FF10025E2B2648460011A4DC /* ConversationState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +595,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FF10023A2B24F4790011A4DC /* XCRemoteSwiftPackageReference "OllamaKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kevinhermawan/OllamaKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		FF1002642B2653EE0011A4DC /* XCRemoteSwiftPackageReference "ActivityIndicatorView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/ActivityIndicatorView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FF10023B2B24F4790011A4DC /* OllamaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF10023A2B24F4790011A4DC /* XCRemoteSwiftPackageReference "OllamaKit" */;
+			productName = OllamaKit;
+		};
+		FF1002652B2653EE0011A4DC /* ActivityIndicatorView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF1002642B2653EE0011A4DC /* XCRemoteSwiftPackageReference "ActivityIndicatorView" */;
+			productName = ActivityIndicatorView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FFEC32852B24779A003E5C04 /* Project object */;
 }
