@@ -28,7 +28,9 @@ final class ConversationStore {
     
     @MainActor
     func loadConversations() async throws {
+        print("loading conversations")
         conversations = try swiftDataService.fetchConversations()
+        print("loaded conversations")
     }
     
     func create(_ conversation: ConversationSD) throws {
@@ -44,6 +46,7 @@ final class ConversationStore {
         try reloadConversation(conversation)
     }
     
+//    @MainActor 
     func stopGenerate() {
         generation?.cancel()
         handleComplete()
@@ -60,26 +63,36 @@ final class ConversationStore {
         conversation.updatedAt = Date.now
         conversation.model = model
         
-        let context = conversation.messages.last?.context ?? []
+        print(conversation.name)
+        print(conversation.messages)
         
-        let message = MessageSD(prompt: userPrompt)
-        message.context = context
-        message.conversation = conversation
+        let userMessage = MessageSD(content: userPrompt, role: "user")
+        userMessage.conversation = conversation
+        
+        let messageHistory = conversation.messages
+            .sorted{$0.createdAt < $1.createdAt}
+            .map{OkChatRequestData.ChatMessage(role: $0.role, content: $0.content)
+        }
+        
+//        let messageHistory: [OkChatRequestData.ChatMessage] = []
+        
+        let assistantMessage = MessageSD(content: "", role: "assistant")
+        assistantMessage.conversation = conversation
+        
         conversationState = .loading
+        print("msg received")
         
         Task {
             try swiftDataService.updateConversation(conversation)
-            try swiftDataService.createMessage(message)
+            try swiftDataService.createMessage(userMessage)
+            try swiftDataService.createMessage(assistantMessage)
             try reloadConversation(conversation)
             try? await loadConversations()
             
             if await OllamaService.shared.ollamaKit.reachable() {
-                var request = OKGenerateRequestData(model: message.model, prompt: userPrompt)
-                request.context = context
-                
+                let request = OkChatRequestData(model: model.name, messages: messageHistory)
                 print(request)
-                
-                generation = OllamaService.shared.ollamaKit.generate(data: request)
+                generation = OllamaService.shared.ollamaKit.chat(data: request)
                     .sink(receiveCompletion: { [weak self] completion in
                         switch completion {
                         case .finished:
@@ -96,26 +109,22 @@ final class ConversationStore {
         }
         
         prompt = ""
-        
     }
     
-    private func handleReceive(_ response: OKGenerateResponse)  {
+//    @MainActor
+    private func handleReceive(_ response: OKChatResponse)  {
         if messages.isEmpty { return }
         
         let lastIndex = messages.count - 1
-        let currentResponse = messages[lastIndex].response ?? ""
-        if let responseContext = response.context {
-            if responseContext.count > 0 {
-                print(responseContext)
-                let currentContext = messages[lastIndex].context ?? []
-                print(responseContext.count, currentContext.count)
-                messages[lastIndex].context = currentContext + responseContext
-            }
+        let currentContent = messages[lastIndex].content
+
+        if let responseContent = response.message?.content {
+            messages[lastIndex].content = currentContent + responseContent
         }
-        messages[lastIndex].response = currentResponse + response.response
-        conversationState = .loading
+//        conversationState = .loading
     }
     
+//    @MainActor
     private func handleError(_ errorMessage: String) {
         guard let lastMesasge = messages.last else { return }
         lastMesasge.error = true
@@ -126,6 +135,7 @@ final class ConversationStore {
         }
     }
     
+//    @MainActor
     private func handleComplete() {
         guard let lastMesasge = messages.last else { return }
         lastMesasge.error = false

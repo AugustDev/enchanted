@@ -13,7 +13,8 @@ struct EnchantedApp: App {
     @AppStorage("colorScheme") private var colorScheme: AppColorScheme = .system
     @State private var languageModelStore: LanguageModelStore
     @State private var conversationStore: ConversationStore
-
+    @State private var appStore: AppStore
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             LanguageModelSD.self,
@@ -21,7 +22,7 @@ struct EnchantedApp: App {
             MessageSD.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
+        
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
@@ -33,18 +34,18 @@ struct EnchantedApp: App {
         let swiftDataService = SwiftDataService(modelContext: sharedModelContainer.mainContext)
         languageModelStore = LanguageModelStore(swiftDataService: swiftDataService)
         conversationStore = ConversationStore(swiftDataService: swiftDataService)
+        appStore = AppStore()
     }
-
+    
     var body: some Scene {
         WindowGroup {
             MainView()
                 .environment(languageModelStore)
                 .environment(conversationStore)
-                .onAppear {
-                    Task {
-                        try? await languageModelStore.loadModels()
-                        try? await conversationStore.loadConversations()
-                    }
+                .environment(appStore)
+                .task {
+                    try? await languageModelStore.loadModels()
+                    try? await conversationStore.loadConversations()
                 }
                 .preferredColorScheme(colorScheme.toiOSFormat)
         }

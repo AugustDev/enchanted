@@ -12,20 +12,23 @@ import SwiftData
 final class MessageSD: Identifiable {
     @Attribute(.unique) var id: UUID = UUID()
     
-    var prompt: String
-    var response: String?
-    var context: [Int]?
+    var content: String
+    var role: String
     var done: Bool = false
     var error: Bool = false
     var createdAt: Date = Date.now
     
     @Relationship var conversation: ConversationSD?
         
-    init(prompt: String, response: String? = nil) {
-        self.prompt = prompt
-        self.response = response
-    }
     
+    init(content: String, role: String, done: Bool = false, error: Bool = false) {
+        self.content = content
+        self.role = role
+        self.done = done
+        self.error = error
+        self.conversation = conversation
+    }
+
     @Transient var model: String {
         conversation?.model?.name ?? ""
     }
@@ -33,7 +36,9 @@ final class MessageSD: Identifiable {
 
 extension MessageSD {
     static let sample: [MessageSD] = [
-        .init(prompt: "How many quarks there are in SM?", response: "There are 6 quarks in SM, each of them has an antiparticle and colour."),
-        .init(prompt: "How elementary particle is defined in mathematics?", response: "Elementary particle is defined as an irreducible representation of the poincase group.")
+        .init(content: "How many quarks there are in SM?", role: "user"),
+        .init(content: "There are 6 quarks in SM, each of them has an antiparticle and colour.", role: "assistant"),
+        .init(content: "How elementary particle is defined in mathematics?", role: "user"),
+        .init(content: "Elementary particle is defined as an irreducible representation of the poincase group.", role: "assistant")
     ]
 }

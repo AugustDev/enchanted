@@ -10,17 +10,17 @@ import SwiftUI
 struct MainView: View {
     @Environment(LanguageModelStore.self) private var languageModelStore
     @Environment(ConversationStore.self) private var conversationStore
-    
+    @Environment(AppStore.self) private var appStore
     @State var showMenu = false
     
+//    @MainActor
     func toggleMenu() {
         withAnimation(.spring) {
             showMenu.toggle()
         }
     }
     
-    @MainActor
-    func sendMessage(prompt: String, model: LanguageModelSD) {
+    @MainActor func sendMessage(prompt: String, model: LanguageModelSD) {
         conversationStore.sendPrompt(userPrompt: prompt, model: model)
     }
     
@@ -35,6 +35,7 @@ struct MainView: View {
         }
     }
     
+//    @MainActor 
     func onStopGenerateTap() {
         conversationStore.stopGenerate()
     }
@@ -58,9 +59,10 @@ struct MainView: View {
                 modelsList: languageModelStore.models, 
                 onMenuTap: toggleMenu,
                 onNewConversationTap: newConversation,
-                onSendMessageTap: sendMessage,
+                onSendMessageTap: sendMessage, 
                 conversationState: conversationStore.conversationState, 
-                onStopGenerateTap: onStopGenerateTap
+                onStopGenerateTap: onStopGenerateTap,
+                reachable: appStore.isReachable
             )
         }
     }

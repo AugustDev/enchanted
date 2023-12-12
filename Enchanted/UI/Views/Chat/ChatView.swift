@@ -16,7 +16,7 @@ struct ChatView: View {
     var onSendMessageTap: (_ prompt: String, _ model: LanguageModelSD) -> ()
     var conversationState: ConversationState
     var onStopGenerateTap: () -> ()
-    var reachable = false
+    var reachable: Bool
     
     @State private var selectedModel: LanguageModelSD?
     @State private var message = ""
@@ -29,7 +29,8 @@ struct ChatView: View {
         onNewConversationTap: @escaping () -> Void,
         onSendMessageTap: @escaping (_ prompt: String, _ model: LanguageModelSD) -> Void,
         conversationState: ConversationState,
-        onStopGenerateTap: @escaping () -> Void
+        onStopGenerateTap:  @escaping () -> Void,
+        reachable: Bool
     ) {
         self.conversation = conversation
         self.messages = messages
@@ -39,6 +40,7 @@ struct ChatView: View {
         self.onSendMessageTap = onSendMessageTap
         self.conversationState = conversationState
         self.onStopGenerateTap = onStopGenerateTap
+        self.reachable = reachable
         
         if let model = conversation?.model {
             self._selectedModel = State(initialValue: model)
@@ -81,9 +83,9 @@ struct ChatView: View {
     var inputFields: some View {
         HStack(spacing: 10) {
             TextField("Message", text: $message, axis: .vertical)
+                .frame(height: 40)
                 .font(.system(size: 14))
                 .padding(.horizontal)
-                .padding(.vertical, 8)
                 .overlay(RoundedRectangle(cornerRadius: 20).strokeBorder(Color(.systemGray2), style: StrokeStyle(lineWidth: 0.5)))
             
             ZStack {
@@ -119,6 +121,18 @@ struct ChatView: View {
         }
     }
     
+    var unreachableApi: some View {
+        HStack {
+            Text("Ollama is unreachable. Go to Settings and update your Ollama API endpoint.")
+                .fontWeight(.medium)
+                .font(.system(size: 14))
+            Spacer()
+        }
+        .padding()
+        .background(Color(.systemRed).opacity(0.25))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+    
     var body: some View {
         VStack {
             header
@@ -133,6 +147,10 @@ struct ChatView: View {
              
             ConversationStatusView(state: conversationState)
                 .padding()
+            
+            if !reachable {
+                unreachableApi
+            }
             
             inputFields
             
@@ -163,6 +181,7 @@ struct ChatView: View {
         onNewConversationTap: { },
         onSendMessageTap: {_,_  in},
         conversationState: .loading,
-        onStopGenerateTap: {}
+        onStopGenerateTap: {},
+        reachable: false
     )
 }

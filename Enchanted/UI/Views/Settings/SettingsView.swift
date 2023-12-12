@@ -12,13 +12,18 @@ struct SettingsView: View {
     @AppStorage("vibrations") private var vibrations: Bool = true
     @AppStorage("colorScheme") private var colorScheme = AppColorScheme.system
 
+    private func save() {
+        OllamaService.reinit(url: ollamaUri)
+        print("sved")
+    }
+    
     var body: some View {
         VStack {
             ZStack {
                 HStack {
                     Spacer()
                     
-                    Button(action: {}) {
+                    Button(action: save) {
                         Text("Save")
                             .font(.system(size: 16))
                             .foregroundStyle(Color(.label))
@@ -39,6 +44,10 @@ struct SettingsView: View {
             Form {
                 Section(header: Text("Ollama")) {
                     TextField("Ollama server URI", text: $ollamaUri)
+                        .keyboardType(.URL)
+                        .textContentType(.URL)
+                        .disableAutocorrection(true)
+                        .autocapitalization(.none)
                     
                 }
                 

@@ -6,12 +6,12 @@
 //
 
 import SwiftUI
+import MarkdownUI
 
 struct ChatMessageView: View {
     var avatarName: String
     var name: String
     var text: String
-    var conversationState: ConversationState? = nil
     
     var body: some View {
         VStack {
@@ -32,7 +32,9 @@ struct ChatMessageView: View {
                         .fontWeight(.medium)
                         .padding(.bottom, 2)
                     
-                    Text(text)
+                    Markdown(text)
+                        .textSelection(.enabled)
+                        .markdownTheme(.gitHub)
                         .font(.system(size: 16))
                         .lineSpacing(5)
                         .multilineTextAlignment(.leading)
@@ -40,10 +42,6 @@ struct ChatMessageView: View {
                 
                 Spacer()
             }
-            
-//            if let conversationState = conversationState {
-//                ConversationStatusView(state: conversationState)
-//            }
         }
     }
 }
