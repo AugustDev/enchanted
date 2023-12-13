@@ -30,8 +30,8 @@
             filePath = "Enchanted/UI/Views/Settings/SettingsView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "13"
-            endingLineNumber = "13"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
             landmarkName = "SettingsView"
             landmarkType = "14">
          </BreakpointContent>

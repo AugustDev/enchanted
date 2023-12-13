@@ -19,6 +19,7 @@ final class LanguageModelStore {
     
     @MainActor
     func loadModels() async throws {
+        print("loading models")
         let localModels = try await loadLocal()
         let remoteModels = try await loadRemote()
     
@@ -30,6 +31,7 @@ final class LanguageModelStore {
         try swiftDataService.saveModels(models: updateModelsList)
         
         models = try await loadLocal()
+        print("loaded models")
     }
     
     private func loadLocal() async throws -> [LanguageModelSD] {

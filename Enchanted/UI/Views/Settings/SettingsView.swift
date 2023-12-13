@@ -8,13 +8,27 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @AppStorage("ollamaUri") private var ollamaUri: String = "http://localhost:11434"
+    @Environment(LanguageModelStore.self) private var languageModelStore
+    @Environment(\.presentationMode) var presentationMode
+    @AppStorage("ollamaUri") private var ollamaUri: String = ""
     @AppStorage("vibrations") private var vibrations: Bool = true
     @AppStorage("colorScheme") private var colorScheme = AppColorScheme.system
+    @State var ollamaStatus: Bool?
 
     private func save() {
         OllamaService.reinit(url: ollamaUri)
-        print("sved")
+        Task {
+            presentationMode.wrappedValue.dismiss()
+            try? await languageModelStore.loadModels()
+        }
+    }
+    
+    private func checkServer() {
+        Task {
+            OllamaService.reinit(url: ollamaUri)
+            ollamaStatus = await OllamaService.shared.reachable()
+            try? await languageModelStore.loadModels()
+        }
     }
     
     var body: some View {
@@ -41,33 +55,101 @@ struct SettingsView: View {
             }
             .padding()
             
-            Form {
-                Section(header: Text("Ollama")) {
-                    TextField("Ollama server URI", text: $ollamaUri)
+
+            VStack {
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        Text("OLLAMA")
+                            .foregroundStyle(Color(.systemGray))
+                            .font(.system(size: 12))
+                        
+                        Spacer()
+                        
+                    }
+                    TextField("Ollama server URI", text: $ollamaUri, onCommit: checkServer)
                         .keyboardType(.URL)
                         .textContentType(.URL)
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
-                    
+                        .padding(10)
+                        .background(Color(.systemGray5))
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
                 
-                Section("App") {
-                    Toggle(isOn: $vibrations, label: {Label("Vibrations", systemImage: "water.waves")})
-                    Picker(selection: $colorScheme) {
-                        ForEach(AppColorScheme.allCases, id:\.self) { scheme in
-                            Text(scheme.toString).tag(scheme.id)
+                if let ollamaStatus = ollamaStatus {
+                    HStack {
+                        if ollamaStatus {
+                            Image(systemName: "checkmark.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20)
+                                .foregroundColor(Color(.systemGreen))
+                            
+                            Text("Successfully connected to server")
+                                .font(.system(size: 14))
+                        } else {
+                            Image(systemName: "xmark.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20)
+                                .foregroundColor(Color(.systemRed))
+                            
+                            Text("Could not connect to server")
+                                .font(.system(size: 14))
                         }
-                    } label: {
-                        Label("Color Scheme", systemImage: "sun.max")
+                        
+                        Spacer()
                     }
+                    .padding()
                 }
+                   
+                
+                
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("APP")
+                            .foregroundStyle(Color(.systemGray))
+                            .font(.system(size: 12))
+                        
+                        Spacer()
+                        
+                    }
+                    
+                    VStack {
+                        HStack {
+                            Toggle(isOn: $vibrations, label: {Label("Vibrations", systemImage: "water.waves")})
+                        }
+                        
+                        Divider()
+                        
+                        HStack {
+                            Label("Color Scheme", systemImage: "sun.max")
+                            Spacer()
+                            Picker(selection: $colorScheme) {
+                                ForEach(AppColorScheme.allCases, id:\.self) { scheme in
+                                    Text(scheme.toString).tag(scheme.id)
+                                }
+                            } label: {
+                                Label("Color Scheme", systemImage: "sun.max")
+                            }
+                        }
+                    }
+                    .padding(10)
+                    .background(Color(.systemGray5))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
+                .padding(.top, 20)
             }
-            .foregroundColor(Color(.label))
+            .padding()
+            
+            
+        
             
             Spacer()
         }
         .preferredColorScheme(colorScheme.toiOSFormat)
-        .ignoresSafeArea()
+        .background(Color(.systemGroupedBackground))
+        .ignoresSafeArea(.all, edges: .bottom)
     }
 }
 
