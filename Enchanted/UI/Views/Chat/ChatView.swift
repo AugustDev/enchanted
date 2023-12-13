@@ -13,13 +13,14 @@ struct ChatView: View {
     var modelsList: [LanguageModelSD]
     var onMenuTap: () -> ()
     var onNewConversationTap: () -> ()
-    var onSendMessageTap: (_ prompt: String, _ model: LanguageModelSD) -> ()
+    var onSendMessageTap: @MainActor (_ prompt: String, _ model: LanguageModelSD) -> ()
     var conversationState: ConversationState
     var onStopGenerateTap: () -> ()
     var reachable: Bool
     
     @State private var selectedModel: LanguageModelSD?
     @State private var message = ""
+    @FocusState private var isFocusedInput: Bool
     
     init(
         conversation: ConversationSD? = nil,
@@ -27,7 +28,7 @@ struct ChatView: View {
         modelsList: [LanguageModelSD],
         onMenuTap: @escaping () -> Void,
         onNewConversationTap: @escaping () -> Void,
-        onSendMessageTap: @escaping (_ prompt: String, _ model: LanguageModelSD) -> Void,
+        onSendMessageTap: @MainActor @escaping (_ prompt: String, _ model: LanguageModelSD) -> Void,
         conversationState: ConversationState,
         onStopGenerateTap:  @escaping () -> Void,
         reachable: Bool
@@ -76,13 +77,13 @@ struct ChatView: View {
                     .frame(width: 22)
                     .foregroundColor(Color(.label))
             }
-            
         }
     }
     
     var inputFields: some View {
         HStack(spacing: 10) {
             TextField("Message", text: $message, axis: .vertical)
+                .focused($isFocusedInput)
                 .frame(height: 40)
                 .font(.system(size: 14))
                 .padding(.horizontal)
@@ -91,7 +92,7 @@ struct ChatView: View {
             ZStack {
                 Circle()
                     .foregroundColor(Color(.label))
-                    .frame(width: 24, height: 24)
+                    .frame(width: 30, height: 30)
                 
                 switch conversationState {
                 case .loading:
@@ -101,20 +102,23 @@ struct ChatView: View {
                             .resizable()
                             .scaledToFit()
                             .foregroundColor(Color(.systemBackground))
-                            .frame(height: 9)
+                            .frame(height: 12)
                     }
                 default:
                     Button(action: {
-                        guard let selectedModel = selectedModel else { return }
-                        onSendMessageTap(message, selectedModel)
-                        message = ""
+                        Task {
+                            guard let selectedModel = selectedModel else { return }
+                            isFocusedInput = false
+                            await onSendMessageTap(message, selectedModel)
+                            message = ""
+                        }
                     }) {
                         Image(systemName: "arrow.up")
                             .renderingMode(.template)
                             .resizable()
                             .scaledToFit()
                             .foregroundColor(Color(.systemBackground))
-                            .frame(height: 13)
+                            .frame(height: 15)
                     }
                 }
             }
@@ -129,9 +133,12 @@ struct ChatView: View {
             Spacer()
         }
         .padding()
-        .background(Color(.systemRed).opacity(0.25))
+        .background(Color(.systemRed).opacity(0.4))
         .clipShape(RoundedRectangle(cornerRadius: 10))
     }
+    
+    @State private var animationAmount: CGFloat = 1
+
     
     var body: some View {
         VStack {
@@ -141,7 +148,26 @@ struct ChatView: View {
                 MessageListView(messages: messages, conversationState: conversationState)
             } else {
                 Spacer()
-                Text("Start new conversation")
+                
+                VStack(spacing: 25) {
+                    Image("logo-nobg")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40)
+                        .scaleEffect(animationAmount)
+                        .animation(
+                            .snappy(duration: 0.6, extraBounce: 0.3)
+                            .delay(5)
+                            .repeatForever(autoreverses: true),
+                            value: animationAmount)
+                        .onAppear {
+                            animationAmount = 1.3
+                        }
+                    
+                    Text("Start new conversation")
+                        .font(.system(size: 15))
+                        .foregroundStyle(Color(.systemGray))
+                }
                 Spacer()
             }
              
@@ -173,15 +199,31 @@ struct ChatView: View {
 }
 
 #Preview {
+    Group {
+        ChatView(
+            conversation: ConversationSD.sample[0],
+            messages: MessageSD.sample,
+            modelsList: LanguageModelSD.sample,
+            onMenuTap: {},
+            onNewConversationTap: { },
+            onSendMessageTap: {_,_  in},
+            conversationState: .loading,
+            onStopGenerateTap: {},
+            reachable: false
+        )
+    }
+}
+
+#Preview {
     ChatView(
-        conversation: ConversationSD.sample[0],
-        messages: MessageSD.sample,
+        conversation: nil,
+        messages: [],
         modelsList: LanguageModelSD.sample,
         onMenuTap: {},
         onNewConversationTap: { },
         onSendMessageTap: {_,_  in},
-        conversationState: .loading,
+        conversationState: .completed,
         onStopGenerateTap: {},
-        reachable: false
+        reachable: true
     )
 }

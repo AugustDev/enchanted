@@ -14,7 +14,8 @@ struct MessageListView: View {
     var body: some View {
         ScrollViewReader { scrollViewProxy in
             List(messages.indices, id:\.self) { index in
-                ChatMessageView(avatarName: "AM", name: messages[index].role.capitalized, text: messages[index].content)
+                let roleName = messages[index].role == "user" ? "AM" : "AI"
+                ChatMessageView(avatarName: roleName, name: messages[index].role, text: messages[index].content)
                     .id(messages[index])
                     .listRowInsets(EdgeInsets())
                     .listRowSeparator(.hidden)
@@ -32,7 +33,7 @@ struct MessageListView: View {
             .listStyle(.inset)
             .scrollIndicators(.never)
         }
-//        .scrollDismissesKeyboard(.interactively)
+        .scrollDismissesKeyboard(.interactively)
     }
     
     private func scrollToBottom(_ proxy: ScrollViewProxy) {

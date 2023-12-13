@@ -16,7 +16,6 @@ final class ConversationStore {
     private var swiftDataService: SwiftDataService
     private var generation: AnyCancellable?
     
-    var prompt: String = ""
     var conversationState: ConversationState = .completed
     var conversations: [ConversationSD] = []
     var selectedConversation: ConversationSD?
@@ -74,8 +73,6 @@ final class ConversationStore {
             .map{OkChatRequestData.ChatMessage(role: $0.role, content: $0.content)
         }
         
-//        let messageHistory: [OkChatRequestData.ChatMessage] = []
-        
         let assistantMessage = MessageSD(content: "", role: "assistant")
         assistantMessage.conversation = conversation
         
@@ -107,8 +104,6 @@ final class ConversationStore {
                 self.handleError("Server unreachable")
             }
         }
-        
-        prompt = ""
     }
     
 //    @MainActor
@@ -121,7 +116,7 @@ final class ConversationStore {
         if let responseContent = response.message?.content {
             messages[lastIndex].content = currentContent + responseContent
         }
-//        conversationState = .loading
+        conversationState = .loading
     }
     
 //    @MainActor
