@@ -26,6 +26,7 @@ struct ChatView: View {
         conversation: ConversationSD? = nil,
         messages: [MessageSD],
         modelsList: [LanguageModelSD],
+        selectedModel: LanguageModelSD?,
         onMenuTap: @escaping () -> Void,
         onNewConversationTap: @escaping () -> Void,
         onSendMessageTap: @MainActor @escaping (_ prompt: String, _ model: LanguageModelSD) -> Void,
@@ -42,12 +43,7 @@ struct ChatView: View {
         self.conversationState = conversationState
         self.onStopGenerateTap = onStopGenerateTap
         self.reachable = reachable
-        
-        if let model = conversation?.model {
-            self._selectedModel = State(initialValue: model)
-        } else if modelsList.count > 0 {
-            self._selectedModel = State(initialValue: modelsList.first)
-        }
+        self.selectedModel = selectedModel
     }
     
     var header: some View {
@@ -203,7 +199,8 @@ struct ChatView: View {
         ChatView(
             conversation: ConversationSD.sample[0],
             messages: MessageSD.sample,
-            modelsList: LanguageModelSD.sample,
+            modelsList: LanguageModelSD.sample, 
+            selectedModel: LanguageModelSD.sample[0],
             onMenuTap: {},
             onNewConversationTap: { },
             onSendMessageTap: {_,_  in},
@@ -219,6 +216,7 @@ struct ChatView: View {
         conversation: nil,
         messages: [],
         modelsList: LanguageModelSD.sample,
+        selectedModel: LanguageModelSD.sample[0],
         onMenuTap: {},
         onNewConversationTap: { },
         onSendMessageTap: {_,_  in},

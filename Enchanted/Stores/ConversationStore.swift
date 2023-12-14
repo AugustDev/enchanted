@@ -64,6 +64,7 @@ final class ConversationStore {
         
         print(conversation.name)
         print(conversation.messages)
+        print(conversation.model?.name ?? "")
         
         let userMessage = MessageSD(content: userPrompt, role: "user")
         userMessage.conversation = conversation
@@ -108,15 +109,17 @@ final class ConversationStore {
     
 //    @MainActor
     private func handleReceive(_ response: OKChatResponse)  {
-        if messages.isEmpty { return }
-        
-        let lastIndex = messages.count - 1
-        let currentContent = messages[lastIndex].content
+        DispatchQueue.main.async { [self] in
+            if messages.isEmpty { return }
+            
+            let lastIndex = messages.count - 1
+            let currentContent = messages[lastIndex].content
 
-        if let responseContent = response.message?.content {
-            messages[lastIndex].content = currentContent + responseContent
+            if let responseContent = response.message?.content {
+                messages[lastIndex].content = currentContent + responseContent
+            }
+            conversationState = .loading
         }
-        conversationState = .loading
     }
     
 //    @MainActor

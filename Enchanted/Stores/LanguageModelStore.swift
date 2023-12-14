@@ -12,9 +12,15 @@ import SwiftData
 final class LanguageModelStore {
     private var swiftDataService: SwiftDataService
     var models: [LanguageModelSD] = []
+    var selectedModel: LanguageModelSD?
     
     init(swiftDataService: SwiftDataService) {
         self.swiftDataService = swiftDataService
+    }
+    
+    @MainActor
+    func setModel(model: LanguageModelSD?) {
+        selectedModel = model
     }
     
     @MainActor

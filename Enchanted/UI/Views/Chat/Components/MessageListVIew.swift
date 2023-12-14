@@ -14,7 +14,8 @@ struct MessageListView: View {
     var body: some View {
         ScrollViewReader { scrollViewProxy in
             List(messages.indices, id:\.self) { index in
-                let roleName = messages[index].role == "user" ? "AM" : "AI"
+//                let roleName = messages[index].role == "user" ? "AM" : "AI"
+                let roleName = "assistant"
                 ChatMessageView(avatarName: roleName, name: messages[index].role, text: messages[index].content)
                     .id(messages[index])
                     .listRowInsets(EdgeInsets())

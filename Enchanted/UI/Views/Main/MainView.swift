@@ -28,6 +28,7 @@ struct MainView: View {
         withAnimation(.bouncy(duration: 0.3)) {
             do {
                 try conversationStore.selectConversation(conversation)
+                languageModelStore.selectedModel = conversation.model
             } catch {
                 
             }
@@ -57,6 +58,7 @@ struct MainView: View {
                 conversation: conversationStore.selectedConversation,
                 messages: conversationStore.messages,
                 modelsList: languageModelStore.models, 
+                selectedModel: languageModelStore.selectedModel,
                 onMenuTap: toggleMenu,
                 onNewConversationTap: newConversation,
                 onSendMessageTap: sendMessage, 
