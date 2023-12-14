@@ -55,4 +55,6 @@ You're done! Make a prompt.
 
    You're done! Make a prompt.
 
-## About me
+# Contact
+
+For any questions please do not hesitate to contact me at augustians@subj.org
