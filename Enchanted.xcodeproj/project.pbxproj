@@ -13,7 +13,6 @@
 		FF1002342B248BA90011A4DC /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002332B248BA90011A4DC /* Message.swift */; };
 		FF1002362B24A0880011A4DC /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002352B24A0880011A4DC /* Conversation.swift */; };
 		FF1002392B24BBF20011A4DC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002382B24BBF20011A4DC /* MainView.swift */; };
-		FF10023C2B24F4790011A4DC /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = FF10023B2B24F4790011A4DC /* OllamaKit */; };
 		FF10023E2B24F4900011A4DC /* OllamaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10023D2B24F4900011A4DC /* OllamaService.swift */; };
 		FF1002402B24F7320011A4DC /* SideBarMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10023F2B24F7320011A4DC /* SideBarMenuView.swift */; };
 		FF1002442B25BB730011A4DC /* ConversationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002432B25BB730011A4DC /* ConversationStore.swift */; };
@@ -35,6 +34,8 @@
 		FF1002732B276EC10011A4DC /* AppColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002722B276EC10011A4DC /* AppColorScheme.swift */; };
 		FF1002752B278C170011A4DC /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002742B278C170011A4DC /* AppStore.swift */; };
 		FF10027A2B27B6070011A4DC /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = FF1002792B27B6070011A4DC /* MarkdownUI */; };
+		FF61C9602B2A7D84003CD1CB /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = FF61C95F2B2A7D84003CD1CB /* OllamaKit */; };
+		FF61C9632B2A7DC6003CD1CB /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = FF61C9622B2A7DC6003CD1CB /* OllamaKit */; };
 		FFEC32912B24779A003E5C04 /* EnchantedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC32902B24779A003E5C04 /* EnchantedApp.swift */; };
 		FFEC32932B24779A003E5C04 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC32922B24779A003E5C04 /* ContentView.swift */; };
 		FFEC32952B24779A003E5C04 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC32942B24779A003E5C04 /* Item.swift */; };
@@ -69,7 +70,6 @@
 		FF10026C2B2751760011A4DC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FF1002722B276EC10011A4DC /* AppColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColorScheme.swift; sourceTree = "<group>"; };
 		FF1002742B278C170011A4DC /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
-		FF1002802B2858060011A4DC /* OllamaKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = OllamaKit; path = ../OllamaKit; sourceTree = "<group>"; };
 		FFEC328D2B24779A003E5C04 /* Enchanted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enchanted.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFEC32902B24779A003E5C04 /* EnchantedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnchantedApp.swift; sourceTree = "<group>"; };
 		FFEC32922B24779A003E5C04 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -87,7 +87,8 @@
 			files = (
 				FF10027A2B27B6070011A4DC /* MarkdownUI in Frameworks */,
 				FF1002662B2653EE0011A4DC /* ActivityIndicatorView in Frameworks */,
-				FF10023C2B24F4790011A4DC /* OllamaKit in Frameworks */,
+				FF61C9602B2A7D84003CD1CB /* OllamaKit in Frameworks */,
+				FF61C9632B2A7DC6003CD1CB /* OllamaKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,7 +171,6 @@
 		FFEC32842B24779A003E5C04 = {
 			isa = PBXGroup;
 			children = (
-				FF1002802B2858060011A4DC /* OllamaKit */,
 				FFEC328F2B24779A003E5C04 /* Enchanted */,
 				FFEC328E2B24779A003E5C04 /* Products */,
 			);
@@ -295,9 +295,10 @@
 			);
 			name = Enchanted;
 			packageProductDependencies = (
-				FF10023B2B24F4790011A4DC /* OllamaKit */,
 				FF1002652B2653EE0011A4DC /* ActivityIndicatorView */,
 				FF1002792B27B6070011A4DC /* MarkdownUI */,
+				FF61C95F2B2A7D84003CD1CB /* OllamaKit */,
+				FF61C9622B2A7DC6003CD1CB /* OllamaKit */,
 			);
 			productName = Enchanted;
 			productReference = FFEC328D2B24779A003E5C04 /* Enchanted.app */;
@@ -328,9 +329,9 @@
 			);
 			mainGroup = FFEC32842B24779A003E5C04;
 			packageReferences = (
-				FF10023A2B24F4790011A4DC /* XCRemoteSwiftPackageReference "OllamaKit" */,
 				FF1002642B2653EE0011A4DC /* XCRemoteSwiftPackageReference "ActivityIndicatorView" */,
 				FF1002782B27B6070011A4DC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+				FF61C9612B2A7DC6003CD1CB /* XCRemoteSwiftPackageReference "OllamaKit" */,
 			);
 			productRefGroup = FFEC328E2B24779A003E5C04 /* Products */;
 			projectDirPath = "";
@@ -613,14 +614,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		FF10023A2B24F4790011A4DC /* XCRemoteSwiftPackageReference "OllamaKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kevinhermawan/OllamaKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 		FF1002642B2653EE0011A4DC /* XCRemoteSwiftPackageReference "ActivityIndicatorView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/exyte/ActivityIndicatorView.git";
@@ -637,14 +630,17 @@
 				minimumVersion = 2.2.0;
 			};
 		};
+		FF61C9612B2A7DC6003CD1CB /* XCRemoteSwiftPackageReference "OllamaKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:AugustDev/OllamaKit.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		FF10023B2B24F4790011A4DC /* OllamaKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FF10023A2B24F4790011A4DC /* XCRemoteSwiftPackageReference "OllamaKit" */;
-			productName = OllamaKit;
-		};
 		FF1002652B2653EE0011A4DC /* ActivityIndicatorView */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FF1002642B2653EE0011A4DC /* XCRemoteSwiftPackageReference "ActivityIndicatorView" */;
@@ -654,6 +650,15 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FF1002782B27B6070011A4DC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
+		};
+		FF61C95F2B2A7D84003CD1CB /* OllamaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = OllamaKit;
+		};
+		FF61C9622B2A7DC6003CD1CB /* OllamaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF61C9612B2A7DC6003CD1CB /* XCRemoteSwiftPackageReference "OllamaKit" */;
+			productName = OllamaKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -67,10 +67,10 @@ final class ConversationStore {
         
         let userMessage = MessageSD(content: userPrompt, role: "user")
         userMessage.conversation = conversation
-        
+
         let messageHistory = conversation.messages
             .sorted{$0.createdAt < $1.createdAt}
-            .map{OkChatRequestData.ChatMessage(role: $0.role, content: $0.content)
+            .map{ChatMessage(role: $0.role, content: $0.content)
         }
         
         let assistantMessage = MessageSD(content: "", role: "assistant")
