@@ -6,7 +6,9 @@ Enchanted is open source, [Ollama](https://github.com/jmorganca/ollama) compatib
 
 ## App Store
 
-While app is being approved by Apple you can use Testflight beta invite link [here](https://testflight.apple.com/join/hs3N11rZ).
+[<img src="https://i.ibb.co/7WXt3qZ/download.png">](https://apps.apple.com/gb/app/enchanted-llm/id6474268307)
+
+Note: You will need to run your own Ollama server to use the app. Read instructions below.
 
 ## Demo
 
