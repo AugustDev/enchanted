@@ -23,6 +23,7 @@ struct ConversationGroup: Hashable {
 struct ConversationHistoryList: View {
     var conversations: [ConversationSD]
     var onTap: (_ conversation: ConversationSD) -> ()
+    var onDelete: (_ conversation: ConversationSD) -> ()
     
     func groupConversationsByDay(conversations: [ConversationSD]) -> [ConversationGroup] {
         let groupedDictionary = Dictionary(grouping: conversations) { (conversation) -> Date in
@@ -52,13 +53,21 @@ struct ConversationHistoryList: View {
                 }
                 
                 ForEach(conversationGroup.conversations, id:\.self) { dailyConversation in
-                    Button(action: {onTap(dailyConversation)}) {
-                        Text(dailyConversation.name)
-                            .lineLimit(1)
-                            .font(.system(size: 16))
-                            .fontWeight(.medium)
-                            .foregroundColor(Color(.label))
+                    HStack {
+                        Button(action: {onTap(dailyConversation)}) {
+                            Text(dailyConversation.name)
+                                .lineLimit(1)
+                                .font(.system(size: 16))
+                                .fontWeight(.medium)
+                                .foregroundColor(Color(.label))
+                            Spacer()
+                        }
                     }
+                    .contextMenu(menuItems: {
+                        Button(role: .destructive, action: { onDelete(dailyConversation) }) {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    })
                 }
                 
                 Divider()
@@ -69,5 +78,5 @@ struct ConversationHistoryList: View {
 
 
 #Preview {
-    ConversationHistoryList(conversations: ConversationSD.sample, onTap: {_ in})
+    ConversationHistoryList(conversations: ConversationSD.sample, onTap: {_ in}, onDelete: {_ in})
 }
