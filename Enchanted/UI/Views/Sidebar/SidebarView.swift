@@ -11,12 +11,17 @@ struct SidebarView: View {
     
     var conversations: [ConversationSD]
     var onConversationTap: (_ conversation: ConversationSD) -> ()
+    var onConversationDelete: (_ conversation: ConversationSD) -> ()
     @State var showSettings = false
     
     var body: some View {
         VStack {
             ScrollView() {
-                ConversationHistoryList(conversations: conversations, onTap: onConversationTap)
+                ConversationHistoryList(
+                    conversations: conversations,
+                    onTap: onConversationTap,
+                    onDelete: onConversationDelete
+                )
             }
             .scrollIndicators(.never)
             
@@ -46,5 +51,5 @@ struct SidebarView: View {
 }
 
 #Preview {
-    SidebarView(conversations: ConversationSD.sample, onConversationTap: {_ in})
+    SidebarView(conversations: ConversationSD.sample, onConversationTap: {_ in}, onConversationDelete: {_ in})
 }

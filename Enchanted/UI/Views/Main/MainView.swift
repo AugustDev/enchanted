@@ -41,6 +41,10 @@ struct MainView: View {
         conversationStore.stopGenerate()
     }
     
+    func onConversationDelete(_ conversation: ConversationSD) {
+        try? conversationStore.delete(conversation)
+    }
+    
     func newConversation() {
         withAnimation(.easeOut(duration: 0.3)) {
             conversationStore.selectedConversation = nil
@@ -51,7 +55,8 @@ struct MainView: View {
         SideBarStack(sidebarWidth: 300,showSidebar: $showMenu, sidebar: {
             SidebarView(
                 conversations: conversationStore.conversations,
-                onConversationTap: onConversationTap
+                onConversationTap: onConversationTap,
+                onConversationDelete: onConversationDelete
             )
         }) {
             ChatView(

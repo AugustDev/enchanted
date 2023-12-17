@@ -45,6 +45,11 @@ final class ConversationStore {
         try reloadConversation(conversation)
     }
     
+    func delete(_ conversation: ConversationSD) throws {
+        try swiftDataService.deleteConversation(conversation)
+        conversations = try swiftDataService.fetchConversations()
+    }
+    
 //    @MainActor 
     func stopGenerate() {
         generation?.cancel()

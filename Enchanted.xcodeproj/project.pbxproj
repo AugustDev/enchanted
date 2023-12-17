@@ -7,11 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FF10022B2B247BCC0011A4DC /* LanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10022A2B247BCC0011A4DC /* LanguageModel.swift */; };
 		FF1002302B2482BA0011A4DC /* ChatMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10022F2B2482BA0011A4DC /* ChatMessageView.swift */; };
 		FF1002322B2483A20011A4DC /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002312B2483A20011A4DC /* Colours.swift */; };
-		FF1002342B248BA90011A4DC /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002332B248BA90011A4DC /* Message.swift */; };
-		FF1002362B24A0880011A4DC /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002352B24A0880011A4DC /* Conversation.swift */; };
 		FF1002392B24BBF20011A4DC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002382B24BBF20011A4DC /* MainView.swift */; };
 		FF10023E2B24F4900011A4DC /* OllamaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10023D2B24F4900011A4DC /* OllamaService.swift */; };
 		FF1002402B24F7320011A4DC /* SideBarMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10023F2B24F7320011A4DC /* SideBarMenuView.swift */; };
@@ -45,11 +42,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FF10022A2B247BCC0011A4DC /* LanguageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageModel.swift; sourceTree = "<group>"; };
 		FF10022F2B2482BA0011A4DC /* ChatMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageView.swift; sourceTree = "<group>"; };
 		FF1002312B2483A20011A4DC /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
-		FF1002332B248BA90011A4DC /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
-		FF1002352B24A0880011A4DC /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		FF1002382B24BBF20011A4DC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		FF10023D2B24F4900011A4DC /* OllamaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamaService.swift; sourceTree = "<group>"; };
 		FF10023F2B24F7320011A4DC /* SideBarMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarMenuView.swift; sourceTree = "<group>"; };
@@ -232,9 +226,6 @@
 		FFEC32A32B24786D003E5C04 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FF10022A2B247BCC0011A4DC /* LanguageModel.swift */,
-				FF1002332B248BA90011A4DC /* Message.swift */,
-				FF1002352B24A0880011A4DC /* Conversation.swift */,
 				FF10025D2B2648460011A4DC /* ConversationState.swift */,
 				FF1002722B276EC10011A4DC /* AppColorScheme.swift */,
 			);
@@ -367,16 +358,13 @@
 				FF1002322B2483A20011A4DC /* Colours.swift in Sources */,
 				FF10026A2B2731C60011A4DC /* ModelSelector.swift in Sources */,
 				FF1002682B2668790011A4DC /* Date.swift in Sources */,
-				FF10022B2B247BCC0011A4DC /* LanguageModel.swift in Sources */,
 				FF1002462B25BCE70011A4DC /* LanguageModelStore.swift in Sources */,
 				FF10025C2B2625BE0011A4DC /* SidebarView.swift in Sources */,
 				FF1002392B24BBF20011A4DC /* MainView.swift in Sources */,
 				FF10024A2B25BE740011A4DC /* LanguageModelSD.swift in Sources */,
-				FF1002362B24A0880011A4DC /* Conversation.swift in Sources */,
 				FF1002402B24F7320011A4DC /* SideBarMenuView.swift in Sources */,
 				FFEC32AA2B24797C003E5C04 /* ChatView.swift in Sources */,
 				FFEC32932B24779A003E5C04 /* ContentView.swift in Sources */,
-				FF1002342B248BA90011A4DC /* Message.swift in Sources */,
 				FFEC32952B24779A003E5C04 /* Item.swift in Sources */,
 				FF1002502B25C79F0011A4DC /* SwiftDataService.swift in Sources */,
 				FF10025A2B2624C40011A4DC /* ConversationHistoryListView.swift in Sources */,
@@ -543,7 +531,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = subj.Enchanted;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -583,7 +572,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = subj.Enchanted;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
