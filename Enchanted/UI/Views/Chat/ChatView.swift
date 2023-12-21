@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Speech
 
 struct ChatView: View {
     var conversation: ConversationSD?
@@ -20,6 +21,7 @@ struct ChatView: View {
     
     @State private var selectedModel: LanguageModelSD?
     @State private var message = ""
+    @State private var isRecording = false
     @FocusState private var isFocusedInput: Bool
     
     init(
@@ -78,12 +80,24 @@ struct ChatView: View {
     
     var inputFields: some View {
         HStack(spacing: 10) {
-            TextField("Message", text: $message, axis: .vertical)
-                .focused($isFocusedInput)
-                .frame(height: 40)
-                .font(.system(size: 14))
-                .padding(.horizontal)
-                .overlay(RoundedRectangle(cornerRadius: 20).strokeBorder(Color(.systemGray2), style: StrokeStyle(lineWidth: 0.5)))
+            HStack {
+                TextField("Message", text: $message, axis: .vertical)
+                    .focused($isFocusedInput)
+                    .frame(minHeight: 40)
+                    .font(.system(size: 14))
+                
+                RecordingView(isRecording: $isRecording.animation()) { transcription in
+                    self.message = transcription
+                }
+            }
+            .padding(.horizontal)
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .strokeBorder(
+                        isRecording ? Color(.systemBlue) : Color(.systemGray2),
+                        style: StrokeStyle(lineWidth: isRecording ? 2 : 0.5)
+                    )
+            )
             
             ZStack {
                 Circle()
@@ -134,7 +148,7 @@ struct ChatView: View {
     }
     
     @State private var animationAmount: CGFloat = 1
-
+    
     
     var body: some View {
         VStack {
@@ -166,7 +180,7 @@ struct ChatView: View {
                 }
                 Spacer()
             }
-             
+            
             ConversationStatusView(state: conversationState)
                 .padding()
             
@@ -195,20 +209,18 @@ struct ChatView: View {
 }
 
 #Preview {
-    Group {
-        ChatView(
-            conversation: ConversationSD.sample[0],
-            messages: MessageSD.sample,
-            modelsList: LanguageModelSD.sample, 
-            selectedModel: LanguageModelSD.sample[0],
-            onMenuTap: {},
-            onNewConversationTap: { },
-            onSendMessageTap: {_,_  in},
-            conversationState: .loading,
-            onStopGenerateTap: {},
-            reachable: false
-        )
-    }
+    ChatView(
+        conversation: ConversationSD.sample[0],
+        messages: MessageSD.sample,
+        modelsList: LanguageModelSD.sample,
+        selectedModel: LanguageModelSD.sample[0],
+        onMenuTap: {},
+        onNewConversationTap: { },
+        onSendMessageTap: {_,_  in},
+        conversationState: .loading,
+        onStopGenerateTap: {},
+        reachable: false
+    )
 }
 
 #Preview {

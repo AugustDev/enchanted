@@ -68,8 +68,8 @@ final class ConversationStore {
         conversation.model = model
         
         print(conversation.name)
-        print(conversation.messages)
-        print(conversation.model?.name ?? "")
+//        print(conversation.messages)
+        print("MODEL", conversation.model?.name ?? "")
         
         let userMessage = MessageSD(content: userPrompt, role: "user")
         userMessage.conversation = conversation
