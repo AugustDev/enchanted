@@ -7,16 +7,17 @@
 
 import SwiftUI
 
-struct ModelSelector: View {
+struct ModelSelectorView: View {
     var modelsList: [LanguageModelSD]
-    @Binding var selectedModel: LanguageModelSD?
+    var selectedModel: LanguageModelSD?
+    var onSelectModel: (_ model: LanguageModelSD?) -> ()
     
     var body: some View {
         Menu {
             ForEach(modelsList, id: \.self) { model in
                 Button(action: {
-                    withAnimation(.easeOut) {                        
-                        selectedModel = model
+                    withAnimation(.easeOut) {    
+                        onSelectModel(model)
                     }
                 }) {
                     Text(model.name)
@@ -48,8 +49,8 @@ struct ModelSelector: View {
 }
 
 #Preview {
-    ModelSelector(
+    ModelSelectorView(
         modelsList: LanguageModelSD.sample,
-        selectedModel: .constant(LanguageModelSD.sample[0])
+        selectedModel: LanguageModelSD.sample[0], onSelectModel: {_ in}
     )
 }
