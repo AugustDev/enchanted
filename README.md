@@ -12,7 +12,7 @@ Note: You will need to run your own Ollama server to use the app. Read instructi
 
 ## Demo
 
-[<img src="./assets/promo.png">](https://www.youtube.com/watch?v=3nGlMjVYYbE)
+[<img src="./assets/promo.png">](https://www.youtube.com/watch?v=_0L9Qz1Gn2Y)
 
 ## Features
 
