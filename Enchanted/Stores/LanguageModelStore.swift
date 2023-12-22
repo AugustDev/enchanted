@@ -12,7 +12,10 @@ import SwiftData
 final class LanguageModelStore {
     private var swiftDataService: SwiftDataService
     var models: [LanguageModelSD] = []
+    var supportsImages = false
     var selectedModel: LanguageModelSD?
+    
+    var imageModelNames = ["llava"]
     
     init(swiftDataService: SwiftDataService) {
         self.swiftDataService = swiftDataService
@@ -21,6 +24,21 @@ final class LanguageModelStore {
     @MainActor
     func setModel(model: LanguageModelSD?) {
         selectedModel = model
+        
+        checkModelFeatures()
+    }
+    
+    func checkModelFeatures() {
+        for modelName in imageModelNames {
+            if let selectedModelName = selectedModel?.name {
+                if selectedModelName.contains(modelName) {
+                    supportsImages = true
+                    return
+                }
+            }
+        }
+        
+        supportsImages = false
     }
     
     @MainActor

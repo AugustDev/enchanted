@@ -12,6 +12,7 @@ struct ChatMessageView: View {
     var avatarName: String
     var name: String
     var text: String
+    var uiImage: UIImage?
     
     let enchantedTheme = Theme()
         .text {
@@ -195,6 +196,14 @@ struct ChatMessageView: View {
                     Markdown(text)
                         .textSelection(.enabled)
                         .markdownTheme(enchantedTheme)
+                    
+                    if let uiImage = uiImage {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
                 }
                 
                 Spacer()

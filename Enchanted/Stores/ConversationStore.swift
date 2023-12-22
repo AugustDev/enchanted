@@ -60,30 +60,36 @@ final class ConversationStore {
     }
     
     @MainActor
-    func sendPrompt(userPrompt: String, model: LanguageModelSD) {
+    func sendPrompt(userPrompt: String, model: LanguageModelSD, image: Image?) {
         guard userPrompt.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 else { return }
         
         let conversation = selectedConversation ?? ConversationSD(name: userPrompt)
         conversation.updatedAt = Date.now
         conversation.model = model
         
-        print(conversation.name)
-//        print(conversation.messages)
-        print("MODEL", conversation.model?.name ?? "")
-        
-        let userMessage = MessageSD(content: userPrompt, role: "user")
+        let userMessage = MessageSD(content: userPrompt, role: "user", image: image?.render()?.compressImageData())
         userMessage.conversation = conversation
 
-        let messageHistory = conversation.messages
+        var messageHistory = conversation.messages
             .sorted{$0.createdAt < $1.createdAt}
             .map{ChatMessage(role: $0.role, content: $0.content)
+        }
+        
+        /// attach selected image to the last Message
+        if let lastMessage = messageHistory.popLast() {
+            var imagesBase64: [String] = []
+            if let image = image?.render() {
+                imagesBase64.append(image.convertImageToBase64String())
+            }
+            
+            let messageWithImage = ChatMessage(role: lastMessage.role, content: lastMessage.content, images: imagesBase64)
+            messageHistory.append(messageWithImage)
         }
         
         let assistantMessage = MessageSD(content: "", role: "assistant")
         assistantMessage.conversation = conversation
         
         conversationState = .loading
-        print("msg received")
         
         Task {
             try swiftDataService.updateConversation(conversation)
@@ -94,7 +100,6 @@ final class ConversationStore {
             
             if await OllamaService.shared.ollamaKit.reachable() {
                 let request = OkChatRequestData(model: model.name, messages: messageHistory)
-                print(request)
                 generation = OllamaService.shared.ollamaKit.chat(data: request)
                     .sink(receiveCompletion: { [weak self] completion in
                         switch completion {

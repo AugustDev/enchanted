@@ -17,16 +17,18 @@ final class MessageSD: Identifiable {
     var done: Bool = false
     var error: Bool = false
     var createdAt: Date = Date.now
+    @Attribute(.externalStorage) var image: Data?
     
     @Relationship var conversation: ConversationSD?
         
     
-    init(content: String, role: String, done: Bool = false, error: Bool = false) {
+    init(content: String, role: String, done: Bool = false, error: Bool = false, image: Data? = nil) {
         self.content = content
         self.role = role
         self.done = done
         self.error = error
         self.conversation = conversation
+        self.image = image
     }
 
     @Transient var model: String {
