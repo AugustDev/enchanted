@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Speech
+import PhotosUI
 
 struct ChatView: View {
     var conversation: ConversationSD?
@@ -14,27 +14,35 @@ struct ChatView: View {
     var modelsList: [LanguageModelSD]
     var onMenuTap: () -> ()
     var onNewConversationTap: () -> ()
-    var onSendMessageTap: @MainActor (_ prompt: String, _ model: LanguageModelSD) -> ()
+    var onSendMessageTap: @MainActor (_ prompt: String, _ model: LanguageModelSD, _ image: Image?) -> ()
     var conversationState: ConversationState
     var onStopGenerateTap: () -> ()
     var reachable: Bool
+    var modelSupportsImages: Bool
+    var onSelectModel: (_ model: LanguageModelSD?) -> ()
     
-    @State private var selectedModel: LanguageModelSD?
+    private var selectedModel: LanguageModelSD?
     @State private var message = ""
     @State private var isRecording = false
     @FocusState private var isFocusedInput: Bool
+    
+    /// Image selection
+    @State private var avatarItem: PhotosPickerItem?
+    @State private var selectedImage: Image?
     
     init(
         conversation: ConversationSD? = nil,
         messages: [MessageSD],
         modelsList: [LanguageModelSD],
         selectedModel: LanguageModelSD?,
+        onSelectModel: @escaping (_ model: LanguageModelSD?) -> (),
         onMenuTap: @escaping () -> Void,
         onNewConversationTap: @escaping () -> Void,
-        onSendMessageTap: @MainActor @escaping (_ prompt: String, _ model: LanguageModelSD) -> Void,
+        onSendMessageTap: @MainActor @escaping (_ prompt: String, _ model: LanguageModelSD, _ image: Image?) -> Void,
         conversationState: ConversationState,
         onStopGenerateTap:  @escaping () -> Void,
-        reachable: Bool
+        reachable: Bool,
+        modelSupportsImages: Bool = false
     ) {
         self.conversation = conversation
         self.messages = messages
@@ -45,6 +53,8 @@ struct ChatView: View {
         self.conversationState = conversationState
         self.onStopGenerateTap = onStopGenerateTap
         self.reachable = reachable
+        self.modelSupportsImages = modelSupportsImages
+        self.onSelectModel = onSelectModel
         self.selectedModel = selectedModel
     }
     
@@ -61,9 +71,8 @@ struct ChatView: View {
             
             Spacer()
             
-            if modelsList.count > 0 {
-                ModelSelector(modelsList: modelsList, selectedModel: $selectedModel)
-            }
+            ModelSelectorView(modelsList: modelsList, selectedModel: selectedModel, onSelectModel: onSelectModel)
+                .showIf(!modelsList.isEmpty)
             
             Spacer()
             
@@ -80,16 +89,43 @@ struct ChatView: View {
     
     var inputFields: some View {
         HStack(spacing: 10) {
+            
+            PhotosPicker(selection: $avatarItem) {
+                Image(systemName: "photo")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundStyle(.foreground)
+                    .frame(height: 19)
+            }
+            .onChange(of: avatarItem) {
+                Task {
+                    if let loaded = try? await avatarItem?.loadTransferable(type: Image.self) {
+                        selectedImage = loaded
+                    } else {
+                        print("Failed")
+                    }
+                }
+            }
+            .showIf(modelSupportsImages)
+            
             HStack {
+                SelectedImageView(image: $selectedImage)
+                
                 TextField("Message", text: $message, axis: .vertical)
                     .focused($isFocusedInput)
                     .frame(minHeight: 40)
                     .font(.system(size: 14))
                 
+                
                 RecordingView(isRecording: $isRecording.animation()) { transcription in
                     self.message = transcription
                 }
             }
+            .onChange(of: isFocusedInput, { oldValue, newValue in
+                withAnimation {
+                    isFocusedInput = newValue
+                }
+            })
             .padding(.horizontal)
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
@@ -118,9 +154,12 @@ struct ChatView: View {
                     Button(action: {
                         Task {
                             guard let selectedModel = selectedModel else { return }
-                            isFocusedInput = false
-                            await onSendMessageTap(message, selectedModel)
-                            message = ""
+                            await onSendMessageTap(message, selectedModel, selectedImage)
+                            withAnimation {
+                                isFocusedInput = false
+                                message = ""
+                                selectedImage = nil
+                            }
                         }
                     }) {
                         Image(systemName: "arrow.up")
@@ -195,14 +234,14 @@ struct ChatView: View {
         .padding(.bottom, 5)
         .onChange(of: modelsList, { _, modelsList in
             if selectedModel == nil {
-                selectedModel = modelsList.first
+                onSelectModel(modelsList.first)
             }
         })
         .onChange(of: conversation, initial: true, { _, newConversation in
             if let conversation = newConversation {
-                selectedModel = conversation.model
+                onSelectModel(conversation.model)
             } else {
-                selectedModel = modelsList.first
+                onSelectModel(modelsList.first)
             }
         })
     }
@@ -213,13 +252,15 @@ struct ChatView: View {
         conversation: ConversationSD.sample[0],
         messages: MessageSD.sample,
         modelsList: LanguageModelSD.sample,
-        selectedModel: LanguageModelSD.sample[0],
+        selectedModel: LanguageModelSD.sample[0], 
+        onSelectModel: {_ in },
         onMenuTap: {},
         onNewConversationTap: { },
-        onSendMessageTap: {_,_  in},
+        onSendMessageTap: {_,_,_   in},
         conversationState: .loading,
         onStopGenerateTap: {},
-        reachable: false
+        reachable: false,
+        modelSupportsImages: true
     )
 }
 
@@ -229,11 +270,13 @@ struct ChatView: View {
         messages: [],
         modelsList: LanguageModelSD.sample,
         selectedModel: LanguageModelSD.sample[0],
+        onSelectModel: {_ in},
         onMenuTap: {},
         onNewConversationTap: { },
-        onSendMessageTap: {_,_  in},
+        onSendMessageTap: {_,_,_   in},
         conversationState: .completed,
         onStopGenerateTap: {},
-        reachable: true
+        reachable: true, 
+        modelSupportsImages: true
     )
 }

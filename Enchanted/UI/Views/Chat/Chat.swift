@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MainView: View {
+struct Chat: View {
     @Environment(LanguageModelStore.self) private var languageModelStore
     @Environment(ConversationStore.self) private var conversationStore
     @Environment(AppStore.self) private var appStore
@@ -20,15 +20,17 @@ struct MainView: View {
         }
     }
     
-    @MainActor func sendMessage(prompt: String, model: LanguageModelSD) {
-        conversationStore.sendPrompt(userPrompt: prompt, model: model)
+    @MainActor func sendMessage(prompt: String, model: LanguageModelSD, image: Image?) {
+        conversationStore.sendPrompt(userPrompt: prompt, model: model, image: image)
     }
     
     func onConversationTap(_ conversation: ConversationSD) {
         withAnimation(.bouncy(duration: 0.3)) {
             do {
                 try conversationStore.selectConversation(conversation)
-                languageModelStore.selectedModel = conversation.model
+                Task {
+                    await languageModelStore.setModel(model: conversation.model)
+                }
             } catch {
                 
             }
@@ -64,17 +66,19 @@ struct MainView: View {
                 messages: conversationStore.messages,
                 modelsList: languageModelStore.models, 
                 selectedModel: languageModelStore.selectedModel,
+                onSelectModel: languageModelStore.setModel,
                 onMenuTap: toggleMenu,
                 onNewConversationTap: newConversation,
                 onSendMessageTap: sendMessage, 
                 conversationState: conversationStore.conversationState, 
                 onStopGenerateTap: onStopGenerateTap,
-                reachable: appStore.isReachable
+                reachable: appStore.isReachable, 
+                modelSupportsImages: languageModelStore.supportsImages
             )
         }
     }
 }
 
 #Preview {
-    MainView()
+    Chat()
 }

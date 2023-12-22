@@ -39,7 +39,7 @@ struct EnchantedApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainView()
+            Chat()
                 .environment(languageModelStore)
                 .environment(conversationStore)
                 .environment(appStore)

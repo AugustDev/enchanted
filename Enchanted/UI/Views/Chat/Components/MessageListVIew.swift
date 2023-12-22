@@ -15,7 +15,8 @@ struct MessageListView: View {
         ScrollViewReader { scrollViewProxy in
             List(messages.indices, id:\.self) { index in
                 let roleName = messages[index].role == "user" ? "AM" : "AI"
-                ChatMessageView(avatarName: roleName, name: messages[index].role, text: messages[index].content)
+                let uiImage: UIImage? = messages[index].image != nil ? UIImage(data: messages[index].image!) : nil
+                ChatMessageView(avatarName: roleName, name: messages[index].role, text: messages[index].content, uiImage: uiImage)
                     .id(messages[index])
                     .listRowInsets(EdgeInsets())
                     .listRowSeparator(.hidden)
