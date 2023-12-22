@@ -21,11 +21,11 @@ Note: You will need to run your own Ollama server to use the app. Read instructi
 - Dark/Light mode
 - Conversation history is stored on your device
 - Markdown support (nicely displays tables/lists/code blocks)
+- Voice prompts
+- Image attachments for prompts
 
 ### Comming soon
 
-- Voice prompts
-- Image attachments for prompts
 - Download new models from mobile
 - Manage your conversations (delete/rename)
 
