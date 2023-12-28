@@ -27,8 +27,8 @@ struct Chat: View {
     func onConversationTap(_ conversation: ConversationSD) {
         withAnimation(.bouncy(duration: 0.3)) {
             do {
-                try conversationStore.selectConversation(conversation)
                 Task {
+                    try await conversationStore.selectConversation(conversation)
                     await languageModelStore.setModel(model: conversation.model)
                 }
             } catch {
@@ -38,8 +38,7 @@ struct Chat: View {
         }
     }
     
-//    @MainActor 
-    func onStopGenerateTap() {
+    @MainActor func onStopGenerateTap() {
         conversationStore.stopGenerate()
     }
     
