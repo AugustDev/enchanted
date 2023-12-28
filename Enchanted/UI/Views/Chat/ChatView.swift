@@ -153,6 +153,7 @@ struct ChatView: View {
                 default:
                     Button(action: {
                         Task {
+                            Haptics.shared.play(.medium)
                             guard let selectedModel = selectedModel else { return }
                             await onSendMessageTap(message, selectedModel, selectedImage)
                             withAnimation {

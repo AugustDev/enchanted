@@ -11,6 +11,7 @@ struct Chat: View {
     @Environment(LanguageModelStore.self) private var languageModelStore
     @Environment(ConversationStore.self) private var conversationStore
     @Environment(AppStore.self) private var appStore
+    @AppStorage("systemPrompt") private var systemPrompt: String = ""
     @State var showMenu = false
     
 //    @MainActor
@@ -18,10 +19,11 @@ struct Chat: View {
         withAnimation(.spring) {
             showMenu.toggle()
         }
+        Haptics.shared.play(.medium)
     }
     
     @MainActor func sendMessage(prompt: String, model: LanguageModelSD, image: Image?) {
-        conversationStore.sendPrompt(userPrompt: prompt, model: model, image: image)
+        conversationStore.sendPrompt(userPrompt: prompt, model: model, image: image, systemPrompt: systemPrompt)
     }
     
     func onConversationTap(_ conversation: ConversationSD) {
@@ -36,21 +38,25 @@ struct Chat: View {
             }
             showMenu.toggle()
         }
+        Haptics.shared.play(.medium)
     }
     
 //    @MainActor 
     func onStopGenerateTap() {
         conversationStore.stopGenerate()
+        Haptics.shared.play(.medium)
     }
     
     func onConversationDelete(_ conversation: ConversationSD) {
         try? conversationStore.delete(conversation)
+        Haptics.shared.play(.medium)
     }
     
     func newConversation() {
         withAnimation(.easeOut(duration: 0.3)) {
             conversationStore.selectedConversation = nil
         }
+        Haptics.shared.play(.medium)
     }
     
     var body: some View {

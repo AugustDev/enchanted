@@ -8,28 +8,14 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Environment(LanguageModelStore.self) private var languageModelStore
     @Environment(\.presentationMode) var presentationMode
-    @AppStorage("ollamaUri") private var ollamaUri: String = ""
-    @AppStorage("vibrations") private var vibrations: Bool = true
-    @AppStorage("colorScheme") private var colorScheme = AppColorScheme.system
+    @Binding var ollamaUri: String
+    @Binding var systemPrompt: String
+    @Binding var vibrations: Bool
+    @Binding var colorScheme: AppColorScheme
     @State var ollamaStatus: Bool?
-
-    private func save() {
-        OllamaService.reinit(url: ollamaUri)
-        Task {
-            presentationMode.wrappedValue.dismiss()
-            try? await languageModelStore.loadModels()
-        }
-    }
-    
-    private func checkServer() {
-        Task {
-            OllamaService.reinit(url: ollamaUri)
-            ollamaStatus = await OllamaService.shared.reachable()
-            try? await languageModelStore.loadModels()
-        }
-    }
+    var save: () -> ()
+    var checkServer: () -> ()
     
     var body: some View {
         VStack {
@@ -103,7 +89,12 @@ struct SettingsView: View {
                     .padding()
                 }
                    
-                
+                TextField("System prompt", text: $systemPrompt, axis: .vertical)
+                    .frame(height: 100)
+                    .lineLimit(5, reservesSpace: true)
+                    .padding(10)
+                    .background(Color(.systemGray5))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
                 
                 VStack(alignment: .leading) {
                     HStack {
@@ -154,5 +145,5 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView()
+    SettingsView(ollamaUri: .constant("http://localhost"), systemPrompt: .constant(""), vibrations: .constant(true), colorScheme: .constant(.light), save: {}, checkServer: {})
 }
