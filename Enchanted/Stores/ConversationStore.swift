@@ -16,6 +16,11 @@ final class ConversationStore {
     private var swiftDataService: SwiftDataService
     private var generation: AnyCancellable?
     
+    /// For some reason (SwiftUI bug / too frequent UI updates) updating UI for each stream message sometimes freezes the UI.
+    /// Throttling UI updates seem to fix the issue.
+    private var currentMessageBuffer: String = ""
+    private let throttler = Throttler(delay: 0.25)
+    
     var conversationState: ConversationState = .completed
     var conversations: [ConversationSD] = []
     var selectedConversation: ConversationSD?
@@ -123,16 +128,18 @@ final class ConversationStore {
         }
     }
     
-        @MainActor
+    @MainActor
     private func handleReceive(_ response: OKChatResponse)  {
         if messages.isEmpty { return }
         
-        let lastIndex = messages.count - 1
-        let currentContent = messages[lastIndex].content
-        
         if let responseContent = response.message?.content {
-            DispatchQueue.main.async { [self] in
-                messages[lastIndex].content = currentContent + responseContent
+            currentMessageBuffer = currentMessageBuffer + responseContent
+            
+            throttler.throttle { [weak self] in
+                guard let self = self else { return }
+                let lastIndex = self.messages.count - 1
+                self.messages[lastIndex].content.append(currentMessageBuffer)
+                currentMessageBuffer = ""
             }
         }
     }

@@ -28,13 +28,9 @@ struct Chat: View {
     
     func onConversationTap(_ conversation: ConversationSD) {
         withAnimation(.bouncy(duration: 0.3)) {
-            do {
-                Task {
-                    try await conversationStore.selectConversation(conversation)
-                    await languageModelStore.setModel(model: conversation.model)
-                }
-            } catch {
-                
+            Task {
+                try await conversationStore.selectConversation(conversation)
+                await languageModelStore.setModel(model: conversation.model)
             }
             showMenu.toggle()
         }
