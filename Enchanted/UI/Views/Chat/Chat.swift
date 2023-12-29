@@ -28,21 +28,16 @@ struct Chat: View {
     
     func onConversationTap(_ conversation: ConversationSD) {
         withAnimation(.bouncy(duration: 0.3)) {
-            do {
-                try conversationStore.selectConversation(conversation)
-                Task {
-                    await languageModelStore.setModel(model: conversation.model)
-                }
-            } catch {
-                
+            Task {
+                try await conversationStore.selectConversation(conversation)
+                await languageModelStore.setModel(model: conversation.model)
             }
             showMenu.toggle()
         }
         Haptics.shared.play(.medium)
     }
     
-//    @MainActor 
-    func onStopGenerateTap() {
+    @MainActor func onStopGenerateTap() {
         conversationStore.stopGenerate()
         Haptics.shared.play(.medium)
     }

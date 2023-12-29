@@ -16,10 +16,15 @@ final class ConversationStore {
     private var swiftDataService: SwiftDataService
     private var generation: AnyCancellable?
     
+    /// For some reason (SwiftUI bug / too frequent UI updates) updating UI for each stream message sometimes freezes the UI.
+    /// Throttling UI updates seem to fix the issue.
+    private var currentMessageBuffer: String = ""
+    private let throttler = Throttler(delay: 0.25)
+    
     var conversationState: ConversationState = .completed
     var conversations: [ConversationSD] = []
     var selectedConversation: ConversationSD?
-    var messages: [MessageSD] = []
+    @MainActor var messages: [MessageSD] = []
     
     init(swiftDataService: SwiftDataService) {
         self.swiftDataService = swiftDataService
@@ -36,12 +41,12 @@ final class ConversationStore {
         try swiftDataService.createConversation(conversation)
     }
     
-    func reloadConversation(_ conversation: ConversationSD) throws {
+    @MainActor func reloadConversation(_ conversation: ConversationSD) throws {
         selectedConversation = try swiftDataService.getConversation(conversation.id)
         messages = try swiftDataService.fetchMessages(conversation.id)
     }
     
-    func selectConversation(_ conversation: ConversationSD) throws {
+    @MainActor func selectConversation(_ conversation: ConversationSD) throws {
         try reloadConversation(conversation)
     }
     
@@ -50,8 +55,8 @@ final class ConversationStore {
         conversations = try swiftDataService.fetchConversations()
     }
     
-//    @MainActor 
-    func stopGenerate() {
+    //    @MainActor
+    @MainActor func stopGenerate() {
         generation?.cancel()
         handleComplete()
         withAnimation {
@@ -75,11 +80,11 @@ final class ConversationStore {
         
         let userMessage = MessageSD(content: userPrompt, role: "user", image: image?.render()?.compressImageData())
         userMessage.conversation = conversation
-
+        
         var messageHistory = conversation.messages
             .sorted{$0.createdAt < $1.createdAt}
             .map{ChatMessage(role: $0.role, content: $0.content)
-        }
+            }
         
         /// attach selected image to the last Message
         if let lastMessage = messageHistory.popLast() {
@@ -112,7 +117,7 @@ final class ConversationStore {
                         case .finished:
                             self?.handleComplete()
                         case .failure(let error):
-                             self?.handleError(error.localizedDescription)
+                            self?.handleError(error.localizedDescription)
                         }
                     }, receiveValue: { [weak self] response in
                         self?.handleReceive(response)
@@ -123,38 +128,46 @@ final class ConversationStore {
         }
     }
     
-//    @MainActor
+    @MainActor
     private func handleReceive(_ response: OKChatResponse)  {
-        DispatchQueue.main.async { [self] in
-            if messages.isEmpty { return }
+        if messages.isEmpty { return }
+        
+        if let responseContent = response.message?.content {
+            currentMessageBuffer = currentMessageBuffer + responseContent
             
-            let lastIndex = messages.count - 1
-            let currentContent = messages[lastIndex].content
-
-            if let responseContent = response.message?.content {
-                messages[lastIndex].content = currentContent + responseContent
+            throttler.throttle { [weak self] in
+                guard let self = self else { return }
+                let lastIndex = self.messages.count - 1
+                self.messages[lastIndex].content.append(currentMessageBuffer)
+                currentMessageBuffer = ""
             }
-            conversationState = .loading
         }
     }
     
-//    @MainActor
+        @MainActor
     private func handleError(_ errorMessage: String) {
         guard let lastMesasge = messages.last else { return }
         lastMesasge.error = true
         lastMesasge.done = false
-        try? swiftDataService.updateMessage(lastMesasge)
+        
+        Task(priority: .background) {
+            try? swiftDataService.updateMessage(lastMesasge)
+        }
+        
         withAnimation {
             conversationState = .error(message: errorMessage)
         }
     }
     
-//    @MainActor
+        @MainActor
     private func handleComplete() {
         guard let lastMesasge = messages.last else { return }
         lastMesasge.error = false
         lastMesasge.done = true
-        try? swiftDataService.updateMessage(lastMesasge)
+        
+        Task(priority: .background) {
+            try self.swiftDataService.updateMessage(lastMesasge)
+        }
         
         withAnimation {
             conversationState = .completed
