@@ -18,6 +18,7 @@ struct RecordingView: View {
             await speechRecognizer.userInit()
             await toggleTranscribing()
         }
+        Haptics.shared.play(.medium)
     }
     
     private func toggleTranscribing() async {

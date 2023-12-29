@@ -25,7 +25,10 @@ struct SidebarView: View {
             }
             .scrollIndicators(.never)
             
-            Button(action: {showSettings.toggle()}) {
+            Button(action: {
+                showSettings.toggle()
+                Haptics.shared.play(.medium)
+            }) {
                 HStack {
                     Image(systemName: "gearshape.fill")
                         .resizable()
@@ -45,7 +48,7 @@ struct SidebarView: View {
         }
         .padding()
         .sheet(isPresented: $showSettings) {
-            SettingsView()
+            Settings()
         }
     }
 }

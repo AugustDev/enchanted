@@ -23,11 +23,12 @@ Note: You will need to run your own Ollama server to use the app. Read instructi
 - Markdown support (nicely displays tables/lists/code blocks)
 - Voice prompts
 - Image attachments for prompts
+- Specify system prompt used for every conversations
 
 ### Comming soon
 
 - Download new models from mobile
-- Manage your conversations (delete/rename)
+- Rename conversations
 
 ## Usage instructions
 

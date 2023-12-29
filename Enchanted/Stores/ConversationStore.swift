@@ -60,12 +60,18 @@ final class ConversationStore {
     }
     
     @MainActor
-    func sendPrompt(userPrompt: String, model: LanguageModelSD, image: Image?) {
+    func sendPrompt(userPrompt: String, model: LanguageModelSD, image: Image?, systemPrompt: String = "") {
         guard userPrompt.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 else { return }
         
         let conversation = selectedConversation ?? ConversationSD(name: userPrompt)
         conversation.updatedAt = Date.now
         conversation.model = model
+        
+        /// add system prompt to very first message in the conversation
+        if !systemPrompt.isEmpty && conversation.messages.isEmpty {
+            let systemMessage = MessageSD(content: systemPrompt, role: "system")
+            systemMessage.conversation = conversation
+        }
         
         let userMessage = MessageSD(content: userPrompt, role: "user", image: image?.render()?.compressImageData())
         userMessage.conversation = conversation
