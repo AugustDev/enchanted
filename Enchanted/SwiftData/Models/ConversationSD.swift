@@ -16,7 +16,7 @@ final class ConversationSD: Identifiable {
     var createdAt: Date
     var updatedAt: Date
 
-    @Relationship
+    @Relationship(deleteRule: .nullify)
     var model: LanguageModelSD?
 
     @Relationship(deleteRule: .cascade, inverse: \MessageSD.conversation)

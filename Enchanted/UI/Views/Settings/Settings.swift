@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Settings: View {
     @Environment(LanguageModelStore.self) private var languageModelStore
+    @Environment(ConversationStore.self) private var conversationStore
     @AppStorage("ollamaUri") private var ollamaUri: String = ""
     @AppStorage("systemPrompt") private var systemPrompt: String = ""
     @AppStorage("vibrations") private var vibrations: Bool = true
@@ -45,7 +46,8 @@ struct Settings: View {
             vibrations: $vibrations,
             colorScheme: $colorScheme,
             save: save,
-            checkServer: checkServer
+            checkServer: checkServer,
+            deleteAllConversations: conversationStore.deleteAllConversations
         )
     }
 }

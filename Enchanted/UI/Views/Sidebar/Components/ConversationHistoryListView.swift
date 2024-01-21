@@ -24,6 +24,7 @@ struct ConversationHistoryList: View {
     var conversations: [ConversationSD]
     var onTap: (_ conversation: ConversationSD) -> ()
     var onDelete: (_ conversation: ConversationSD) -> ()
+    var onDeleteDailyConversations: (_ date: Date) -> ()
     
     func groupConversationsByDay(conversations: [ConversationSD]) -> [ConversationGroup] {
         let groupedDictionary = Dictionary(grouping: conversations) { (conversation) -> Date in
@@ -51,6 +52,11 @@ struct ConversationHistoryList: View {
                     
                     Spacer()
                 }
+                .contextMenu(menuItems: {
+                    Button(role: .destructive, action: { onDeleteDailyConversations(conversationGroup.date) }) {
+                        Label("Delete daily conversations", systemImage: "trash")
+                    }
+                })
                 
                 ForEach(conversationGroup.conversations, id:\.self) { dailyConversation in
                     HStack {
@@ -78,5 +84,5 @@ struct ConversationHistoryList: View {
 
 
 #Preview {
-    ConversationHistoryList(conversations: ConversationSD.sample, onTap: {_ in}, onDelete: {_ in})
+    ConversationHistoryList(conversations: ConversationSD.sample, onTap: {_ in}, onDelete: {_ in}, onDeleteDailyConversations: {_ in})
 }

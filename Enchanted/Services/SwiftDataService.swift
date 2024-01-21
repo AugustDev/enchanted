@@ -68,6 +68,16 @@ extension SwiftDataService {
         let conversations = try modelContext.fetch(fetchDescriptor)
         return conversations.first
     }
+    
+    func deleteConversations() throws {
+        try modelContext.delete(model: ConversationSD.self)
+        try modelContext.saveChanges()
+    }
+    
+    func deleteConversations(_ date: Date) throws {
+        let predicate = #Predicate<ConversationSD>{ $0.createdAt >=  date && $0.createdAt <= date}
+        try modelContext.delete(model: ConversationSD.self, where: predicate)
+    }
 }
 
 

@@ -37,6 +37,28 @@ final class ConversationStore {
         print("loaded conversations")
     }
     
+    func deleteAllConversations() {
+        Task {
+            DispatchQueue.main.async { [self] in
+                messages = []
+            }
+            selectedConversation = nil
+            try? swiftDataService.deleteConversations()
+            try? await loadConversations()
+        }
+    }
+    
+    func deleteDailyConversations(_ date: Date) {
+        Task {
+            DispatchQueue.main.async { [self] in
+                messages = []
+            }
+            selectedConversation = nil
+            try? swiftDataService.deleteConversations()
+            try? await loadConversations()
+        }
+    }
+    
     func create(_ conversation: ConversationSD) throws {
         try swiftDataService.createConversation(conversation)
     }
@@ -51,6 +73,7 @@ final class ConversationStore {
     }
     
     func delete(_ conversation: ConversationSD) throws {
+        selectedConversation = nil
         try swiftDataService.deleteConversation(conversation)
         conversations = try swiftDataService.fetchConversations()
     }
@@ -71,6 +94,9 @@ final class ConversationStore {
         let conversation = selectedConversation ?? ConversationSD(name: userPrompt)
         conversation.updatedAt = Date.now
         conversation.model = model
+        
+        print("model", model.name)
+        print("conversation", conversation.name)
         
         /// add system prompt to very first message in the conversation
         if !systemPrompt.isEmpty && conversation.messages.isEmpty {

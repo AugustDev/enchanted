@@ -14,7 +14,7 @@ final class LanguageModelSD: Identifiable {
     var isAvailable: Bool = false
     
     @Relationship(deleteRule: .cascade, inverse: \ConversationSD.model)
-    var conversations: [ConversationSD] = []
+    var conversations: [ConversationSD]? = []
     
     init(name: String) {
         self.name = name
