@@ -47,6 +47,11 @@ struct Chat: View {
         Haptics.shared.play(.medium)
     }
     
+    func onDeleteDailyCOnversatin(_ conversation: ConversationSD) {
+        try? conversationStore.delete(conversation)
+        Haptics.shared.play(.medium)
+    }
+    
     func newConversation() {
         withAnimation(.easeOut(duration: 0.3)) {
             conversationStore.selectedConversation = nil
@@ -59,7 +64,8 @@ struct Chat: View {
             SidebarView(
                 conversations: conversationStore.conversations,
                 onConversationTap: onConversationTap,
-                onConversationDelete: onConversationDelete
+                onConversationDelete: onConversationDelete, 
+                onDeleteDailyConversations: conversationStore.deleteDailyConversations
             )
         }) {
             ChatView(

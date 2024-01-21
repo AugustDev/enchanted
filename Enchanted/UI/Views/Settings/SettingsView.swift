@@ -16,6 +16,9 @@ struct SettingsView: View {
     @State var ollamaStatus: Bool?
     var save: () -> ()
     var checkServer: () -> ()
+    var deleteAllConversations: () -> ()
+    
+    @State private var deleteConversationsDialog = false
     
     var body: some View {
         VStack {
@@ -41,7 +44,7 @@ struct SettingsView: View {
             }
             .padding()
             
-
+            
             VStack {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
@@ -58,7 +61,7 @@ struct SettingsView: View {
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
                         .padding(10)
-                        .background(Color(.systemGray5))
+                        .background(Color(.secondarySystemGroupedBackground))
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
                 
@@ -88,12 +91,12 @@ struct SettingsView: View {
                     }
                     .padding()
                 }
-                   
+                
                 TextField("System prompt", text: $systemPrompt, axis: .vertical)
                     .frame(height: 100)
                     .lineLimit(5, reservesSpace: true)
                     .padding(10)
-                    .background(Color(.systemGray5))
+                    .background(Color(.secondarySystemGroupedBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 
                 VStack(alignment: .leading) {
@@ -103,7 +106,6 @@ struct SettingsView: View {
                             .font(.system(size: 12))
                         
                         Spacer()
-                        
                     }
                     
                     VStack {
@@ -126,7 +128,34 @@ struct SettingsView: View {
                         }
                     }
                     .padding(10)
-                    .background(Color(.systemGray5))
+                    .background(Color(.secondarySystemGroupedBackground))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                }
+                .padding(.top, 20)
+                
+                VStack(alignment: .leading) {
+                    
+                    VStack {
+                        Button(action: {deleteConversationsDialog.toggle()}) {
+                            HStack {
+                                Spacer()
+                                
+                                Text("Delete All Conversations")
+                                    .foregroundStyle(Color(.systemRed))
+                                    .padding(.vertical, 2)
+                                
+                                Spacer()
+                            }
+                        }
+                        .confirmationDialog("Delete All Conversations?", isPresented: $deleteConversationsDialog) {
+                            Button("Delete", role: .destructive) { deleteAllConversations() }
+                            Button("Cancel", role: .cancel) { }
+                        } message: {
+                            Text("Delete All Conversations?")
+                        }
+                    }
+                    .padding(10)
+                    .background(Color(.secondarySystemGroupedBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
                 .padding(.top, 20)
@@ -134,7 +163,7 @@ struct SettingsView: View {
             .padding()
             
             
-        
+            
             
             Spacer()
         }
@@ -145,5 +174,5 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView(ollamaUri: .constant("http://localhost"), systemPrompt: .constant(""), vibrations: .constant(true), colorScheme: .constant(.light), save: {}, checkServer: {})
+    SettingsView(ollamaUri: .constant("http://localhost"), systemPrompt: .constant(""), vibrations: .constant(true), colorScheme: .constant(.light), save: {}, checkServer: {}, deleteAllConversations: {})
 }

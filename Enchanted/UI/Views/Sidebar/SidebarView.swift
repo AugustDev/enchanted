@@ -12,6 +12,7 @@ struct SidebarView: View {
     var conversations: [ConversationSD]
     var onConversationTap: (_ conversation: ConversationSD) -> ()
     var onConversationDelete: (_ conversation: ConversationSD) -> ()
+    var onDeleteDailyConversations: (_ date: Date) -> ()
     @State var showSettings = false
     
     var body: some View {
@@ -20,7 +21,8 @@ struct SidebarView: View {
                 ConversationHistoryList(
                     conversations: conversations,
                     onTap: onConversationTap,
-                    onDelete: onConversationDelete
+                    onDelete: onConversationDelete,
+                    onDeleteDailyConversations: onDeleteDailyConversations
                 )
             }
             .scrollIndicators(.never)
@@ -54,5 +56,5 @@ struct SidebarView: View {
 }
 
 #Preview {
-    SidebarView(conversations: ConversationSD.sample, onConversationTap: {_ in}, onConversationDelete: {_ in})
+    SidebarView(conversations: ConversationSD.sample, onConversationTap: {_ in}, onConversationDelete: {_ in}, onDeleteDailyConversations: {_ in})
 }
