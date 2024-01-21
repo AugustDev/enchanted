@@ -169,18 +169,10 @@
 		FF10026B2B2751630011A4DC /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				FF31B4B52B5D1BE700329B17 /* Components */,
 				FF10026C2B2751760011A4DC /* SettingsView.swift */,
 				FF0146CA2B3DA1DF00A2A9F6 /* Settings.swift */,
 			);
 			path = Settings;
-			sourceTree = "<group>";
-		};
-		FF31B4B52B5D1BE700329B17 /* Components */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Components;
 			sourceTree = "<group>";
 		};
 		FFB0327B2B312F310066A9DB /* Recorder */ = {
