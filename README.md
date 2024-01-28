@@ -24,6 +24,8 @@ Note: You will need to run your own Ollama server to use the app. Read instructi
 - Voice prompts
 - Image attachments for prompts
 - Specify system prompt used for every conversations
+- Edit message content or submit message with different model
+- Delete single conversation / delete all conversations
 
 ### Comming soon
 
