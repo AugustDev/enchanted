@@ -22,8 +22,14 @@ struct Chat: View {
         Haptics.shared.play(.medium)
     }
     
-    @MainActor func sendMessage(prompt: String, model: LanguageModelSD, image: Image?) {
-        conversationStore.sendPrompt(userPrompt: prompt, model: model, image: image, systemPrompt: systemPrompt)
+    @MainActor func sendMessage(prompt: String, model: LanguageModelSD, image: Image?, trimmingMessageId: String?) {
+        conversationStore.sendPrompt(
+            userPrompt: prompt,
+            model: model,
+            image: image,
+            systemPrompt: systemPrompt,
+            trimmingMessageId: trimmingMessageId
+        )
     }
     
     func onConversationTap(_ conversation: ConversationSD) {

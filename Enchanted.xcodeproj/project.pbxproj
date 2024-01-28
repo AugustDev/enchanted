@@ -33,6 +33,7 @@
 		FF1002732B276EC10011A4DC /* AppColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002722B276EC10011A4DC /* AppColorScheme.swift */; };
 		FF1002752B278C170011A4DC /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002742B278C170011A4DC /* AppStore.swift */; };
 		FF10027A2B27B6070011A4DC /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = FF1002792B27B6070011A4DC /* MarkdownUI */; };
+		FF24B30E2B66BE8500AB618F /* RunningBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF24B30D2B66BE8500AB618F /* RunningBorder.swift */; };
 		FF5FA0D62B35169400BC471D /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5FA0D52B35169400BC471D /* Binding+Extension.swift */; };
 		FF61C9632B2A7DC6003CD1CB /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = FF61C9622B2A7DC6003CD1CB /* OllamaKit */; };
 		FF6B7B132B3EE7AC00E8FEA3 /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6B7B122B3EE7AC00E8FEA3 /* Throttler.swift */; };
@@ -74,6 +75,7 @@
 		FF10026C2B2751760011A4DC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FF1002722B276EC10011A4DC /* AppColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColorScheme.swift; sourceTree = "<group>"; };
 		FF1002742B278C170011A4DC /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		FF24B30D2B66BE8500AB618F /* RunningBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningBorder.swift; sourceTree = "<group>"; };
 		FF5FA0D52B35169400BC471D /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		FF6B7B122B3EE7AC00E8FEA3 /* Throttler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Throttler.swift; sourceTree = "<group>"; };
 		FFB0327C2B312F3D0066A9DB /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				FF10025F2B26499B0011A4DC /* ConversationStatusView.swift */,
 				FF1002692B2731C60011A4DC /* ModelSelectorView.swift */,
 				FFBBF4892B350283008D611C /* SelectedImageView.swift */,
+				FF24B30D2B66BE8500AB618F /* RunningBorder.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF1002442B25BB730011A4DC /* ConversationStore.swift in Sources */,
+				FF24B30E2B66BE8500AB618F /* RunningBorder.swift in Sources */,
 				FF1002602B26499B0011A4DC /* ConversationStatusView.swift in Sources */,
 				FF10024C2B25BEA00011A4DC /* MessageSD.swift in Sources */,
 				FF10023E2B24F4900011A4DC /* OllamaService.swift in Sources */,

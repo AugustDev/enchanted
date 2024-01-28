@@ -19,7 +19,7 @@ final class ConversationStore {
     /// For some reason (SwiftUI bug / too frequent UI updates) updating UI for each stream message sometimes freezes the UI.
     /// Throttling UI updates seem to fix the issue.
     private var currentMessageBuffer: String = ""
-    private let throttler = Throttler(delay: 0.25)
+    private let throttler = Throttler(delay: 0.15)
     
     var conversationState: ConversationState = .completed
     var conversations: [ConversationSD] = []
@@ -88,7 +88,7 @@ final class ConversationStore {
     }
     
     @MainActor
-    func sendPrompt(userPrompt: String, model: LanguageModelSD, image: Image?, systemPrompt: String = "") {
+    func sendPrompt(userPrompt: String, model: LanguageModelSD, image: Image?, systemPrompt: String = "", trimmingMessageId: String?) {
         guard userPrompt.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 else { return }
         
         let conversation = selectedConversation ?? ConversationSD(name: userPrompt)
@@ -98,29 +98,37 @@ final class ConversationStore {
         print("model", model.name)
         print("conversation", conversation.name)
         
+        /// trim conversation if on edit mode
+        if let trimmingMessageId = trimmingMessageId {
+            conversation.messages = conversation.messages
+                .sorted{$0.createdAt < $1.createdAt}
+                .prefix(while: {$0.id.uuidString != trimmingMessageId})
+        }
+        
         /// add system prompt to very first message in the conversation
         if !systemPrompt.isEmpty && conversation.messages.isEmpty {
             let systemMessage = MessageSD(content: systemPrompt, role: "system")
             systemMessage.conversation = conversation
         }
         
+        /// construct new message
         let userMessage = MessageSD(content: userPrompt, role: "user", image: image?.render()?.compressImageData())
         userMessage.conversation = conversation
         
+        /// prepare message history for Ollama
         var messageHistory = conversation.messages
             .sorted{$0.createdAt < $1.createdAt}
-            .map{ChatMessage(role: $0.role, content: $0.content)
-            }
+            .map{ChatMessage(role: $0.role, content: $0.content)}
+
+        print(messageHistory.map({$0.content}))
         
         /// attach selected image to the last Message
-        if let lastMessage = messageHistory.popLast() {
-            var imagesBase64: [String] = []
-            if let image = image?.render() {
-                imagesBase64.append(image.convertImageToBase64String())
+        if let image = image?.render() {
+            if let lastMessage = messageHistory.popLast() {
+                let imagesBase64: [String] = [image.convertImageToBase64String()]
+                let messageWithImage = ChatMessage(role: lastMessage.role, content: lastMessage.content, images: imagesBase64)
+                messageHistory.append(messageWithImage)
             }
-            
-            let messageWithImage = ChatMessage(role: lastMessage.role, content: lastMessage.content, images: imagesBase64)
-            messageHistory.append(messageWithImage)
         }
         
         let assistantMessage = MessageSD(content: "", role: "assistant")

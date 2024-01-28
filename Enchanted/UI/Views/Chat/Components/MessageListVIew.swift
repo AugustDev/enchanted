@@ -10,17 +10,42 @@ import SwiftUI
 struct MessageListView: View {
     var messages: [MessageSD]
     var conversationState: ConversationState
+    @Binding var editMessage: MessageSD?
     
     var body: some View {
         ScrollViewReader { scrollViewProxy in
-            List(messages.indices, id:\.self) { index in
-                let roleName = messages[index].role == "user" ? "AM" : "AI"
-                let uiImage: UIImage? = messages[index].image != nil ? UIImage(data: messages[index].image!) : nil
-                ChatMessageView(avatarName: roleName, name: messages[index].role, text: messages[index].content, uiImage: uiImage)
-                    .id(messages[index])
+            List(messages, id:\.self) { message in
+                let roleName = message.role == "user" ? "AM" : "AI"
+                let uiImage: UIImage? = message.image != nil ? UIImage(data: message.image!) : nil
+                let userContextMenu = ContextMenu(menuItems: {
+                    Button(action: {  }) {
+                        Label("Copy", systemImage: "doc.on.doc")
+                    }
+                    
+                    if message.role == "user" {
+                        Button(action: {
+                            withAnimation { editMessage = message }
+                        }) {
+                            Label("Edit", systemImage: "pencil")
+                        }
+                    }
+                    
+                    if editMessage?.id == message.id {
+                        Button(action: {
+                            withAnimation { editMessage = nil }
+                        }) {
+                            Label("Unselect", systemImage: "pencil")
+                        }
+                    }
+                })
+                ChatMessageView(avatarName: roleName, name: message.role, text: message.content, uiImage: uiImage)
+                    .id(message.id)
                     .listRowInsets(EdgeInsets())
                     .listRowSeparator(.hidden)
-                    .padding(.top, 20)
+                    .padding(.vertical, 10)
+                    .contextMenu(userContextMenu)
+                    .padding(.horizontal, 10)
+                    .runningBorder(animated: message.id == editMessage?.id)
             }
             .onAppear {
                 scrollToBottom(scrollViewProxy)
@@ -46,5 +71,9 @@ struct MessageListView: View {
 }
 
 #Preview {
-    MessageListView(messages: MessageSD.sample, conversationState: .loading)
+    MessageListView(
+        messages: MessageSD.sample,
+        conversationState: .loading,
+        editMessage: .constant(MessageSD.sample[0])
+    )
 }

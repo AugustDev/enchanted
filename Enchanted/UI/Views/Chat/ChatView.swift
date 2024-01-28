@@ -14,7 +14,7 @@ struct ChatView: View {
     var modelsList: [LanguageModelSD]
     var onMenuTap: () -> ()
     var onNewConversationTap: () -> ()
-    var onSendMessageTap: @MainActor (_ prompt: String, _ model: LanguageModelSD, _ image: Image?) -> ()
+    var onSendMessageTap: @MainActor (_ prompt: String, _ model: LanguageModelSD, _ image: Image?, _ trimmingMessageId: String?) -> ()
     var conversationState: ConversationState
     var onStopGenerateTap: () -> ()
     var reachable: Bool
@@ -24,6 +24,7 @@ struct ChatView: View {
     private var selectedModel: LanguageModelSD?
     @State private var message = ""
     @State private var isRecording = false
+    @State private var editMessage: MessageSD?
     @FocusState private var isFocusedInput: Bool
     
     /// Image selection
@@ -38,7 +39,7 @@ struct ChatView: View {
         onSelectModel: @escaping (_ model: LanguageModelSD?) -> (),
         onMenuTap: @escaping () -> Void,
         onNewConversationTap: @escaping () -> Void,
-        onSendMessageTap: @MainActor @escaping (_ prompt: String, _ model: LanguageModelSD, _ image: Image?) -> Void,
+        onSendMessageTap: @MainActor @escaping (_ prompt: String, _ model: LanguageModelSD, _ image: Image?, _ trimmingMessageId: String?) -> Void,
         conversationState: ConversationState,
         onStopGenerateTap:  @escaping () -> Void,
         reachable: Bool,
@@ -155,11 +156,17 @@ struct ChatView: View {
                         Task {
                             Haptics.shared.play(.medium)
                             guard let selectedModel = selectedModel else { return }
-                            await onSendMessageTap(message, selectedModel, selectedImage)
+                            await onSendMessageTap(
+                                message,
+                                selectedModel,
+                                selectedImage,
+                                editMessage?.id.uuidString
+                            )
                             withAnimation {
                                 isFocusedInput = false
-                                message = ""
+                                editMessage = nil
                                 selectedImage = nil
+                                message = ""
                             }
                         }
                     }) {
@@ -193,9 +200,14 @@ struct ChatView: View {
     var body: some View {
         VStack {
             header
+                .padding(.horizontal)
             
             if conversation != nil {
-                MessageListView(messages: messages, conversationState: conversationState)
+                MessageListView(
+                    messages: messages,
+                    conversationState: conversationState,
+                    editMessage: $editMessage
+                )
             } else {
                 Spacer()
                 
@@ -229,9 +241,9 @@ struct ChatView: View {
             }
             
             inputFields
+                .padding(.horizontal)
             
         }
-        .padding(.horizontal)
         .padding(.bottom, 5)
         .onChange(of: modelsList, { _, modelsList in
             if selectedModel == nil {
@@ -245,6 +257,12 @@ struct ChatView: View {
                 onSelectModel(modelsList.first)
             }
         })
+        .onChange(of: editMessage, initial: false) { _, newMessage in
+            if let newMessage = newMessage {
+                message = newMessage.content
+                isFocusedInput = true
+            }
+        }
     }
 }
 
@@ -257,7 +275,7 @@ struct ChatView: View {
         onSelectModel: {_ in },
         onMenuTap: {},
         onNewConversationTap: { },
-        onSendMessageTap: {_,_,_   in},
+        onSendMessageTap: {_,_,_,_    in},
         conversationState: .loading,
         onStopGenerateTap: {},
         reachable: false,
@@ -274,7 +292,7 @@ struct ChatView: View {
         onSelectModel: {_ in},
         onMenuTap: {},
         onNewConversationTap: { },
-        onSendMessageTap: {_,_,_   in},
+        onSendMessageTap: {_,_,_,_    in},
         conversationState: .completed,
         onStopGenerateTap: {},
         reachable: true, 
