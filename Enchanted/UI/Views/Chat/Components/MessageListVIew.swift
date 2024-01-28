@@ -18,7 +18,9 @@ struct MessageListView: View {
                 let roleName = message.role == "user" ? "AM" : "AI"
                 let uiImage: UIImage? = message.image != nil ? UIImage(data: message.image!) : nil
                 let userContextMenu = ContextMenu(menuItems: {
-                    Button(action: {  }) {
+                    Button(action: { 
+                        UIPasteboard.general.string = message.content
+                    }) {
                         Label("Copy", systemImage: "doc.on.doc")
                     }
                     
