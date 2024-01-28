@@ -1,8 +1,15 @@
 ![Enchanted banner](./assets/banner.png)
+![Swift](https://img.shields.io/badge/swift-F54A2A?style=for-the-badge&logo=swift&logoColor=white)
+![Release](https://img.shields.io/github/v/release/augustdev/enchanted?style=for-the-badge)
+![Stars](https://img.shields.io/github/stars/augustdev/enchanted.svg?style=for-the-badge)
+![iOS](https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white)
+[<img src="https://img.shields.io/badge/App_Store-0D96F6?style=for-the-badge&logo=app-store&logoColor=white">](https://apps.apple.com/gb/app/enchanted-llm/id6474268307)
 
 # Enchanted
 
 Enchanted is open source, [Ollama](https://github.com/jmorganca/ollama) compatible, elegant iOS/iPad mobile app for chatting with privately hosted models such as Llama 2, Mistral, Vicuna, Starling and more. It's essentially ChatGPT app UI that connects to your private Ollama models. You can download Enchanted from the App Store or build yourself from scratch.
+
+If you like the project, consider leaving a ⭐️
 
 ## App Store
 
