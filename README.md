@@ -19,7 +19,7 @@ Note: You will need to run your own Ollama server to use the app. Read instructi
 
 ## Demo
 
-[<img src="./assets/promo.png">](https://www.youtube.com/watch?v=_0L9Qz1Gn2Y)
+[<img src="./assets/promo.png">](https://www.youtube.com/watch?v=UDvIuzjv0Mo)
 
 ## Features
 
@@ -34,7 +34,7 @@ Note: You will need to run your own Ollama server to use the app. Read instructi
 - Edit message content or submit message with different model
 - Delete single conversation / delete all conversations
 
-### Comming soon
+### Coming soon
 
 - Download new models from mobile
 - Rename conversations
