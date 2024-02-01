@@ -103,7 +103,16 @@ struct SettingsView: View {
                 
                 
                 HStack {
-                    Label("Default Model", systemImage: "sun.max")
+                    Label {
+                        Text("Default Model")
+                    } icon: {
+                        Image("ollama")
+                            .renderingMode(.template)
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundColor(Color(.label))
+                            .frame(width: 24, height: 24)
+                    }
                     
                     Spacer()
                     
