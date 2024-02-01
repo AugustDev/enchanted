@@ -10,7 +10,7 @@ import SwiftUI
 struct ModelSelectorView: View {
     var modelsList: [LanguageModelSD]
     var selectedModel: LanguageModelSD?
-    var onSelectModel: (_ model: LanguageModelSD?) -> ()
+    var onSelectModel: @MainActor (_ model: LanguageModelSD?) -> ()
     
     var body: some View {
         Menu {

@@ -13,10 +13,12 @@ struct SettingsView: View {
     @Binding var systemPrompt: String
     @Binding var vibrations: Bool
     @Binding var colorScheme: AppColorScheme
+    @Binding var defaultOllamModel: String
     @State var ollamaStatus: Bool?
     var save: () -> ()
     var checkServer: () -> ()
     var deleteAllConversations: () -> ()
+    var ollamaLangugeModels: [LanguageModelSD]
     
     @State private var deleteConversationsDialog = false
     
@@ -99,6 +101,27 @@ struct SettingsView: View {
                     .background(Color(.secondarySystemGroupedBackground))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 
+                
+                HStack {
+                    Label("Default Model", systemImage: "sun.max")
+                    
+                    Spacer()
+                    
+                    Picker(selection: $defaultOllamModel) {
+                        ForEach(ollamaLangugeModels, id:\.self) { model in
+                            Text(model.name).tag(model.name)
+                        }
+                    } label: {
+                        Label("Color Scheme", systemImage: "sun.max")
+                    }
+                }
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                .background(Color(.secondarySystemGroupedBackground))
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .showIf(!ollamaLangugeModels.isEmpty)
+                
+                
                 VStack(alignment: .leading) {
                     HStack {
                         Text("APP")
@@ -174,5 +197,15 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView(ollamaUri: .constant("http://localhost"), systemPrompt: .constant(""), vibrations: .constant(true), colorScheme: .constant(.light), save: {}, checkServer: {}, deleteAllConversations: {})
+    SettingsView(
+        ollamaUri: .constant("http://localhost"),
+        systemPrompt: .constant(""),
+        vibrations: .constant(true),
+        colorScheme: .constant(.light),
+        defaultOllamModel: .constant("llama2"),
+        save: {},
+        checkServer: {},
+        deleteAllConversations: {}, 
+        ollamaLangugeModels: LanguageModelSD.sample
+    )
 }

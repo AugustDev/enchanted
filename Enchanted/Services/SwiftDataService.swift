@@ -33,6 +33,11 @@ extension SwiftDataService {
         
         try modelContext.saveChanges()
     }
+    
+    func deleteModels() throws {
+        try modelContext.delete(model: LanguageModelSD.self)
+        try modelContext.saveChanges()
+    }
 }
 
 // MARK: - Conversations

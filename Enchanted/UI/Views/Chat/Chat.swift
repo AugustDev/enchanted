@@ -12,9 +12,9 @@ struct Chat: View {
     @Environment(ConversationStore.self) private var conversationStore
     @Environment(AppStore.self) private var appStore
     @AppStorage("systemPrompt") private var systemPrompt: String = ""
+    @AppStorage("defaultOllamaModel") private var defaultOllamaModel: String = ""
     @State var showMenu = false
     
-//    @MainActor
     func toggleMenu() {
         withAnimation(.spring) {
             showMenu.toggle()
@@ -63,6 +63,10 @@ struct Chat: View {
             conversationStore.selectedConversation = nil
         }
         Haptics.shared.play(.medium)
+        
+        Task {
+            try? await languageModelStore.loadModels()
+        }
     }
     
     var body: some View {
@@ -70,24 +74,44 @@ struct Chat: View {
             SidebarView(
                 conversations: conversationStore.conversations,
                 onConversationTap: onConversationTap,
-                onConversationDelete: onConversationDelete, 
+                onConversationDelete: onConversationDelete,
                 onDeleteDailyConversations: conversationStore.deleteDailyConversations
             )
         }) {
             ChatView(
                 conversation: conversationStore.selectedConversation,
                 messages: conversationStore.messages,
-                modelsList: languageModelStore.models, 
+                modelsList: languageModelStore.models,
                 selectedModel: languageModelStore.selectedModel,
                 onSelectModel: languageModelStore.setModel,
                 onMenuTap: toggleMenu,
                 onNewConversationTap: newConversation,
-                onSendMessageTap: sendMessage, 
-                conversationState: conversationStore.conversationState, 
+                onSendMessageTap: sendMessage,
+                conversationState: conversationStore.conversationState,
                 onStopGenerateTap: onStopGenerateTap,
-                reachable: appStore.isReachable, 
+                reachable: appStore.isReachable,
                 modelSupportsImages: languageModelStore.supportsImages
             )
+            .onChange(of: languageModelStore.models, { _, modelsList in
+                if languageModelStore.selectedModel == nil {
+                    if defaultOllamaModel != "" {
+                        languageModelStore.setModel(modelName: defaultOllamaModel)
+                    } else {
+                        languageModelStore.setModel(model: languageModelStore.models.first)
+                    }
+                }
+            })
+            .onChange(of: conversationStore.selectedConversation, initial: true, { _, newConversation in
+                if let conversation = newConversation {
+                    languageModelStore.setModel(model: conversation.model)
+                } else {
+                    if defaultOllamaModel != "" {
+                        languageModelStore.setModel(modelName: defaultOllamaModel)
+                    } else {
+                        languageModelStore.setModel(model: languageModelStore.models.first)
+                    }
+                }
+            })
         }
     }
 }

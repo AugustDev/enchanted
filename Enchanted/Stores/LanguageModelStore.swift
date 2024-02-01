@@ -15,7 +15,7 @@ final class LanguageModelStore {
     var supportsImages = false
     var selectedModel: LanguageModelSD?
     
-    var imageModelNames = ["llava"]
+    private var imageModelNames = ["llava"]
     
     init(swiftDataService: SwiftDataService) {
         self.swiftDataService = swiftDataService
@@ -23,9 +23,26 @@ final class LanguageModelStore {
     
     @MainActor
     func setModel(model: LanguageModelSD?) {
-        selectedModel = model
+        if let model = model {
+            // check if model still exists
+            if models.contains(model) {
+                selectedModel = model
+            }
+        } else {
+            selectedModel = nil
+        }
         
         checkModelFeatures()
+    }
+    
+    @MainActor
+    func setModel(modelName: String) {
+        for model in models {
+            if model.name == modelName {
+                setModel(model: model)
+                return
+            }
+        }
     }
     
     func checkModelFeatures() {
@@ -46,7 +63,7 @@ final class LanguageModelStore {
         print("loading models")
         let localModels = try await loadLocal()
         let remoteModels = try await loadRemote()
-    
+        
         _ = localModels.map { model in
             model.isAvailable == remoteModels.contains(model)
         }
@@ -58,6 +75,11 @@ final class LanguageModelStore {
         print("loaded models")
     }
     
+    func deleteAllModels() throws {
+        models = []
+        try swiftDataService.deleteModels()
+    }
+    
     private func loadLocal() async throws -> [LanguageModelSD] {
         return try swiftDataService.fetchModels()
     }
@@ -65,5 +87,4 @@ final class LanguageModelStore {
     private func loadRemote() async throws -> [LanguageModelSD] {
         return try await OllamaService.shared.getModels()
     }
-    
 }

@@ -10,10 +10,13 @@ import SwiftUI
 struct Settings: View {
     @Environment(LanguageModelStore.self) private var languageModelStore
     @Environment(ConversationStore.self) private var conversationStore
+    
     @AppStorage("ollamaUri") private var ollamaUri: String = ""
     @AppStorage("systemPrompt") private var systemPrompt: String = ""
     @AppStorage("vibrations") private var vibrations: Bool = true
     @AppStorage("colorScheme") private var colorScheme = AppColorScheme.system
+    @AppStorage("defaultOllamaModel") private var defaultOllamaModel: String = ""
+    
     @Environment(\.presentationMode) var presentationMode
     
     private func save() {
@@ -45,10 +48,15 @@ struct Settings: View {
             systemPrompt: $systemPrompt, 
             vibrations: $vibrations,
             colorScheme: $colorScheme,
+            defaultOllamModel: $defaultOllamaModel, 
             save: save,
             checkServer: checkServer,
-            deleteAllConversations: conversationStore.deleteAllConversations
+            deleteAllConversations: conversationStore.deleteAllConversations, 
+            ollamaLangugeModels: languageModelStore.models
         )
+        .onChange(of: defaultOllamaModel) { _, modelName in
+            languageModelStore.setModel(modelName: modelName)
+        }
     }
 }
 

@@ -16,10 +16,10 @@ struct ChatView: View {
     var onNewConversationTap: () -> ()
     var onSendMessageTap: @MainActor (_ prompt: String, _ model: LanguageModelSD, _ image: Image?, _ trimmingMessageId: String?) -> ()
     var conversationState: ConversationState
-    var onStopGenerateTap: () -> ()
+    var onStopGenerateTap: @MainActor () -> ()
     var reachable: Bool
     var modelSupportsImages: Bool
-    var onSelectModel: (_ model: LanguageModelSD?) -> ()
+    var onSelectModel: @MainActor (_ model: LanguageModelSD?) -> ()
     
     private var selectedModel: LanguageModelSD?
     @State private var message = ""
@@ -36,12 +36,12 @@ struct ChatView: View {
         messages: [MessageSD],
         modelsList: [LanguageModelSD],
         selectedModel: LanguageModelSD?,
-        onSelectModel: @escaping (_ model: LanguageModelSD?) -> (),
+        onSelectModel: @MainActor @escaping (_ model: LanguageModelSD?) -> (),
         onMenuTap: @escaping () -> Void,
         onNewConversationTap: @escaping () -> Void,
         onSendMessageTap: @MainActor @escaping (_ prompt: String, _ model: LanguageModelSD, _ image: Image?, _ trimmingMessageId: String?) -> Void,
         conversationState: ConversationState,
-        onStopGenerateTap:  @escaping () -> Void,
+        onStopGenerateTap: @MainActor @escaping () -> Void,
         reachable: Bool,
         modelSupportsImages: Bool = false
     ) {
@@ -72,8 +72,12 @@ struct ChatView: View {
             
             Spacer()
             
-            ModelSelectorView(modelsList: modelsList, selectedModel: selectedModel, onSelectModel: onSelectModel)
-                .showIf(!modelsList.isEmpty)
+            ModelSelectorView(
+                modelsList: modelsList,
+                selectedModel: selectedModel,
+                onSelectModel: onSelectModel
+            )
+            .showIf(!modelsList.isEmpty)
             
             Spacer()
             
@@ -155,7 +159,9 @@ struct ChatView: View {
                     Button(action: {
                         Task {
                             Haptics.shared.play(.medium)
+                            
                             guard let selectedModel = selectedModel else { return }
+                            
                             await onSendMessageTap(
                                 message,
                                 selectedModel,
@@ -245,18 +251,6 @@ struct ChatView: View {
             
         }
         .padding(.bottom, 5)
-        .onChange(of: modelsList, { _, modelsList in
-            if selectedModel == nil {
-                onSelectModel(modelsList.first)
-            }
-        })
-        .onChange(of: conversation, initial: true, { _, newConversation in
-            if let conversation = newConversation {
-                onSelectModel(conversation.model)
-            } else {
-                onSelectModel(modelsList.first)
-            }
-        })
         .onChange(of: editMessage, initial: false) { _, newMessage in
             if let newMessage = newMessage {
                 message = newMessage.content
@@ -271,7 +265,7 @@ struct ChatView: View {
         conversation: ConversationSD.sample[0],
         messages: MessageSD.sample,
         modelsList: LanguageModelSD.sample,
-        selectedModel: LanguageModelSD.sample[0], 
+        selectedModel: LanguageModelSD.sample[0],
         onSelectModel: {_ in },
         onMenuTap: {},
         onNewConversationTap: { },
@@ -295,7 +289,7 @@ struct ChatView: View {
         onSendMessageTap: {_,_,_,_    in},
         conversationState: .completed,
         onStopGenerateTap: {},
-        reachable: true, 
+        reachable: true,
         modelSupportsImages: true
     )
 }
