@@ -49,12 +49,14 @@ struct Chat: View {
     }
     
     func onConversationDelete(_ conversation: ConversationSD) {
-        try? conversationStore.delete(conversation)
-        Haptics.shared.mediumTap()
+        Task {
+            try? await conversationStore.delete(conversation)
+            Haptics.shared.mediumTap()
+        }
     }
     
-    func onDeleteDailyCOnversatin(_ conversation: ConversationSD) {
-        try? conversationStore.delete(conversation)
+    func onDeleteDailyConversatin(_ conversation: ConversationSD) async {
+        try? await conversationStore.delete(conversation)
         Haptics.shared.mediumTap()
     }
     

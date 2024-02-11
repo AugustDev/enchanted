@@ -30,7 +30,7 @@ struct ChatView: View {
     @FocusState private var isFocusedInput: Bool
     
     /// Image selection
-//    @State private var avatarItem: PhotosPickerItem?
+    //    @State private var avatarItem: PhotosPickerItem?
     
     init(
         selectedConversation: ConversationSD? = nil,
@@ -81,7 +81,11 @@ struct ChatView: View {
                         editMessage: $editMessage
                     )
                 } else {
-                    EmptyConversaitonView()
+                    EmptyConversaitonView(sendPrompt: {selectedMessage in
+                        if let selectedModel = selectedModel {
+                            onSendMessageTap(selectedMessage, selectedModel, nil, nil)
+                        }
+                    })
                 }
                 
                 if !reachable {
@@ -91,7 +95,7 @@ struct ChatView: View {
                 InputFieldsView(
                     message: $message,
                     conversationState: conversationState,
-                    onStopGenerateTap: onStopGenerateTap, 
+                    onStopGenerateTap: onStopGenerateTap,
                     selectedModel: selectedModel,
                     onSendMessageTap: onSendMessageTap
                 )
@@ -117,7 +121,7 @@ struct ChatView: View {
         messages: MessageSD.sample,
         modelsList: LanguageModelSD.sample,
         selectedModel: LanguageModelSD.sample[0],
-        onSelectModel: {_ in}, 
+        onSelectModel: {_ in},
         onConversationTap: {_ in},
         onMenuTap: {},
         onNewConversationTap: { },

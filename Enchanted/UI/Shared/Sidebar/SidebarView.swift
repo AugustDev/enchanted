@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SidebarView: View {
-    
     var conversations: [ConversationSD]
     var onConversationTap: (_ conversation: ConversationSD) -> ()
     var onConversationDelete: (_ conversation: ConversationSD) -> ()

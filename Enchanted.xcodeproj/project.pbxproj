@@ -38,6 +38,7 @@
 		FF61C9632B2A7DC6003CD1CB /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = FF61C9622B2A7DC6003CD1CB /* OllamaKit */; };
 		FF66A51D2B76949A00FAAC1E /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF66A51C2B76949A00FAAC1E /* Helpers.swift */; };
 		FF6B7B132B3EE7AC00E8FEA3 /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6B7B122B3EE7AC00E8FEA3 /* Throttler.swift */; };
+		FF7FBE4C2B78E384000901F7 /* SamplePrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7FBE4B2B78E384000901F7 /* SamplePrompt.swift */; };
 		FF9300D42B778829000859F4 /* ChatView_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9300D32B778829000859F4 /* ChatView_macOS.swift */; };
 		FF9300DA2B781D97000859F4 /* ToolbarView_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9300D92B781D97000859F4 /* ToolbarView_macOS.swift */; };
 		FF9300DC2B7823B0000859F4 /* EmptyConversaitonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9300DB2B7823B0000859F4 /* EmptyConversaitonView.swift */; };
@@ -83,6 +84,7 @@
 		FF5FA0D52B35169400BC471D /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		FF66A51C2B76949A00FAAC1E /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		FF6B7B122B3EE7AC00E8FEA3 /* Throttler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Throttler.swift; sourceTree = "<group>"; };
+		FF7FBE4B2B78E384000901F7 /* SamplePrompt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SamplePrompt.swift; sourceTree = "<group>"; };
 		FF9300D32B778829000859F4 /* ChatView_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView_macOS.swift; sourceTree = "<group>"; };
 		FF9300D92B781D97000859F4 /* ToolbarView_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarView_macOS.swift; sourceTree = "<group>"; };
 		FF9300DB2B7823B0000859F4 /* EmptyConversaitonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyConversaitonView.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 			children = (
 				FF10025D2B2648460011A4DC /* ConversationState.swift */,
 				FF1002722B276EC10011A4DC /* AppColorScheme.swift */,
+				FF7FBE4B2B78E384000901F7 /* SamplePrompt.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				FF0146CD2B3DADCA00A2A9F6 /* HapticsService.swift in Sources */,
 				FF5FA0D62B35169400BC471D /* Binding+Extension.swift in Sources */,
 				FF1002502B25C79F0011A4DC /* SwiftDataService.swift in Sources */,
+				FF7FBE4C2B78E384000901F7 /* SamplePrompt.swift in Sources */,
 				FF10025A2B2624C40011A4DC /* ConversationHistoryListView.swift in Sources */,
 				FF10026D2B2751760011A4DC /* SettingsView.swift in Sources */,
 				FF1002542B261D460011A4DC /* MessageListVIew.swift in Sources */,

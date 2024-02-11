@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-final class SwiftDataService {
+actor SwiftDataService {
     private var modelContext: ModelContext
     
     init(modelContext: ModelContext) {

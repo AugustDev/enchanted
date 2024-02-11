@@ -8,6 +8,11 @@
 import SwiftUI
 import SwiftData
 
+enum WindowSize {
+    static let min = CGSize(width: 1200, height: 800)
+    static let ideal = CGSize(width: 1400, height: 1000)
+}
+
 @main
 struct EnchantedApp: App {
     @AppStorage("colorScheme") private var colorScheme: AppColorScheme = .system
@@ -44,10 +49,22 @@ struct EnchantedApp: App {
                 .environment(conversationStore)
                 .environment(appStore)
                 .task {
-                    try? await languageModelStore.loadModels()
-                    try? await conversationStore.loadConversations()
+                    Task.detached {
+                        async let loadModels: () = languageModelStore.loadModels()
+                        async let loadConversations: () = conversationStore.loadConversations()
+                        
+                        do {
+                            _ = try await loadModels
+                            _ = try await loadConversations
+                        } catch {
+                            print("Unexpected error: \(error).")
+                        }
+                    }
                 }
                 .preferredColorScheme(colorScheme.toiOSFormat)
+#if os(macOS)
+//                .frame(minWidth: WindowSize.min.width, idealWidth: WindowSize.ideal.width, minHeight: WindowSize.min.height, idealHeight: WindowSize.ideal.height)
+#endif
         }
         .modelContainer(sharedModelContainer)
     }

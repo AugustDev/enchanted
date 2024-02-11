@@ -19,13 +19,33 @@ struct InputFieldsView: View {
     @State private var editMessage: MessageSD?
     @FocusState private var isFocusedInput: Bool
     
+    @MainActor private func sendMessage() {
+        guard let selectedModel = selectedModel else { return }
+        
+        onSendMessageTap(
+            message,
+            selectedModel,
+            selectedImage,
+            editMessage?.id.uuidString
+        )
+        withAnimation {
+            isFocusedInput = false
+            editMessage = nil
+            selectedImage = nil
+            message = ""
+        }
+    }
+    
     var body: some View {
         HStack {
-            TextField("Message", text: $message)
+            TextField("Message", text: $message, axis: .vertical)
                 .focused($isFocusedInput)
                 .frame(minHeight: 40)
                 .font(.system(size: 14))
                 .textFieldStyle(.plain)
+                .onSubmit {
+                    sendMessage()
+                }
             
             ZStack {
                 Circle()
@@ -42,23 +62,11 @@ struct InputFieldsView: View {
                             .foregroundColor(Color.bg)
                             .frame(height: 12)
                     }
+                    .buttonStyle(.plain)
                 default:
                     Button(action: {
                         Task {
-                            guard let selectedModel = selectedModel else { return }
-                            
-                            onSendMessageTap(
-                                message,
-                                selectedModel,
-                                selectedImage,
-                                editMessage?.id.uuidString
-                            )
-                            withAnimation {
-                                isFocusedInput = false
-                                editMessage = nil
-                                selectedImage = nil
-                                message = ""
-                            }
+                            sendMessage()
                         }
                     }) {
                         Image(systemName: "arrow.up")

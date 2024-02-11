@@ -31,6 +31,7 @@ struct ToolbarView: View {
                 .frame(height: 20)
                 .foregroundColor(Color.labelCustom)
         }
+        .keyboardShortcut(KeyEquivalent("n"), modifiers: .command)
     }
 }
 
