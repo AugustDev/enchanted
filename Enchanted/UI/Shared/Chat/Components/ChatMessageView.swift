@@ -13,6 +13,7 @@ struct ChatMessageView: View {
     var name: String
     var text: String
     var uiImage: PlatformImage?
+    @State private var mouseHover = false
     
     let enchantedTheme = Theme()
         .text {
@@ -164,67 +165,84 @@ struct ChatMessageView: View {
         }
     
     var body: some View {
-        VStack {
-            HStack(alignment: .top, spacing: 12) {
-                if name == "user" {
-                    ZStack {
-                        Circle()
-                            .foregroundColor(.green)
-                        
-                        Text(avatarName)
-                            .font(.system(size: 11))
-                            .foregroundStyle(.background)
-
-                    }
-                    .frame(width: 24, height: 24)
-                } else {
-                    Image("logo-nobg")
-                        .resizable()
-                        .scaledToFit()
+        ZStack(alignment: .topTrailing) {
+            VStack {
+                HStack(alignment: .top, spacing: 12) {
+                    if name == "user" {
+                        ZStack {
+                            Circle()
+                                .foregroundColor(.green)
+                            
+                            Text(avatarName)
+                                .font(.system(size: 11))
+                                .foregroundStyle(.background)
+                            
+                        }
                         .frame(width: 24, height: 24)
-                }
-                
-                VStack(alignment: .leading) {
-                    Text(name.capitalized)
-                        .font(.system(size: 16))
-                        .fontWeight(.medium)
-                        .padding(.bottom, 2)
-                        .frame(height: 27)
-                    
-                    Markdown(text)
-                        .textSelection(.enabled)
-                        .markdownTheme(enchantedTheme)
-                    
-                    if let uiImage = uiImage {
-#if os(iOS)
-                        Image(uiImage: uiImage)
+                    } else {
+                        Image("logo-nobg")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-#elseif os(macOS)
-                        Image(nsImage: uiImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 100)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-#endif
-                        
+                            .frame(width: 24, height: 24)
                     }
+                    
+                    VStack(alignment: .leading) {
+                        Text(name.capitalized)
+                            .font(.system(size: 16))
+                            .fontWeight(.medium)
+                            .padding(.bottom, 2)
+                            .frame(height: 27)
+                        
+                        Markdown(text)
+                            .textSelection(.enabled)
+                            .markdownTheme(enchantedTheme)
+                        
+                        if let uiImage = uiImage {
+#if os(iOS)
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+#elseif os(macOS)
+                            Image(nsImage: uiImage)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+#endif
+                            
+                        }
+                    }
+                    
+                    Spacer()
                 }
-                
-                Spacer()
+            }
+            
+#if os(macOS)
+            Button(action: {Clipboard.shared.setString(text)}) {
+                Text("Copy")
+            }
+            .buttonStyle(GrowingButton())
+            .padding(8)
+            .background(Color.gray5)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .showIf(mouseHover)
+#endif
+        }
+#if os(macOS)
+        .onHover { over in
+            withAnimation(.easeInOut(duration: 0.3)) {
+                mouseHover = over
             }
         }
+#endif
     }
 }
 
 #Preview {
     Group {
         ChatMessageView(avatarName: "AM", name: "user", text: "The derivative of a function describes how function changes.")
-            .previewLayout(.sizeThatFits)
-        
-        ChatMessageView(avatarName: "AI", name: "assistant", text: "The derivative of a function describes how function changes.")
             .previewLayout(.sizeThatFits)
     }
 }

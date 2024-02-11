@@ -43,7 +43,7 @@ struct SidebarView: View {
                     Spacer()
                 }
                 .foregroundColor(Color(.label))
-                .padding(.vertical)
+                .padding()
                 .clipShape(RoundedRectangle(cornerRadius: 10))
             }
         }

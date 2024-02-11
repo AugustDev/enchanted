@@ -7,17 +7,14 @@
 
 import SwiftUI
 
+#if os(macOS)
+import AppKit
+#endif
+
 struct MessageListView: View {
     var messages: [MessageSD]
     var conversationState: ConversationState
     @Binding var editMessage: MessageSD?
-    
-    func onCopyTap(_ message: String) {
-#if os(iOS)
-        UIPasteboard.general.string = message
-#elseif os(macOS)
-#endif
-    }
     
     var body: some View {
         ScrollViewReader { scrollViewProxy in
@@ -29,7 +26,7 @@ struct MessageListView: View {
                 let uiImage: NSImage? = message.image != nil ? NSImage(data: message.image!) : nil
 #endif
                 let userContextMenu = ContextMenu(menuItems: {
-                    Button(action: {onCopyTap(message.content)}) {
+                    Button(action: {Clipboard.shared.setString(message.content)}) {
                         Label("Copy", systemImage: "doc.on.doc")
                     }
                     

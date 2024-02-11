@@ -55,11 +55,6 @@ struct Chat: View {
         }
     }
     
-    func onDeleteDailyConversatin(_ conversation: ConversationSD) async {
-        try? await conversationStore.delete(conversation)
-        Haptics.shared.mediumTap()
-    }
-    
     func newConversation() {
         withAnimation(.easeOut(duration: 0.3)) {
             conversationStore.selectedConversation = nil
@@ -79,16 +74,18 @@ struct Chat: View {
                 conversations: conversationStore.conversations,
                 messages: conversationStore.messages,
                 modelsList: languageModelStore.models,
-                selectedModel: languageModelStore.selectedModel,
-                onSelectModel: languageModelStore.setModel,
-                onConversationTap:onConversationTap,
                 onMenuTap: toggleMenu,
                 onNewConversationTap: newConversation,
                 onSendMessageTap: sendMessage,
+                onConversationTap:onConversationTap,
                 conversationState: conversationStore.conversationState,
                 onStopGenerateTap: onStopGenerateTap,
                 reachable: appStore.isReachable,
-                modelSupportsImages: languageModelStore.supportsImages
+                modelSupportsImages: languageModelStore.supportsImages,
+                selectedModel: languageModelStore.selectedModel,
+                onSelectModel: languageModelStore.setModel,
+                onConversationDelete: onConversationDelete,
+                onDeleteDailyConversations: conversationStore.deleteDailyConversations
             )
 #else
             SideBarStack(sidebarWidth: 300,showSidebar: $showMenu, sidebar: {

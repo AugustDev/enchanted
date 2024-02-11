@@ -20,6 +20,7 @@ struct ConversationGroup: Hashable {
         hasher.combine(date)
     }
 }
+
 struct ConversationHistoryList: View {
     var conversations: [ConversationSD]
     var onTap: (_ conversation: ConversationSD) -> ()
