@@ -9,6 +9,8 @@ import Foundation
 
 #if os(macOS)
 import AppKit
+#else
+import UIKit
 #endif
 
 
