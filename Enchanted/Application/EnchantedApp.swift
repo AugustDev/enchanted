@@ -19,7 +19,6 @@ struct EnchantedApp: App {
     @State private var languageModelStore: LanguageModelStore
     @State private var conversationStore: ConversationStore
     @State private var appStore: AppStore
-//    @State var showingPanel = false
     
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
@@ -50,7 +49,7 @@ struct EnchantedApp: App {
                 .environment(conversationStore)
                 .environment(appStore)
                 .task {
-//                    HotkeyService.shared.register(callback: {showingPanel.toggle()})
+
                     Task.detached {
                         async let loadModels: () = languageModelStore.loadModels()
                         async let loadConversations: () = conversationStore.loadConversations()
@@ -64,16 +63,7 @@ struct EnchantedApp: App {
                     }
                 }
                 .preferredColorScheme(colorScheme.toiOSFormat)
-#if os(macOS)
-                .floatingPanel(isPresented: $showingPanel, content: {
-                    ZStack {
-                        Rectangle()
-                            .fill(.white)
-                        Text("I'm a floating panel. Click anywhere to dismiss me.")
-                    }
-                })
-//                .frame(minWidth: WindowSize.min.width, idealWidth: WindowSize.ideal.width, minHeight: WindowSize.min.height, idealHeight: WindowSize.ideal.height)
-#endif
+
         }
         .modelContainer(sharedModelContainer)
     }
