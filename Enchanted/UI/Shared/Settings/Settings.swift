@@ -20,7 +20,9 @@ struct Settings: View {
     @Environment(\.presentationMode) var presentationMode
     
     private func save() {
-        Haptics.shared.play(.medium)
+#if os(iOS)
+        Haptics.shared.mediumTap()
+#endif
         // remove trailing slash
         if ollamaUri.last == "/" {
             ollamaUri = String(ollamaUri.dropLast())

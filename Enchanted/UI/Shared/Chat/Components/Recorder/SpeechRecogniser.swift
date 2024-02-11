@@ -5,6 +5,7 @@
 //  Created by Augustinas Malinauskas on 21/12/2023.
 //
 
+#if os(iOS)
 import Foundation
 import Speech
 
@@ -52,9 +53,11 @@ actor SpeechRecognizer: ObservableObject {
                 guard await SFSpeechRecognizer.hasAuthorizationToRecognize() else {
                     throw RecognizerError.notAuthorizedToRecognize
                 }
+#if os(iOS)
                 guard await AVAudioSession.sharedInstance().hasPermissionToRecord() else {
                     throw RecognizerError.notPermittedToRecord
                 }
+#endif
             } catch {
                 transcribe(error)
             }
@@ -188,3 +191,4 @@ extension AVAudioSession {
         }
     }
 }
+#endif

@@ -16,7 +16,7 @@ struct ConversationStatusView: View {
             Spacer() 
             ActivityIndicatorView(isVisible: .constant(true), type: .opacityDots(count: 1, inset: 4))
                  .frame(width: 21, height: 21)
-                 .foregroundColor(Color(.label))
+                 .foregroundColor(Color.labelCustom)
 
             Spacer()
         }

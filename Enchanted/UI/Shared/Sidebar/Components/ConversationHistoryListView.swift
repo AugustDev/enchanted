@@ -68,6 +68,7 @@ struct ConversationHistoryList: View {
                                 .foregroundColor(Color(.label))
                             Spacer()
                         }
+                        .buttonStyle(.plain)
                     }
                     .contextMenu(menuItems: {
                         Button(role: .destructive, action: { onDelete(dailyConversation) }) {
@@ -84,5 +85,5 @@ struct ConversationHistoryList: View {
 
 
 #Preview {
-    ConversationHistoryList(conversations: ConversationSD.sample, onTap: {_ in}, onDelete: {_ in}, onDeleteDailyConversations: {_ in})
+        ConversationHistoryList(conversations: ConversationSD.sample, onTap: {_ in}, onDelete: {_ in}, onDeleteDailyConversations: {_ in})
 }

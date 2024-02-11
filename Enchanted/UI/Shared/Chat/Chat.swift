@@ -19,7 +19,7 @@ struct Chat: View {
         withAnimation(.spring) {
             showMenu.toggle()
         }
-        Haptics.shared.play(.medium)
+        Haptics.shared.mediumTap()
     }
     
     @MainActor func sendMessage(prompt: String, model: LanguageModelSD, image: Image?, trimmingMessageId: String?) {
@@ -40,29 +40,29 @@ struct Chat: View {
             }
             showMenu.toggle()
         }
-        Haptics.shared.play(.medium)
+        Haptics.shared.mediumTap()
     }
     
     @MainActor func onStopGenerateTap() {
         conversationStore.stopGenerate()
-        Haptics.shared.play(.medium)
+        Haptics.shared.mediumTap()
     }
     
     func onConversationDelete(_ conversation: ConversationSD) {
         try? conversationStore.delete(conversation)
-        Haptics.shared.play(.medium)
+        Haptics.shared.mediumTap()
     }
     
     func onDeleteDailyCOnversatin(_ conversation: ConversationSD) {
         try? conversationStore.delete(conversation)
-        Haptics.shared.play(.medium)
+        Haptics.shared.mediumTap()
     }
     
     func newConversation() {
         withAnimation(.easeOut(duration: 0.3)) {
             conversationStore.selectedConversation = nil
         }
-        Haptics.shared.play(.medium)
+        Haptics.shared.mediumTap()
         
         Task {
             try? await languageModelStore.loadModels()
@@ -70,20 +70,16 @@ struct Chat: View {
     }
     
     var body: some View {
-        SideBarStack(sidebarWidth: 300,showSidebar: $showMenu, sidebar: {
-            SidebarView(
-                conversations: conversationStore.conversations,
-                onConversationTap: onConversationTap,
-                onConversationDelete: onConversationDelete,
-                onDeleteDailyConversations: conversationStore.deleteDailyConversations
-            )
-        }) {
+        Group {
+#if os(macOS)
             ChatView(
-                conversation: conversationStore.selectedConversation,
+                selectedConversation: conversationStore.selectedConversation,
+                conversations: conversationStore.conversations,
                 messages: conversationStore.messages,
                 modelsList: languageModelStore.models,
                 selectedModel: languageModelStore.selectedModel,
                 onSelectModel: languageModelStore.setModel,
+                onConversationTap:onConversationTap,
                 onMenuTap: toggleMenu,
                 onNewConversationTap: newConversation,
                 onSendMessageTap: sendMessage,
@@ -92,27 +88,52 @@ struct Chat: View {
                 reachable: appStore.isReachable,
                 modelSupportsImages: languageModelStore.supportsImages
             )
-            .onChange(of: languageModelStore.models, { _, modelsList in
-                if languageModelStore.selectedModel == nil {
-                    if defaultOllamaModel != "" {
-                        languageModelStore.setModel(modelName: defaultOllamaModel)
-                    } else {
-                        languageModelStore.setModel(model: languageModelStore.models.first)
-                    }
-                }
-            })
-            .onChange(of: conversationStore.selectedConversation, initial: true, { _, newConversation in
-                if let conversation = newConversation {
-                    languageModelStore.setModel(model: conversation.model)
-                } else {
-                    if defaultOllamaModel != "" {
-                        languageModelStore.setModel(modelName: defaultOllamaModel)
-                    } else {
-                        languageModelStore.setModel(model: languageModelStore.models.first)
-                    }
-                }
-            })
+#else
+            SideBarStack(sidebarWidth: 300,showSidebar: $showMenu, sidebar: {
+                SidebarView(
+                    conversations: conversationStore.conversations,
+                    onConversationTap: onConversationTap,
+                    onConversationDelete: onConversationDelete,
+                    onDeleteDailyConversations: conversationStore.deleteDailyConversations
+                )
+            }) {
+                ChatView(
+                    conversation: conversationStore.selectedConversation,
+                    messages: conversationStore.messages,
+                    modelsList: languageModelStore.models,
+                    selectedModel: languageModelStore.selectedModel,
+                    onSelectModel: languageModelStore.setModel,
+                    onMenuTap: toggleMenu,
+                    onNewConversationTap: newConversation,
+                    onSendMessageTap: sendMessage,
+                    conversationState: conversationStore.conversationState,
+                    onStopGenerateTap: onStopGenerateTap,
+                    reachable: appStore.isReachable,
+                    modelSupportsImages: languageModelStore.supportsImages
+                )
+            }
+#endif
         }
+        .onChange(of: languageModelStore.models, { _, modelsList in
+            if languageModelStore.selectedModel == nil {
+                if defaultOllamaModel != "" {
+                    languageModelStore.setModel(modelName: defaultOllamaModel)
+                } else {
+                    languageModelStore.setModel(model: languageModelStore.models.first)
+                }
+            }
+        })
+        .onChange(of: conversationStore.selectedConversation, initial: true, { _, newConversation in
+            if let conversation = newConversation {
+                languageModelStore.setModel(model: conversation.model)
+            } else {
+                if defaultOllamaModel != "" {
+                    languageModelStore.setModel(modelName: defaultOllamaModel)
+                } else {
+                    languageModelStore.setModel(model: languageModelStore.models.first)
+                }
+            }
+        })
     }
 }
 

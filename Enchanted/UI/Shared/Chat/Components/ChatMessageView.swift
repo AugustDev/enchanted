@@ -12,12 +12,10 @@ struct ChatMessageView: View {
     var avatarName: String
     var name: String
     var text: String
-    var uiImage: UIImage?
+    var uiImage: PlatformImage?
     
     let enchantedTheme = Theme()
         .text {
-            ForegroundColor(.text)
-            BackgroundColor(.background)
             FontSize(16)
         }
         .code {
@@ -198,11 +196,20 @@ struct ChatMessageView: View {
                         .markdownTheme(enchantedTheme)
                     
                     if let uiImage = uiImage {
+#if os(iOS)
                         Image(uiImage: uiImage)
                             .resizable()
                             .scaledToFit()
                             .frame(width: 100)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
+#elseif os(macOS)
+                        Image(nsImage: uiImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+#endif
+                        
                     }
                 }
                 

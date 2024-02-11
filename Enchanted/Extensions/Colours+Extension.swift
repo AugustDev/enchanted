@@ -8,6 +8,15 @@
 import SwiftUI
 
 extension Color {
-    public static let primary = Color(.label)
-    public static let secondary =  Color(.systemGray)
+    static let primary = Color(.label)
+    static let secondary =  Color(.systemGray)
+    
+    static let labelCustom = Color("label")
+    static let bgCustom = Color("bg")
+    static let grayCustom = Color("gray")
+    static let gray2Custom = Color("gray2")
+    static let gray3Custom = Color("gray3")
+    
 }
+
+

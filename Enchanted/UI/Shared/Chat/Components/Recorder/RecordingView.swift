@@ -5,6 +5,7 @@
 //  Created by Augustinas Malinauskas on 18/12/2023.
 //
 
+#if os(iOS)
 import SwiftUI
 import AVFoundation
 
@@ -18,7 +19,9 @@ struct RecordingView: View {
             await speechRecognizer.userInit()
             await toggleTranscribing()
         }
-        Haptics.shared.play(.medium)
+        #if os(iOS)
+        Haptics.shared.mediumTap()
+        #endif
     }
     
     private func toggleTranscribing() async {
@@ -42,7 +45,7 @@ struct RecordingView: View {
                     Image(systemName: "square.fill")
                         .resizable()
                         .scaledToFit()
-                        .foregroundColor(Color(.systemBackground))
+                        .foregroundColor(Color.bgCustom)
                         .frame(width: 8)
                 }
                 .clipShape(Circle())
@@ -64,3 +67,5 @@ struct MeetingView_Previews: PreviewProvider {
         RecordingView(isRecording: .constant(true))
     }
 }
+
+#endif

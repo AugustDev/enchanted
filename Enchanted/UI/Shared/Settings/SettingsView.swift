@@ -58,12 +58,18 @@ struct SettingsView: View {
                         
                     }
                     TextField("Ollama server URI", text: $ollamaUri, onCommit: checkServer)
+#if os(iOS)
                         .keyboardType(.URL)
+#endif
                         .textContentType(.URL)
                         .disableAutocorrection(true)
+#if os(iOS)
                         .autocapitalization(.none)
+#endif
                         .padding(10)
+#if os(iOS)
                         .background(Color(.secondarySystemGroupedBackground))
+#endif
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
                 
@@ -98,7 +104,9 @@ struct SettingsView: View {
                     .frame(height: 100)
                     .lineLimit(5, reservesSpace: true)
                     .padding(10)
+#if os(iOS)
                     .background(Color(.secondarySystemGroupedBackground))
+#endif
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 
                 
@@ -126,7 +134,9 @@ struct SettingsView: View {
                 }
                 .padding(.horizontal, 10)
                 .padding(.vertical, 5)
+#if os(iOS)
                 .background(Color(.secondarySystemGroupedBackground))
+#endif
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .showIf(!ollamaLangugeModels.isEmpty)
                 
@@ -160,7 +170,9 @@ struct SettingsView: View {
                         }
                     }
                     .padding(10)
+#if os(iOS)
                     .background(Color(.secondarySystemGroupedBackground))
+#endif
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
                 .padding(.top, 20)
@@ -187,7 +199,9 @@ struct SettingsView: View {
                         }
                     }
                     .padding(10)
+#if os(iOS)
                     .background(Color(.secondarySystemGroupedBackground))
+#endif
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
                 .padding(.top, 20)
@@ -200,7 +214,9 @@ struct SettingsView: View {
             Spacer()
         }
         .preferredColorScheme(colorScheme.toiOSFormat)
+#if os(iOS)
         .background(Color(.systemGroupedBackground))
+#endif
         .ignoresSafeArea(.all, edges: .bottom)
     }
 }
@@ -214,7 +230,7 @@ struct SettingsView: View {
         defaultOllamModel: .constant("llama2"),
         save: {},
         checkServer: {},
-        deleteAllConversations: {}, 
+        deleteAllConversations: {},
         ollamaLangugeModels: LanguageModelSD.sample
     )
 }

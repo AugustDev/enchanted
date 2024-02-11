@@ -38,11 +38,17 @@ struct ConditionalView: ViewModifier {
 
 extension View {
     /// Usually you would pass  `@Environment(\.displayScale) var displayScale`
-    @MainActor func render(scale displayScale: CGFloat = 1.0) -> UIImage? {
+    @MainActor func render(scale displayScale: CGFloat = 1.0) -> PlatformImage? {
         let renderer = ImageRenderer(content: self)
         
         renderer.scale = displayScale
         
-        return renderer.uiImage
+#if os(iOS)
+        let image = renderer.uiImage
+#elseif os(macOS)
+        let image = renderer.nsImage
+#endif
+        
+        return image
     }
 }

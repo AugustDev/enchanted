@@ -37,7 +37,7 @@ struct OllamaService {
         return models
     }
     
-    func reachable() async -> Bool{
+    func reachable() async -> Bool {
         return await ollamaKit.reachable()
     }
     

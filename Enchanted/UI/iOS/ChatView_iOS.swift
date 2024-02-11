@@ -5,6 +5,7 @@
 //  Created by Augustinas Malinauskas on 09/12/2023.
 //
 
+#if os(iOS)
 import SwiftUI
 import PhotosUI
 
@@ -94,7 +95,6 @@ struct ChatView: View {
     
     var inputFields: some View {
         HStack(spacing: 10) {
-            
             PhotosPicker(selection: $avatarItem) {
                 Image(systemName: "photo")
                     .resizable()
@@ -113,6 +113,7 @@ struct ChatView: View {
             }
             .showIf(modelSupportsImages)
             
+
             HStack {
                 SelectedImageView(image: $selectedImage)
                 
@@ -120,7 +121,6 @@ struct ChatView: View {
                     .focused($isFocusedInput)
                     .frame(minHeight: 40)
                     .font(.system(size: 14))
-                
                 
                 RecordingView(isRecording: $isRecording.animation()) { transcription in
                     self.message = transcription
@@ -139,10 +139,11 @@ struct ChatView: View {
                         style: StrokeStyle(lineWidth: isRecording ? 2 : 0.5)
                     )
             )
+
             
             ZStack {
                 Circle()
-                    .foregroundColor(Color(.label))
+                    .foregroundColor(Color.labelCustom)
                     .frame(width: 30, height: 30)
                 
                 switch conversationState {
@@ -152,13 +153,13 @@ struct ChatView: View {
                             .renderingMode(.template)
                             .resizable()
                             .scaledToFit()
-                            .foregroundColor(Color(.systemBackground))
+                            .foregroundColor(Color.bg)
                             .frame(height: 12)
                     }
                 default:
                     Button(action: {
                         Task {
-                            Haptics.shared.play(.medium)
+                            Haptics.shared.mediumTap()
                             
                             guard let selectedModel = selectedModel else { return }
                             
@@ -180,28 +181,15 @@ struct ChatView: View {
                             .renderingMode(.template)
                             .resizable()
                             .scaledToFit()
-                            .foregroundColor(Color(.systemBackground))
+                            .foregroundColor(Color.bg)
                             .frame(height: 15)
                     }
+                    /// MARK :- Check iOS
+                    .buttonStyle(.plain)
                 }
             }
         }
     }
-    
-    var unreachableApi: some View {
-        HStack {
-            Text("Ollama is unreachable. Go to Settings and update your Ollama API endpoint.")
-                .fontWeight(.medium)
-                .font(.system(size: 14))
-            Spacer()
-        }
-        .padding()
-        .background(Color(.systemRed).opacity(0.4))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-    }
-    
-    @State private var animationAmount: CGFloat = 1
-    
     
     var body: some View {
         VStack {
@@ -215,35 +203,14 @@ struct ChatView: View {
                     editMessage: $editMessage
                 )
             } else {
-                Spacer()
-                
-                VStack(spacing: 25) {
-                    Image("logo-nobg")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 40)
-                        .scaleEffect(animationAmount)
-                        .animation(
-                            .snappy(duration: 0.6, extraBounce: 0.3)
-                            .delay(5)
-                            .repeatForever(autoreverses: true),
-                            value: animationAmount)
-                        .onAppear {
-                            animationAmount = 1.3
-                        }
-                    
-                    Text("Start new conversation")
-                        .font(.system(size: 15))
-                        .foregroundStyle(Color(.systemGray))
-                }
-                Spacer()
+                EmptyConversaitonView()
             }
             
             ConversationStatusView(state: conversationState)
                 .padding()
             
             if !reachable {
-                unreachableApi
+                UnreachableAPIView()
             }
             
             inputFields
@@ -293,3 +260,4 @@ struct ChatView: View {
         modelSupportsImages: true
     )
 }
+#endif

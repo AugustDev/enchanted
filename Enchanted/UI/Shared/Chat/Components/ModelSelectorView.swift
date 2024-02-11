@@ -11,6 +11,7 @@ struct ModelSelectorView: View {
     var modelsList: [LanguageModelSD]
     var selectedModel: LanguageModelSD?
     var onSelectModel: @MainActor (_ model: LanguageModelSD?) -> ()
+    var showChevron = true
     
     var body: some View {
         Menu {
@@ -28,13 +29,20 @@ struct ModelSelectorView: View {
             HStack(alignment: .center) {
                 if let selectedModel = selectedModel {
                     HStack(alignment: .bottom, spacing: 5) {
-                        Text(selectedModel.prettyName)
+                        
+                        #if os(macOS)
+                        Text(selectedModel.name)
                             .font(.system(size: 14))
-                            .foregroundColor(Color(.label))
+                            .foregroundColor(Color.labelCustom)
+                        #elseif os(iOS)
+                        Text(selectedModel.prettyName )
+                            .font(.system(size: 14))
+                            .foregroundColor(Color.labelCustom)
                         
                         Text(selectedModel.prettyVersion)
                             .font(.system(size: 12))
-                            .foregroundColor(Color(.systemGray))
+                            .foregroundColor(Color.gray3Custom)
+                        #endif
                     }
                 }
                 
@@ -43,6 +51,7 @@ struct ModelSelectorView: View {
                     .scaledToFit()
                     .frame(width: 10)
                     .foregroundColor(Color(.label))
+                    .showIf(showChevron)
             }
         }
     }
@@ -51,6 +60,8 @@ struct ModelSelectorView: View {
 #Preview {
     ModelSelectorView(
         modelsList: LanguageModelSD.sample,
-        selectedModel: LanguageModelSD.sample[0], onSelectModel: {_ in}
+        selectedModel: LanguageModelSD.sample[0], 
+        onSelectModel: {_ in},
+        showChevron: false
     )
 }

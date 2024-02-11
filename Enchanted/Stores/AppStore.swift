@@ -50,6 +50,7 @@ final class AppStore {
     }
 
     private func reachable() async -> Bool {
-        return await OllamaService.shared.reachable()
+        let status = await OllamaService.shared.reachable()
+        return status
     }
 }

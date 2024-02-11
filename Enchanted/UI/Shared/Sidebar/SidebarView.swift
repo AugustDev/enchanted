@@ -29,7 +29,7 @@ struct SidebarView: View {
             
             Button(action: {
                 showSettings.toggle()
-                Haptics.shared.play(.medium)
+                Haptics.shared.mediumTap()
             }) {
                 HStack {
                     Image(systemName: "gearshape.fill")
