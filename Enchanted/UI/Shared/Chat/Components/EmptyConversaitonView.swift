@@ -34,8 +34,8 @@ struct EmptyConversaitonView: View {
                         )
                     )
                 
-                Text("Start new conversation")
-                    .font(.system(size: 15))
+                Text("How can I help you today?")
+                    .font(.system(size: 25))
                     .foregroundStyle(Color(.systemGray))
                 
                 LazyVGrid(columns: columns, alignment: .leading, spacing: 15) {

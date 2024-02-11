@@ -203,7 +203,11 @@ struct ChatView: View {
                     editMessage: $editMessage
                 )
             } else {
-                EmptyConversaitonView()
+                EmptyConversaitonView(sendPrompt: {selectedMessage in
+                    if let selectedModel = selectedModel {
+                        onSendMessageTap(selectedMessage, selectedModel, nil, nil)
+                    }
+                })
             }
             
             ConversationStatusView(state: conversationState)

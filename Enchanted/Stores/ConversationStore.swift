@@ -64,11 +64,15 @@ final class ConversationStore {
     }
     
     @MainActor func reloadConversation(_ conversation: ConversationSD) async throws {
-        async let messages = swiftDataService.fetchMessages(conversation.id)
-        async let selectedConversation = swiftDataService.getConversation(conversation.id)
+        let (messages, selectedConversation) = try await (
+            swiftDataService.fetchMessages(conversation.id),
+            swiftDataService.getConversation(conversation.id)
+        )
         
-        self.selectedConversation = try await selectedConversation
-        self.messages = try await messages
+        withAnimation(.easeInOut(duration: 0.3)) {
+            self.messages = messages
+            self.selectedConversation = selectedConversation
+        }
     }
     
     @MainActor func selectConversation(_ conversation: ConversationSD) async throws {
