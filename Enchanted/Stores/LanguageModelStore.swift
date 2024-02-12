@@ -62,26 +62,29 @@ final class LanguageModelStore {
     func loadModels() async throws {
         print("loading models")
         let localModels = try await loadLocal()
+        print("completed loadLocal()")
         let remoteModels = try await loadRemote()
+        print("completed loadRemote()")
         
         _ = localModels.map { model in
             model.isAvailable == remoteModels.contains(model)
         }
         
         let updateModelsList = Array(Set(localModels + remoteModels))
-        try swiftDataService.saveModels(models: updateModelsList)
+        try await swiftDataService.saveModels(models: updateModelsList)
+        print("completed saveModels()")
         
         models = try await loadLocal()
         print("loaded models")
     }
     
-    func deleteAllModels() throws {
+    func deleteAllModels() async throws {
         models = []
-        try swiftDataService.deleteModels()
+        try await swiftDataService.deleteModels()
     }
     
     private func loadLocal() async throws -> [LanguageModelSD] {
-        return try swiftDataService.fetchModels()
+        return try await swiftDataService.fetchModels()
     }
     
     private func loadRemote() async throws -> [LanguageModelSD] {

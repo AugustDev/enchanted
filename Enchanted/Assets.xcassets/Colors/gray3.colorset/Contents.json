@@ -1,0 +1,28 @@
+{
+  "colors" : [
+    {
+      "color" : {
+        "platform" : "ios",
+        "reference" : "systemGray3Color"
+      },
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "color" : {
+        "platform" : "XR",
+        "reference" : "systemGray3Color"
+      },
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -33,7 +33,7 @@ final class ConversationStore {
     @MainActor
     func loadConversations() async throws {
         print("loading conversations")
-        conversations = try swiftDataService.fetchConversations()
+        conversations = try await swiftDataService.fetchConversations()
         print("loaded conversations")
     }
     
@@ -43,7 +43,7 @@ final class ConversationStore {
                 messages = []
             }
             selectedConversation = nil
-            try? swiftDataService.deleteConversations()
+            try? await swiftDataService.deleteConversations()
             try? await loadConversations()
         }
     }
@@ -54,28 +54,35 @@ final class ConversationStore {
                 messages = []
             }
             selectedConversation = nil
-            try? swiftDataService.deleteConversations()
+            try? await swiftDataService.deleteConversations()
             try? await loadConversations()
         }
     }
     
-    func create(_ conversation: ConversationSD) throws {
-        try swiftDataService.createConversation(conversation)
+    func create(_ conversation: ConversationSD) async throws {
+        try await swiftDataService.createConversation(conversation)
     }
     
-    @MainActor func reloadConversation(_ conversation: ConversationSD) throws {
-        selectedConversation = try swiftDataService.getConversation(conversation.id)
-        messages = try swiftDataService.fetchMessages(conversation.id)
+    @MainActor func reloadConversation(_ conversation: ConversationSD) async throws {
+        let (messages, selectedConversation) = try await (
+            swiftDataService.fetchMessages(conversation.id),
+            swiftDataService.getConversation(conversation.id)
+        )
+        
+        withAnimation(.easeInOut(duration: 0.3)) {
+            self.messages = messages
+            self.selectedConversation = selectedConversation
+        }
     }
     
-    @MainActor func selectConversation(_ conversation: ConversationSD) throws {
-        try reloadConversation(conversation)
+    @MainActor func selectConversation(_ conversation: ConversationSD) async throws {
+        try await reloadConversation(conversation)
     }
     
-    func delete(_ conversation: ConversationSD) throws {
+    func delete(_ conversation: ConversationSD) async throws {
         selectedConversation = nil
-        try swiftDataService.deleteConversation(conversation)
-        conversations = try swiftDataService.fetchConversations()
+        try await swiftDataService.deleteConversation(conversation)
+        conversations = try await swiftDataService.fetchConversations()
     }
     
     //    @MainActor
@@ -137,10 +144,10 @@ final class ConversationStore {
         conversationState = .loading
         
         Task {
-            try swiftDataService.updateConversation(conversation)
-            try swiftDataService.createMessage(userMessage)
-            try swiftDataService.createMessage(assistantMessage)
-            try reloadConversation(conversation)
+            try await swiftDataService.updateConversation(conversation)
+            try await swiftDataService.createMessage(userMessage)
+            try await swiftDataService.createMessage(assistantMessage)
+            try await reloadConversation(conversation)
             try? await loadConversations()
             
             if await OllamaService.shared.ollamaKit.reachable() {
@@ -185,7 +192,7 @@ final class ConversationStore {
         lastMesasge.done = false
         
         Task(priority: .background) {
-            try? swiftDataService.updateMessage(lastMesasge)
+            try? await swiftDataService.updateMessage(lastMesasge)
         }
         
         withAnimation {
@@ -200,7 +207,7 @@ final class ConversationStore {
         lastMesasge.done = true
         
         Task(priority: .background) {
-            try self.swiftDataService.updateMessage(lastMesasge)
+            try await self.swiftDataService.updateMessage(lastMesasge)
         }
         
         withAnimation {

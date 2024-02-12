@@ -27,8 +27,11 @@ struct OllamaService {
         }
 
         print("url", ollamaUrl)
-        let url = URL(string: ollamaUrl)!
-        ollamaKit =  OllamaKit(baseURL: url)
+        if let url = URL(string: ollamaUrl) {
+            ollamaKit =  OllamaKit(baseURL: url)
+        } else {
+            ollamaKit = OllamaKit(baseURL: URL(string: "http://localhost")!)
+        }
     }
     
     func getModels() async throws -> [LanguageModelSD]  {
@@ -37,7 +40,7 @@ struct OllamaService {
         return models
     }
     
-    func reachable() async -> Bool{
+    func reachable() async -> Bool {
         return await ollamaKit.reachable()
     }
     

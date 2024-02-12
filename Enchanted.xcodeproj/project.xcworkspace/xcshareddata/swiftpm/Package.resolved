@@ -19,12 +19,30 @@
       }
     },
     {
+      "identity" : "magnet",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Clipy/Magnet",
+      "state" : {
+        "branch" : "master",
+        "revision" : "6ab594e9e16e2502867a4ef1ed8cc40077814c0e"
+      }
+    },
+    {
       "identity" : "networkimage",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gonzalezreal/NetworkImage",
       "state" : {
         "revision" : "7aff8d1b31148d32c5933d75557d42f6323ee3d1",
         "version" : "6.0.0"
+      }
+    },
+    {
+      "identity" : "sauce",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Clipy/Sauce",
+      "state" : {
+        "revision" : "8f8fabaa8509c1a653d6c2c3c87396a4c493d876",
+        "version" : "2.4.0"
       }
     },
     {
