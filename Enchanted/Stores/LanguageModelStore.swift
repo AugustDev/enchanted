@@ -10,6 +10,8 @@ import SwiftData
 
 @Observable
 final class LanguageModelStore {
+    static let shared = LanguageModelStore(swiftDataService: SwiftDataService.shared)
+    
     private var swiftDataService: SwiftDataService
     var models: [LanguageModelSD] = []
     var supportsImages = false
@@ -61,9 +63,9 @@ final class LanguageModelStore {
     @MainActor
     func loadModels() async throws {
         print("loading models")
-        let localModels = try await loadLocal()
+        let localModels = try await swiftDataService.fetchModels()
         print("completed loadLocal()")
-        let remoteModels = try await loadRemote()
+        let remoteModels = try await OllamaService.shared.getModels()
         print("completed loadRemote()")
         
         _ = localModels.map { model in
@@ -74,20 +76,12 @@ final class LanguageModelStore {
         try await swiftDataService.saveModels(models: updateModelsList)
         print("completed saveModels()")
         
-        models = try await loadLocal()
+        models = try await swiftDataService.fetchModels()
         print("loaded models")
     }
     
     func deleteAllModels() async throws {
         models = []
         try await swiftDataService.deleteModels()
-    }
-    
-    private func loadLocal() async throws -> [LanguageModelSD] {
-        return try await swiftDataService.fetchModels()
-    }
-    
-    private func loadRemote() async throws -> [LanguageModelSD] {
-        return try await OllamaService.shared.getModels()
     }
 }

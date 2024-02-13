@@ -225,7 +225,7 @@ struct ChatMessageView: View {
             }
             .buttonStyle(GrowingButton())
             .padding(8)
-            .background(Color.gray5)
+            .background(Color.gray5Custom)
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .showIf(mouseHover)
 #endif

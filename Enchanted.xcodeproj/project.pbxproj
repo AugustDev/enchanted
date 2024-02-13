@@ -38,6 +38,14 @@
 		FF2F03442B79631800349855 /* Button+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2F03432B79631800349855 /* Button+Extension.swift */; };
 		FF2F03492B796A6500349855 /* HotkeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2F03482B796A6500349855 /* HotkeyService.swift */; };
 		FF2F03722B79743400349855 /* Magnet in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = FF2F03712B79743400349855 /* Magnet */; };
+		FF38F84F2B7A7B6700546B56 /* MenuBarControlView_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F84E2B7A7B6700546B56 /* MenuBarControlView_macOS.swift */; };
+		FF38F8512B7A919C00546B56 /* MenuBarControl_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F8502B7A919C00546B56 /* MenuBarControl_macOS.swift */; };
+		FF38F8532B7AA9C400546B56 /* ApplicationEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F8522B7AA9C400546B56 /* ApplicationEntry.swift */; };
+		FF38F8562B7AB01E00546B56 /* FloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F8552B7AB01E00546B56 /* FloatingPanel.swift */; };
+		FF38F8582B7AB1AD00546B56 /* PanelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F8572B7AB1AD00546B56 /* PanelManager.swift */; };
+		FF38F85A2B7AB28300546B56 /* PromptPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F8592B7AB28300546B56 /* PromptPanelView.swift */; };
+		FF38F85C2B7ABC2C00546B56 /* PromptPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F85B2B7ABC2C00546B56 /* PromptPanel.swift */; };
+		FF38F85E2B7AD0E000546B56 /* ModelContainer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F85D2B7AD0E000546B56 /* ModelContainer+Extension.swift */; };
 		FF5FA0D62B35169400BC471D /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5FA0D52B35169400BC471D /* Binding+Extension.swift */; };
 		FF61C9632B2A7DC6003CD1CB /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = FF61C9622B2A7DC6003CD1CB /* OllamaKit */; };
 		FF66A51D2B76949A00FAAC1E /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF66A51C2B76949A00FAAC1E /* Helpers.swift */; };
@@ -88,6 +96,14 @@
 		FF2F03412B795E0B00349855 /* Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipboard.swift; sourceTree = "<group>"; };
 		FF2F03432B79631800349855 /* Button+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Extension.swift"; sourceTree = "<group>"; };
 		FF2F03482B796A6500349855 /* HotkeyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyService.swift; sourceTree = "<group>"; };
+		FF38F84E2B7A7B6700546B56 /* MenuBarControlView_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarControlView_macOS.swift; sourceTree = "<group>"; };
+		FF38F8502B7A919C00546B56 /* MenuBarControl_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarControl_macOS.swift; sourceTree = "<group>"; };
+		FF38F8522B7AA9C400546B56 /* ApplicationEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationEntry.swift; sourceTree = "<group>"; };
+		FF38F8552B7AB01E00546B56 /* FloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanel.swift; sourceTree = "<group>"; };
+		FF38F8572B7AB1AD00546B56 /* PanelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelManager.swift; sourceTree = "<group>"; };
+		FF38F8592B7AB28300546B56 /* PromptPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptPanelView.swift; sourceTree = "<group>"; };
+		FF38F85B2B7ABC2C00546B56 /* PromptPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptPanel.swift; sourceTree = "<group>"; };
+		FF38F85D2B7AD0E000546B56 /* ModelContainer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelContainer+Extension.swift"; sourceTree = "<group>"; };
 		FF5FA0D52B35169400BC471D /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		FF66A51C2B76949A00FAAC1E /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		FF6B7B122B3EE7AC00E8FEA3 /* Throttler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Throttler.swift; sourceTree = "<group>"; };
@@ -103,7 +119,6 @@
 		FFBBF4872B34F9C8008D611C /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		FFBBF4892B350283008D611C /* SelectedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedImageView.swift; sourceTree = "<group>"; };
 		FFBBF48B2B35051D008D611C /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
-		FFBBF48D2B35054F008D611C /* OllamaKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = OllamaKit; path = ../OllamaKit; sourceTree = "<group>"; };
 		FFEC328D2B24779A003E5C04 /* Enchanted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enchanted.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFEC32902B24779A003E5C04 /* EnchantedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnchantedApp.swift; sourceTree = "<group>"; };
 		FFEC32962B24779B003E5C04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -198,9 +213,31 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		FF38F84D2B7A7B5300546B56 /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				FF38F84E2B7A7B6700546B56 /* MenuBarControlView_macOS.swift */,
+				FF38F8502B7A919C00546B56 /* MenuBarControl_macOS.swift */,
+			);
+			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		FF38F8542B7AB00100546B56 /* PromptPanel */ = {
+			isa = PBXGroup;
+			children = (
+				FF38F8552B7AB01E00546B56 /* FloatingPanel.swift */,
+				FF38F8572B7AB1AD00546B56 /* PanelManager.swift */,
+				FF38F8592B7AB28300546B56 /* PromptPanelView.swift */,
+				FF38F85B2B7ABC2C00546B56 /* PromptPanel.swift */,
+			);
+			path = PromptPanel;
+			sourceTree = "<group>";
+		};
 		FF66A51E2B77788D00FAAC1E /* macOS */ = {
 			isa = PBXGroup;
 			children = (
+				FF38F8542B7AB00100546B56 /* PromptPanel */,
+				FF38F84D2B7A7B5300546B56 /* MenuBar */,
 				FF9300D52B778F1A000859F4 /* Chat */,
 			);
 			path = macOS;
@@ -244,7 +281,6 @@
 		FFEC32842B24779A003E5C04 = {
 			isa = PBXGroup;
 			children = (
-				FFBBF48D2B35054F008D611C /* OllamaKit */,
 				FFEC328F2B24779A003E5C04 /* Enchanted */,
 				FFEC328E2B24779A003E5C04 /* Products */,
 			);
@@ -295,13 +331,14 @@
 		FFEC32A22B247858003E5C04 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				FF1002312B2483A20011A4DC /* Colours+Extension.swift */,
-				FF1002512B2609970011A4DC /* ModelContext+Extension.swift */,
-				FF1002672B2668790011A4DC /* Date+Extension.swift */,
-				FFBBF4872B34F9C8008D611C /* View+Extension.swift */,
-				FFBBF48B2B35051D008D611C /* UIImage+Extension.swift */,
 				FF5FA0D52B35169400BC471D /* Binding+Extension.swift */,
 				FF2F03432B79631800349855 /* Button+Extension.swift */,
+				FF1002312B2483A20011A4DC /* Colours+Extension.swift */,
+				FF1002672B2668790011A4DC /* Date+Extension.swift */,
+				FF38F85D2B7AD0E000546B56 /* ModelContainer+Extension.swift */,
+				FF1002512B2609970011A4DC /* ModelContext+Extension.swift */,
+				FFBBF48B2B35051D008D611C /* UIImage+Extension.swift */,
+				FFBBF4872B34F9C8008D611C /* View+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -319,12 +356,12 @@
 		FFEC32A42B247874003E5C04 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				FF2F03412B795E0B00349855 /* Clipboard.swift */,
+				FF0146CC2B3DADCA00A2A9F6 /* HapticsService.swift */,
+				FF2F03482B796A6500349855 /* HotkeyService.swift */,
 				FF10023D2B24F4900011A4DC /* OllamaService.swift */,
 				FF10024F2B25C79F0011A4DC /* SwiftDataService.swift */,
-				FF0146CC2B3DADCA00A2A9F6 /* HapticsService.swift */,
 				FF6B7B122B3EE7AC00E8FEA3 /* Throttler.swift */,
-				FF2F03412B795E0B00349855 /* Clipboard.swift */,
-				FF2F03482B796A6500349855 /* HotkeyService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -346,6 +383,7 @@
 				FFEC32A82B24795A003E5C04 /* Chat */,
 				FF10026B2B2751630011A4DC /* Settings */,
 				FF1002552B2624790011A4DC /* Sidebar */,
+				FF38F8522B7AA9C400546B56 /* ApplicationEntry.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -451,13 +489,19 @@
 				FF1002322B2483A20011A4DC /* Colours+Extension.swift in Sources */,
 				FF66A51D2B76949A00FAAC1E /* Helpers.swift in Sources */,
 				FF10026A2B2731C60011A4DC /* ModelSelectorView.swift in Sources */,
+				FF38F84F2B7A7B6700546B56 /* MenuBarControlView_macOS.swift in Sources */,
 				FFBBF48A2B350283008D611C /* SelectedImageView.swift in Sources */,
 				FF2F03492B796A6500349855 /* HotkeyService.swift in Sources */,
 				FF9300E02B783945000859F4 /* InputFields_macOS.swift in Sources */,
+				FF38F8562B7AB01E00546B56 /* FloatingPanel.swift in Sources */,
 				FF0146CB2B3DA1DF00A2A9F6 /* Settings.swift in Sources */,
+				FF38F8532B7AA9C400546B56 /* ApplicationEntry.swift in Sources */,
+				FF38F85C2B7ABC2C00546B56 /* PromptPanel.swift in Sources */,
 				FF2F03442B79631800349855 /* Button+Extension.swift in Sources */,
 				FF1002682B2668790011A4DC /* Date+Extension.swift in Sources */,
 				FF9300D42B778829000859F4 /* ChatView_macOS.swift in Sources */,
+				FF38F8512B7A919C00546B56 /* MenuBarControl_macOS.swift in Sources */,
+				FF38F85A2B7AB28300546B56 /* PromptPanelView.swift in Sources */,
 				FF1002462B25BCE70011A4DC /* LanguageModelStore.swift in Sources */,
 				FF10025C2B2625BE0011A4DC /* SidebarView.swift in Sources */,
 				FF1002392B24BBF20011A4DC /* Chat.swift in Sources */,
@@ -474,6 +518,7 @@
 				FF5FA0D62B35169400BC471D /* Binding+Extension.swift in Sources */,
 				FF1002502B25C79F0011A4DC /* SwiftDataService.swift in Sources */,
 				FF7FBE4C2B78E384000901F7 /* SamplePrompt.swift in Sources */,
+				FF38F8582B7AB1AD00546B56 /* PanelManager.swift in Sources */,
 				FF10025A2B2624C40011A4DC /* ConversationHistoryListView.swift in Sources */,
 				FF10026D2B2751760011A4DC /* SettingsView.swift in Sources */,
 				FF1002542B261D460011A4DC /* MessageListVIew.swift in Sources */,
@@ -483,6 +528,7 @@
 				FF9300DA2B781D97000859F4 /* ToolbarView_macOS.swift in Sources */,
 				FF1002522B2609980011A4DC /* ModelContext+Extension.swift in Sources */,
 				FF1002752B278C170011A4DC /* AppStore.swift in Sources */,
+				FF38F85E2B7AD0E000546B56 /* ModelContainer+Extension.swift in Sources */,
 				FF1002732B276EC10011A4DC /* AppColorScheme.swift in Sources */,
 				FF10025E2B2648460011A4DC /* ConversationState.swift in Sources */,
 			);

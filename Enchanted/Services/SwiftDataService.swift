@@ -9,10 +9,33 @@ import Foundation
 import SwiftData
 
 actor SwiftDataService {
-    private var modelContext: ModelContext
+    @MainActor
+    static let shared = SwiftDataService()
+    
+    private let modelContext: ModelContext
     
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
+    }
+
+    @MainActor
+    init() {
+        let sharedModelContainer: ModelContainer = {
+            let schema = Schema([
+                LanguageModelSD.self,
+                ConversationSD.self,
+                MessageSD.self,
+            ])
+            print("init bruv")
+            let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+            
+            do {
+                return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            } catch {
+                fatalError("Could not create ModelContainer: \(error)")
+            }
+        }()
+        self.modelContext = sharedModelContainer.mainContext
     }
 }
 
@@ -101,6 +124,16 @@ extension SwiftDataService {
     
     func createMessage(_ mesasge: MessageSD) throws {
         self.modelContext.insert(mesasge)
+        try modelContext.saveChanges()
+    }
+}
+
+// MARK: - General
+extension SwiftDataService {
+    func deleteEverything() throws {
+        try modelContext.delete(model: ConversationSD.self)
+        try modelContext.delete(model: LanguageModelSD.self)
+        try modelContext.delete(model: MessageSD.self)
         try modelContext.saveChanges()
     }
 }

@@ -59,7 +59,7 @@ struct InputFieldsView: View {
                             .renderingMode(.template)
                             .resizable()
                             .scaledToFit()
-                            .foregroundColor(Color.bg)
+                            .foregroundColor(Color.bgCustom)
                             .frame(height: 12)
                     }
                     .buttonStyle(.plain)
@@ -73,7 +73,7 @@ struct InputFieldsView: View {
                             .renderingMode(.template)
                             .resizable()
                             .scaledToFit()
-                            .foregroundColor(Color.bg)
+                            .foregroundColor(Color.bgCustom)
                             .frame(height: 15)
                     }
                     .buttonStyle(.plain)

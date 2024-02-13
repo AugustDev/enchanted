@@ -8,63 +8,32 @@
 import SwiftUI
 import SwiftData
 
-enum WindowSize {
-    static let min = CGSize(width: 1200, height: 800)
-    static let ideal = CGSize(width: 1400, height: 1000)
-}
-
 @main
 struct EnchantedApp: App {
-    @AppStorage("colorScheme") private var colorScheme: AppColorScheme = .system
-    @State private var languageModelStore: LanguageModelStore
-    @State private var conversationStore: ConversationStore
-    @State private var appStore: AppStore
-    
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            LanguageModelSD.self,
-            ConversationSD.self,
-            MessageSD.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-        
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-    
-    init() {
-        let swiftDataService = SwiftDataService(modelContext: sharedModelContainer.mainContext)
-        languageModelStore = LanguageModelStore(swiftDataService: swiftDataService)
-        conversationStore = ConversationStore(swiftDataService: swiftDataService)
-        appStore = AppStore()
-    }
+#if os(macOS)
+    @NSApplicationDelegateAdaptor(PanelManager.self) var panelManager
+#endif
     
     var body: some Scene {
         WindowGroup {
-            Chat()
-                .environment(languageModelStore)
-                .environment(conversationStore)
-                .environment(appStore)
+            ApplicationEntry()
                 .task {
-
-                    Task.detached {
-                        async let loadModels: () = languageModelStore.loadModels()
-                        async let loadConversations: () = conversationStore.loadConversations()
-                        
-                        do {
-                            _ = try await loadModels
-                            _ = try await loadConversations
-                        } catch {
-                            print("Unexpected error: \(error).")
-                        }
-                    }
+#if os(macOS)
+                    HotkeyService.shared.register(callback: {panelManager.togglePanel()})
+#endif
                 }
-                .preferredColorScheme(colorScheme.toiOSFormat)
-
         }
-        .modelContainer(sharedModelContainer)
+        
+#if os(macOS)
+#if true
+        MenuBarExtra {
+            MenuBarControl()
+        } label: {
+            MenuBarControlView.icon
+        }
+        .menuBarExtraStyle(.window)
+#endif
+#endif
     }
 }
+

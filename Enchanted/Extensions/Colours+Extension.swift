@@ -13,12 +13,6 @@ extension Color {
     static let secondary =  Color(.systemGray)
     
     static let labelCustom = Color("label")
-    static let bgCustom = Color("bg")
-    static let grayCustom = Color("gray")
-    static let gray2Custom = Color("gray2")
-    static let gray3Custom = Color("gray3")
-    static let gray4Custom = Color("gray4")
-    static let gray5Custom = Color("gray5")
 }
 
 // MARK: - hex

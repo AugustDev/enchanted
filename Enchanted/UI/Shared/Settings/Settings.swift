@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct Settings: View {
-    @Environment(LanguageModelStore.self) private var languageModelStore
-    @Environment(ConversationStore.self) private var conversationStore
+    private var languageModelStore = LanguageModelStore.shared
+    private var conversationStore = ConversationStore.shared
     
     @AppStorage("ollamaUri") private var ollamaUri: String = ""
     @AppStorage("systemPrompt") private var systemPrompt: String = ""

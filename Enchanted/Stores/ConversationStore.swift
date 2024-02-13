@@ -13,6 +13,8 @@ import SwiftUI
 
 @Observable
 final class ConversationStore {
+    static let shared = ConversationStore(swiftDataService: SwiftDataService.shared)
+    
     private var swiftDataService: SwiftDataService
     private var generation: AnyCancellable?
     
@@ -43,7 +45,7 @@ final class ConversationStore {
                 messages = []
             }
             selectedConversation = nil
-            try? await swiftDataService.deleteConversations()
+            try? await swiftDataService.deleteEverything()
             try? await loadConversations()
         }
     }

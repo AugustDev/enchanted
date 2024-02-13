@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct Chat: View {
-    @Environment(LanguageModelStore.self) private var languageModelStore
-    @Environment(ConversationStore.self) private var conversationStore
-    @Environment(AppStore.self) private var appStore
+    @State private var languageModelStore: LanguageModelStore
+    @State private var conversationStore: ConversationStore
+    @State private var appStore: AppStore
     @AppStorage("systemPrompt") private var systemPrompt: String = ""
     @AppStorage("defaultOllamaModel") private var defaultOllamaModel: String = ""
     @State var showMenu = false
+    
+    init(languageModelStore: LanguageModelStore, conversationStore: ConversationStore, appStore: AppStore) {
+        _languageModelStore = State(initialValue: languageModelStore)
+        _conversationStore = State(initialValue: conversationStore)
+        _appStore = State(initialValue: appStore)
+    }
     
     func toggleMenu() {
         withAnimation(.spring) {
@@ -22,7 +28,8 @@ struct Chat: View {
         Haptics.shared.mediumTap()
     }
     
-    @MainActor func sendMessage(prompt: String, model: LanguageModelSD, image: Image?, trimmingMessageId: String?) {
+    @MainActor 
+    func sendMessage(prompt: String, model: LanguageModelSD, image: Image?, trimmingMessageId: String?) {
         conversationStore.sendPrompt(
             userPrompt: prompt,
             model: model,
@@ -134,8 +141,4 @@ struct Chat: View {
             }
         })
     }
-}
-
-#Preview {
-    Chat()
 }
