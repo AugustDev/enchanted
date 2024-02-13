@@ -25,7 +25,7 @@ struct EnchantedApp: App {
         }
         
 #if os(macOS)
-#if true
+#if false
         MenuBarExtra {
             MenuBarControl()
         } label: {

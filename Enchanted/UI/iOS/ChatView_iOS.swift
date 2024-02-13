@@ -153,7 +153,7 @@ struct ChatView: View {
                             .renderingMode(.template)
                             .resizable()
                             .scaledToFit()
-                            .foregroundColor(Color.bg)
+                            .foregroundColor(Color.bgCustom)
                             .frame(height: 12)
                     }
                 default:
@@ -181,7 +181,7 @@ struct ChatView: View {
                             .renderingMode(.template)
                             .resizable()
                             .scaledToFit()
-                            .foregroundColor(Color.bg)
+                            .foregroundColor(Color.bgCustom)
                             .frame(height: 15)
                     }
                     /// MARK :- Check iOS

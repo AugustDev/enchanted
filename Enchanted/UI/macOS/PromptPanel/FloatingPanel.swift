@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if os(macOS)
 class FloatingPanel: NSPanel {
     override func sendEvent(_ event: NSEvent) {
         super.sendEvent(event)
@@ -51,3 +52,4 @@ class FloatingPanel: NSPanel {
         return true
     }
 }
+#endif
