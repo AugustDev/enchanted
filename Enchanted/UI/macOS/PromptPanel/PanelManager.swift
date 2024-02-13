@@ -18,6 +18,7 @@ class PanelManager: NSObject, NSApplicationDelegate {
     @objc func togglePanel() {
         if panel == nil {
             createPanel()
+            return
         }
         
         if panel.isVisible {
@@ -61,7 +62,7 @@ class PanelManager: NSObject, NSApplicationDelegate {
         panel.contentView = NSHostingView(rootView: contentView)
         panel.center()
         panel.orderFront(nil)
-        panel.makeKey()
+        showPanel()
     }
 }
 
