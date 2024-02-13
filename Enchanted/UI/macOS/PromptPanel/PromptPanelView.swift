@@ -9,7 +9,8 @@ import SwiftUI
 
 struct PromptPanelView: View {
     @FocusState private var focused: Bool?
-    @State var prompt = ""
+    @State var prompt: String = ""
+    var onSubmit: @MainActor (_ prompt: String) -> ()
     
     var body: some View {
         HStack {
@@ -26,6 +27,9 @@ struct PromptPanelView: View {
                 .background(Color.clear)
                 .focused($focused, equals: true)
                 .textFieldStyle(PlainTextFieldStyle())
+                .onSubmit {
+                    onSubmit(prompt)
+                }
         }
         .padding(12)
         .background {
@@ -40,5 +44,5 @@ struct PromptPanelView: View {
 }
 
 #Preview {
-    PromptPanelView()
+    PromptPanelView(onSubmit: {_ in})
 }

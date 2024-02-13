@@ -21,15 +21,38 @@ class PanelManager: NSObject, NSApplicationDelegate {
         }
         
         if panel.isVisible {
-            panel.orderOut(nil)
+            hidePanel()
         } else {
-            panel.makeKeyAndOrderFront(nil)
-            NSApp.activate(ignoringOtherApps: true)
+            showPanel()
+        }
+    }
+    
+    @objc func hidePanel() {
+        panel.orderOut(nil)
+    }
+    
+    @objc func showPanel() {
+        panel.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
+    
+    @objc func onSubmitMessage() {
+        hidePanel()
+        
+        /// Focus Enchanted
+        if let app = NSRunningApplication.runningApplications(withBundleIdentifier: Bundle.main.bundleIdentifier!).first {
+            app.activate(options: [.activateAllWindows])
+            
+            NSApp.windows.forEach { window in
+                if window.isMiniaturized {
+                    window.deminiaturize(nil)
+                }
+            }
         }
     }
     
     func createPanel() {
-        let contentView = PromptPanelView()
+        let contentView = PromptPanel(onSubmitPanel: onSubmitMessage)
             .edgesIgnoringSafeArea(.all)
             .padding(.bottom, -28)
         

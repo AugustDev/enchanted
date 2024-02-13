@@ -8,12 +8,23 @@
 import SwiftUI
 
 struct PromptPanel: View {
-    @State var conversationStore: ConversationStore
+    @AppStorage("systemPrompt") private var systemPrompt: String = ""
+    @State var conversationStore = ConversationStore.shared
+    @State var languageModelStore = LanguageModelStore.shared
+    var onSubmitPanel: () -> ()
+    
+    @MainActor
+    func sendMessage(prompt: String) {
+        conversationStore.selectedConversation = nil
+        conversationStore.sendPrompt(
+            userPrompt: prompt,
+            model: languageModelStore.selectedModel!,
+            systemPrompt: systemPrompt
+        )
+        onSubmitPanel()
+    }
     
     var body: some View {
-        PromptPanelView()
-            .onAppear {
-                print(conversationStore.conversations)
-            }
+        PromptPanelView(onSubmit: sendMessage)
     }
 }

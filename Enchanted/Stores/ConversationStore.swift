@@ -97,7 +97,7 @@ final class ConversationStore {
     }
     
     @MainActor
-    func sendPrompt(userPrompt: String, model: LanguageModelSD, image: Image?, systemPrompt: String = "", trimmingMessageId: String?) {
+    func sendPrompt(userPrompt: String, model: LanguageModelSD, image: Image? = nil, systemPrompt: String = "", trimmingMessageId: String? = nil) {
         guard userPrompt.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 else { return }
         
         let conversation = selectedConversation ?? ConversationSD(name: userPrompt)
