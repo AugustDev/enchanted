@@ -26,7 +26,6 @@ actor SwiftDataService {
                 ConversationSD.self,
                 MessageSD.self,
             ])
-            print("init bruv")
             let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
             
             do {

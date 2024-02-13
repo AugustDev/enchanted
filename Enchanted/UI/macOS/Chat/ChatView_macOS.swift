@@ -64,7 +64,8 @@ struct ChatView: View {
                     conversationState: conversationState,
                     onStopGenerateTap: onStopGenerateTap,
                     selectedModel: selectedModel,
-                    onSendMessageTap: onSendMessageTap
+                    onSendMessageTap: onSendMessageTap, 
+                    editMessage: $editMessage
                 )
                 .padding()
                 .frame(maxWidth: 800)
@@ -77,6 +78,12 @@ struct ChatView: View {
                 onSelectModel: onSelectModel,
                 onNewConversationTap: onNewConversationTap
             )
+        }
+        .onChange(of: editMessage, initial: false) { _, newMessage in
+            if let newMessage = newMessage {
+                message = newMessage.content
+                isFocusedInput = true
+            }
         }
     }
 }

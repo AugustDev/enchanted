@@ -17,6 +17,12 @@ struct ApplicationEntry: View {
     var body: some View {
         Chat(languageModelStore: languageModelStore, conversationStore: conversationStore, appStore: appStore)
             .task {
+                if let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String {
+                    print("CFBundleVersion: \(build)")
+                }
+                if let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
+                    print("CFBundleShortVersionString: \(version)")
+                }
                 Task.detached {
                     async let loadModels: () = languageModelStore.loadModels()
                     async let loadConversations: () = conversationStore.loadConversations()

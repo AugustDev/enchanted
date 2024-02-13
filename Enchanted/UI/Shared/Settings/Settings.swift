@@ -43,6 +43,10 @@ struct Settings: View {
         }
     }
     
+    private func deleteAll() {
+        conversationStore.deleteAllConversations()
+    }
+    
     @State var ollamaStatus: Bool?
     var body: some View {
         SettingsView(

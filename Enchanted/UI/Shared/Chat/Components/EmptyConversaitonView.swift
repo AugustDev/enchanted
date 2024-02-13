@@ -7,10 +7,13 @@
 
 import SwiftUI
 
-struct EmptyConversaitonView: View {
-    @State var showPrompts = false
+struct EmptyConversaitonView: View, KeyboardReadable {
+    @State var showPromptsAnimation = false
     @State var prompts: [SamplePrompts] = []
     var sendPrompt: (String) -> ()
+#if os(iOS)
+    @State var isKeyboardVisible = false
+#endif
     
 #if os(macOS)
     var columns = Array.init(repeating: GridItem(.flexible(), spacing: 15), count: 4)
@@ -55,24 +58,36 @@ struct EmptyConversaitonView: View {
                             .padding(15)
                             .background(Color.gray5Custom)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
-
+                            
                         }
                         .transition(.slide)
-                        .showIf(showPrompts)
+                        .showIf(showPromptsAnimation)
                         .buttonStyle(.plain)
                     }
                 }
                 .frame(maxWidth: 700)
                 .padding()
+                .transition(AnyTransition(.opacity).combined(with: .slide))
+#if os(iOS)
+                .showIf(!isKeyboardVisible)
+#endif
             }
             Spacer()
         }
         .onAppear {
             withAnimation {
                 prompts = SamplePrompts.samples.shuffled()
-                showPrompts = true
+                showPromptsAnimation = true
             }
         }
+#if os(iOS)
+        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+            withAnimation {
+                isKeyboardVisible = newIsKeyboardVisible
+            }
+        }
+#endif
+        
     }
 }
 

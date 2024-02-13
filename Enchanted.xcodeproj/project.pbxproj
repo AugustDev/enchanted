@@ -56,6 +56,7 @@
 		FF9300DE2B782A28000859F4 /* UnreachableAPIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9300DD2B782A28000859F4 /* UnreachableAPIView.swift */; };
 		FF9300E02B783945000859F4 /* InputFields_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9300DF2B783945000859F4 /* InputFields_macOS.swift */; };
 		FFB0327D2B312F3D0066A9DB /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB0327C2B312F3D0066A9DB /* RecordingView.swift */; };
+		FFB21A872B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB21A862B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift */; };
 		FFBBF4842B34881B008D611C /* SpeechRecogniser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBBF4832B34881B008D611C /* SpeechRecogniser.swift */; };
 		FFBBF4882B34F9C8008D611C /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBBF4872B34F9C8008D611C /* View+Extension.swift */; };
 		FFBBF48A2B350283008D611C /* SelectedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBBF4892B350283008D611C /* SelectedImageView.swift */; };
@@ -112,6 +113,7 @@
 		FF9300DD2B782A28000859F4 /* UnreachableAPIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnreachableAPIView.swift; sourceTree = "<group>"; };
 		FF9300DF2B783945000859F4 /* InputFields_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFields_macOS.swift; sourceTree = "<group>"; };
 		FFB0327C2B312F3D0066A9DB /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
+		FFB21A862B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardReadable+Extension.swift"; sourceTree = "<group>"; };
 		FFBBF4822B348345008D611C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FFBBF4832B34881B008D611C /* SpeechRecogniser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecogniser.swift; sourceTree = "<group>"; };
 		FFBBF4872B34F9C8008D611C /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
@@ -336,6 +338,7 @@
 				FF1002512B2609970011A4DC /* ModelContext+Extension.swift */,
 				FFBBF48B2B35051D008D611C /* UIImage+Extension.swift */,
 				FFBBF4872B34F9C8008D611C /* View+Extension.swift */,
+				FFB21A862B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -484,6 +487,7 @@
 				FFBBF48C2B35051D008D611C /* UIImage+Extension.swift in Sources */,
 				FF1002302B2482BA0011A4DC /* ChatMessageView.swift in Sources */,
 				FF1002322B2483A20011A4DC /* Colours+Extension.swift in Sources */,
+				FFB21A872B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift in Sources */,
 				FF66A51D2B76949A00FAAC1E /* Helpers.swift in Sources */,
 				FF10026A2B2731C60011A4DC /* ModelSelectorView.swift in Sources */,
 				FF38F84F2B7A7B6700546B56 /* MenuBarControlView_macOS.swift in Sources */,
@@ -657,7 +661,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Enchanted/Enchanted.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Enchanted/Preview Content\"";
 				DEVELOPMENT_TEAM = JDDZ55DT74;
@@ -682,7 +686,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.4.4;
 				PRODUCT_BUNDLE_IDENTIFIER = subj.Enchanted;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -702,7 +706,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Enchanted/Enchanted.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Enchanted/Preview Content\"";
 				DEVELOPMENT_TEAM = JDDZ55DT74;
@@ -727,7 +731,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.4.4;
 				PRODUCT_BUNDLE_IDENTIFIER = subj.Enchanted;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

@@ -14,9 +14,9 @@ struct InputFieldsView: View {
     var onStopGenerateTap: @MainActor () -> Void
     var selectedModel: LanguageModelSD?
     var onSendMessageTap: @MainActor (_ prompt: String, _ model: LanguageModelSD, _ image: Image?, _ trimmingMessageId: String?) -> ()
+    @Binding var editMessage: MessageSD?
     
     @State private var selectedImage: Image?
-    @State private var editMessage: MessageSD?
     @FocusState private var isFocusedInput: Bool
     
     @MainActor private func sendMessage() {
@@ -97,7 +97,8 @@ struct InputFieldsView: View {
         message: .constant(""),
         conversationState: .completed,
         onStopGenerateTap: {},
-        onSendMessageTap: {_, _, _, _  in}
+        onSendMessageTap: {_, _, _, _  in},
+        editMessage: .constant(nil)
     )
 }
 #endif

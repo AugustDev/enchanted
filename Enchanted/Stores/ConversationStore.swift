@@ -45,7 +45,7 @@ final class ConversationStore {
                 messages = []
             }
             selectedConversation = nil
-            try? await swiftDataService.deleteEverything()
+            try? await swiftDataService.deleteConversations()
             try? await loadConversations()
         }
     }
