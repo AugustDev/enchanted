@@ -43,6 +43,7 @@ Note: You will need to run your own Ollama server to use the app. Read instructi
 - Download new models from mobile
 - Rename conversations
 - Conversation syncing between
+- Tabs for macOS
 
 ## Usage instructions
 
