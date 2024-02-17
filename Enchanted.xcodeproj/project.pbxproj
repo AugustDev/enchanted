@@ -66,6 +66,10 @@
 		FFEC32972B24779B003E5C04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFEC32962B24779B003E5C04 /* Assets.xcassets */; };
 		FFEC329B2B24779B003E5C04 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFEC329A2B24779B003E5C04 /* Preview Assets.xcassets */; };
 		FFEC32AA2B24797C003E5C04 /* ChatView_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC32A92B24797C003E5C04 /* ChatView_iOS.swift */; };
+		FFEC9BDF2B8131B900AFBA63 /* HotKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC9BDE2B8131B900AFBA63 /* HotKeys.swift */; };
+		FFEC9BE12B81327B00AFBA63 /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC9BE02B81327B00AFBA63 /* DragAndDrop.swift */; };
+		FFEC9BE32B81358800AFBA63 /* DeallocPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC9BE22B81358800AFBA63 /* DeallocPrinter.swift */; };
+		FFEC9BE72B813A8D00AFBA63 /* RemovableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC9BE62B813A8D00AFBA63 /* RemovableImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -126,6 +130,10 @@
 		FFEC32982B24779B003E5C04 /* Enchanted.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Enchanted.entitlements; sourceTree = "<group>"; };
 		FFEC329A2B24779B003E5C04 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FFEC32A92B24797C003E5C04 /* ChatView_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView_iOS.swift; sourceTree = "<group>"; };
+		FFEC9BDE2B8131B900AFBA63 /* HotKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeys.swift; sourceTree = "<group>"; };
+		FFEC9BE02B81327B00AFBA63 /* DragAndDrop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragAndDrop.swift; sourceTree = "<group>"; };
+		FFEC9BE22B81358800AFBA63 /* DeallocPrinter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeallocPrinter.swift; sourceTree = "<group>"; };
+		FFEC9BE62B813A8D00AFBA63 /* RemovableImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovableImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,15 +155,16 @@
 		FF10022C2B2481790011A4DC /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				FFB0327B2B312F310066A9DB /* Recorder */,
 				FF10022F2B2482BA0011A4DC /* ChatMessageView.swift */,
-				FF1002532B261D460011A4DC /* MessageListVIew.swift */,
 				FF10025F2B26499B0011A4DC /* ConversationStatusView.swift */,
-				FF1002692B2731C60011A4DC /* ModelSelectorView.swift */,
-				FFBBF4892B350283008D611C /* SelectedImageView.swift */,
-				FF24B30D2B66BE8500AB618F /* RunningBorder.swift */,
 				FF9300DB2B7823B0000859F4 /* EmptyConversaitonView.swift */,
+				FF1002532B261D460011A4DC /* MessageListVIew.swift */,
+				FF1002692B2731C60011A4DC /* ModelSelectorView.swift */,
+				FF24B30D2B66BE8500AB618F /* RunningBorder.swift */,
+				FFBBF4892B350283008D611C /* SelectedImageView.swift */,
 				FF9300DD2B782A28000859F4 /* UnreachableAPIView.swift */,
+				FFB0327B2B312F310066A9DB /* Recorder */,
+				FFEC9BE62B813A8D00AFBA63 /* RemovableImage.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -238,6 +247,8 @@
 		FF464B142B80BB9C008E5130 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				FFEC9BE22B81358800AFBA63 /* DeallocPrinter.swift */,
+				FFEC9BDE2B8131B900AFBA63 /* HotKeys.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -245,6 +256,7 @@
 		FF464B172B810966008E5130 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				FFEC9BE02B81327B00AFBA63 /* DragAndDrop.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -512,12 +524,14 @@
 				FF10026A2B2731C60011A4DC /* ModelSelectorView.swift in Sources */,
 				FF38F84F2B7A7B6700546B56 /* MenuBarControlView_macOS.swift in Sources */,
 				FFBBF48A2B350283008D611C /* SelectedImageView.swift in Sources */,
+				FFEC9BDF2B8131B900AFBA63 /* HotKeys.swift in Sources */,
 				FF2F03492B796A6500349855 /* HotkeyService.swift in Sources */,
 				FF9300E02B783945000859F4 /* InputFields_macOS.swift in Sources */,
 				FF38F8562B7AB01E00546B56 /* FloatingPanel.swift in Sources */,
 				FF0146CB2B3DA1DF00A2A9F6 /* Settings.swift in Sources */,
 				FF38F8532B7AA9C400546B56 /* ApplicationEntry.swift in Sources */,
 				FF38F85C2B7ABC2C00546B56 /* PromptPanel.swift in Sources */,
+				FFEC9BE12B81327B00AFBA63 /* DragAndDrop.swift in Sources */,
 				FF2F03442B79631800349855 /* Button+Extension.swift in Sources */,
 				FF1002682B2668790011A4DC /* Date+Extension.swift in Sources */,
 				FF9300D42B778829000859F4 /* ChatView_macOS.swift in Sources */,
@@ -533,6 +547,7 @@
 				FF9300DE2B782A28000859F4 /* UnreachableAPIView.swift in Sources */,
 				FF9300DC2B7823B0000859F4 /* EmptyConversaitonView.swift in Sources */,
 				FFBBF4882B34F9C8008D611C /* View+Extension.swift in Sources */,
+				FFEC9BE32B81358800AFBA63 /* DeallocPrinter.swift in Sources */,
 				FFBBF4842B34881B008D611C /* SpeechRecogniser.swift in Sources */,
 				FFEC32AA2B24797C003E5C04 /* ChatView_iOS.swift in Sources */,
 				FF0146CD2B3DADCA00A2A9F6 /* HapticsService.swift in Sources */,
@@ -551,6 +566,7 @@
 				FF1002752B278C170011A4DC /* AppStore.swift in Sources */,
 				FF1002732B276EC10011A4DC /* AppColorScheme.swift in Sources */,
 				FF10025E2B2648460011A4DC /* ConversationState.swift in Sources */,
+				FFEC9BE72B813A8D00AFBA63 /* RemovableImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

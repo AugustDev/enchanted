@@ -17,6 +17,7 @@ struct InputFieldsView: View {
     @Binding var editMessage: MessageSD?
     
     @State private var selectedImage: Image?
+    @State private var fileDropActive: Bool = false
     @FocusState private var isFocusedInput: Bool
     
     @MainActor private func sendMessage() {
@@ -37,7 +38,17 @@ struct InputFieldsView: View {
     }
     
     var body: some View {
-        HStack {
+        HStack(spacing: 20) {
+            
+            if let image = selectedImage {
+                RemovableImage(
+                    image: image,
+                    onClick: {selectedImage = nil},
+                    height: 70
+                )
+                .padding(5)
+            }
+            
             TextField("Message", text: $message, axis: .vertical)
                 .focused($isFocusedInput)
                 .frame(minHeight: 40)
@@ -103,15 +114,18 @@ struct InputFieldsView: View {
         .animation(.default, value: fileDropActive)
         .onDrop(of: [.image], isTargeted: $fileDropActive, perform: { providers in
             guard let provider = providers.first else { return false }
-
+            
+            print("imaage found")
             _ = provider.loadDataRepresentation(for: .image) { data, error in
                 if error == nil, let data {
+                    print("ns image")
                     if let nsImage = NSImage(data: data) {
+                        print("selectedimage")
                         selectedImage = Image(nsImage: nsImage)
                     }
                 }
             }
-
+            
             return true
         })
     }

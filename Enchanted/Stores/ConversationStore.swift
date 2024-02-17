@@ -127,15 +127,16 @@ final class ConversationStore {
         /// prepare message history for Ollama
         var messageHistory = conversation.messages
             .sorted{$0.createdAt < $1.createdAt}
-            .map{(role: $0.role, content: $0.content)}
-
+            .map{OKChatRequestData.Message(role: OKChatRequestData.Message.Role(rawValue: $0.role) ?? .assistant, content: $0.content)}
+        
+        
         print(messageHistory.map({$0.content}))
         
         /// attach selected image to the last Message
         if let image = image?.render() {
             if let lastMessage = messageHistory.popLast() {
                 let imagesBase64: [String] = [image.convertImageToBase64String()]
-                let messageWithImage = ChatMessage(role: lastMessage.role, content: lastMessage.content, images: imagesBase64)
+                let messageWithImage = OKChatRequestData.Message(role: lastMessage.role, content: lastMessage.content, images: imagesBase64)
                 messageHistory.append(messageWithImage)
             }
         }
@@ -153,7 +154,7 @@ final class ConversationStore {
             try? await loadConversations()
             
             if await OllamaService.shared.ollamaKit.reachable() {
-                let request = OkChatRequestData(model: model.name, messages: messageHistory)
+                let request = OKChatRequestData(model: model.name, messages: messageHistory)
                 generation = OllamaService.shared.ollamaKit.chat(data: request)
                     .sink(receiveCompletion: { [weak self] completion in
                         switch completion {
@@ -187,7 +188,7 @@ final class ConversationStore {
         }
     }
     
-        @MainActor
+    @MainActor
     private func handleError(_ errorMessage: String) {
         guard let lastMesasge = messages.last else { return }
         lastMesasge.error = true
@@ -202,7 +203,7 @@ final class ConversationStore {
         }
     }
     
-        @MainActor
+    @MainActor
     private func handleComplete() {
         guard let lastMesasge = messages.last else { return }
         lastMesasge.error = false

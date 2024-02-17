@@ -203,13 +203,13 @@ struct ChatMessageView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 100)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
 #elseif os(macOS)
                             Image(nsImage: uiImage)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 100)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
 #endif
                             
                         }

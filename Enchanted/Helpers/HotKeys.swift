@@ -1,5 +1,5 @@
 //
-//  KeyboardReaction.swift
+//  HotKeys.swift
 //  Enchanted
 //
 //  Created by Augustinas Malinauskas on 17/02/2024.
@@ -119,6 +119,9 @@ enum KeyBase: CaseIterable {
     }
 }
 
+import Foundation
+
+///https://gist.github.com/chipjarred/cbb324c797aec865918a8045c4b51d14
 extension CGKeyCode {
     static let kVK_ANSI_A                    : CGKeyCode = 0x00
     static let kVK_ANSI_S                    : CGKeyCode = 0x01

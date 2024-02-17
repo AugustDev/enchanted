@@ -28,7 +28,7 @@ struct DragAndDrop: View {
                 .foregroundColor(.grayCustom)
         )
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
-        .padding()
+        .padding(5)
         .background {
             RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                 .fill(.ultraThinMaterial)
@@ -38,4 +38,5 @@ struct DragAndDrop: View {
 
 #Preview {
     DragAndDrop()
+        .frame(height: 100)
 }
