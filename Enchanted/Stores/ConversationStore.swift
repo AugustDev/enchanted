@@ -127,7 +127,7 @@ final class ConversationStore {
         /// prepare message history for Ollama
         var messageHistory = conversation.messages
             .sorted{$0.createdAt < $1.createdAt}
-            .map{ChatMessage(role: $0.role, content: $0.content)}
+            .map{(role: $0.role, content: $0.content)}
 
         print(messageHistory.map({$0.content}))
         

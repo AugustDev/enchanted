@@ -46,7 +46,6 @@
 		FF38F85A2B7AB28300546B56 /* PromptPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F8592B7AB28300546B56 /* PromptPanelView.swift */; };
 		FF38F85C2B7ABC2C00546B56 /* PromptPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F85B2B7ABC2C00546B56 /* PromptPanel.swift */; };
 		FF5FA0D62B35169400BC471D /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5FA0D52B35169400BC471D /* Binding+Extension.swift */; };
-		FF61C9632B2A7DC6003CD1CB /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = FF61C9622B2A7DC6003CD1CB /* OllamaKit */; };
 		FF66A51D2B76949A00FAAC1E /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF66A51C2B76949A00FAAC1E /* Helpers.swift */; };
 		FF6B7B132B3EE7AC00E8FEA3 /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6B7B122B3EE7AC00E8FEA3 /* Throttler.swift */; };
 		FF7FBE4C2B78E384000901F7 /* SamplePrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7FBE4B2B78E384000901F7 /* SamplePrompt.swift */; };
@@ -61,6 +60,8 @@
 		FFBBF4882B34F9C8008D611C /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBBF4872B34F9C8008D611C /* View+Extension.swift */; };
 		FFBBF48A2B350283008D611C /* SelectedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBBF4892B350283008D611C /* SelectedImageView.swift */; };
 		FFBBF48C2B35051D008D611C /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBBF48B2B35051D008D611C /* UIImage+Extension.swift */; };
+		FFD5FAD22B8130490055AB51 /* Vortex in Frameworks */ = {isa = PBXBuildFile; productRef = FF464B122B8026DA008E5130 /* Vortex */; };
+		FFD5FAD52B8130CE0055AB51 /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = FFD5FAD42B8130CE0055AB51 /* OllamaKit */; };
 		FFEC32912B24779A003E5C04 /* EnchantedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC32902B24779A003E5C04 /* EnchantedApp.swift */; };
 		FFEC32972B24779B003E5C04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFEC32962B24779B003E5C04 /* Assets.xcassets */; };
 		FFEC329B2B24779B003E5C04 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFEC329A2B24779B003E5C04 /* Preview Assets.xcassets */; };
@@ -132,10 +133,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFD5FAD52B8130CE0055AB51 /* OllamaKit in Frameworks */,
+				FFD5FAD22B8130490055AB51 /* Vortex in Frameworks */,
 				FF10027A2B27B6070011A4DC /* MarkdownUI in Frameworks */,
 				FF1002662B2653EE0011A4DC /* ActivityIndicatorView in Frameworks */,
 				FF2F03722B79743400349855 /* Magnet in Frameworks */,
-				FF61C9632B2A7DC6003CD1CB /* OllamaKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,9 +235,24 @@
 			path = PromptPanel;
 			sourceTree = "<group>";
 		};
+		FF464B142B80BB9C008E5130 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		FF464B172B810966008E5130 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		FF66A51E2B77788D00FAAC1E /* macOS */ = {
 			isa = PBXGroup;
 			children = (
+				FF464B172B810966008E5130 /* Components */,
 				FF38F8542B7AB00100546B56 /* PromptPanel */,
 				FF38F84D2B7A7B5300546B56 /* MenuBar */,
 				FF9300D52B778F1A000859F4 /* Chat */,
@@ -297,11 +314,12 @@
 		FFEC328F2B24779A003E5C04 /* Enchanted */ = {
 			isa = PBXGroup;
 			children = (
-				FFBBF4822B348345008D611C /* Info.plist */,
 				FFEC32982B24779B003E5C04 /* Enchanted.entitlements */,
+				FFBBF4822B348345008D611C /* Info.plist */,
 				FFEC32962B24779B003E5C04 /* Assets.xcassets */,
 				FFEC32A12B24783B003E5C04 /* Application */,
 				FFEC32A22B247858003E5C04 /* Extensions */,
+				FF464B142B80BB9C008E5130 /* Helpers */,
 				FFEC32A32B24786D003E5C04 /* Models */,
 				FFEC32992B24779B003E5C04 /* Preview Content */,
 				FFEC32A42B247874003E5C04 /* Services */,
@@ -416,8 +434,9 @@
 			packageProductDependencies = (
 				FF1002652B2653EE0011A4DC /* ActivityIndicatorView */,
 				FF1002792B27B6070011A4DC /* MarkdownUI */,
-				FF61C9622B2A7DC6003CD1CB /* OllamaKit */,
 				FF2F03712B79743400349855 /* Magnet */,
+				FF464B122B8026DA008E5130 /* Vortex */,
+				FFD5FAD42B8130CE0055AB51 /* OllamaKit */,
 			);
 			productName = Enchanted;
 			productReference = FFEC328D2B24779A003E5C04 /* Enchanted.app */;
@@ -450,8 +469,9 @@
 			packageReferences = (
 				FF1002642B2653EE0011A4DC /* XCRemoteSwiftPackageReference "ActivityIndicatorView" */,
 				FF1002782B27B6070011A4DC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
-				FF61C9612B2A7DC6003CD1CB /* XCRemoteSwiftPackageReference "OllamaKit" */,
 				FF2F03702B79743400349855 /* XCRemoteSwiftPackageReference "Magnet" */,
+				FF464B112B8026DA008E5130 /* XCRemoteSwiftPackageReference "Vortex" */,
+				FFD5FAD32B8130CE0055AB51 /* XCRemoteSwiftPackageReference "OllamaKit" */,
 			);
 			productRefGroup = FFEC328E2B24779A003E5C04 /* Products */;
 			projectDirPath = "";
@@ -791,9 +811,17 @@
 				kind = branch;
 			};
 		};
-		FF61C9612B2A7DC6003CD1CB /* XCRemoteSwiftPackageReference "OllamaKit" */ = {
+		FF464B112B8026DA008E5130 /* XCRemoteSwiftPackageReference "Vortex" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:AugustDev/OllamaKit.git";
+			repositoryURL = "https://github.com/twostraws/Vortex";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		FFD5FAD32B8130CE0055AB51 /* XCRemoteSwiftPackageReference "OllamaKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AugustDev/OllamaKit";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -817,9 +845,14 @@
 			package = FF2F03702B79743400349855 /* XCRemoteSwiftPackageReference "Magnet" */;
 			productName = Magnet;
 		};
-		FF61C9622B2A7DC6003CD1CB /* OllamaKit */ = {
+		FF464B122B8026DA008E5130 /* Vortex */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = FF61C9612B2A7DC6003CD1CB /* XCRemoteSwiftPackageReference "OllamaKit" */;
+			package = FF464B112B8026DA008E5130 /* XCRemoteSwiftPackageReference "Vortex" */;
+			productName = Vortex;
+		};
+		FFD5FAD42B8130CE0055AB51 /* OllamaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FFD5FAD32B8130CE0055AB51 /* XCRemoteSwiftPackageReference "OllamaKit" */;
 			productName = OllamaKit;
 		};
 /* End XCSwiftPackageProductDependency section */

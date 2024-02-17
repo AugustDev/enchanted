@@ -44,8 +44,14 @@ struct InputFieldsView: View {
                 .font(.system(size: 14))
                 .textFieldStyle(.plain)
                 .onSubmit {
-                    sendMessage()
+                    if NSApp.currentEvent?.modifierFlags.contains(.shift) == true {
+                        message += "\n"
+                    } else {
+                        sendMessage()
+                    }
                 }
+            /// TextField bypasses drop area
+                .allowsHitTesting(!fileDropActive)
             
             ZStack {
                 Circle()
@@ -89,6 +95,25 @@ struct InputFieldsView: View {
                     style: StrokeStyle(lineWidth: 1)
                 )
         )
+        .overlay {
+            if fileDropActive {
+                DragAndDrop(cornerRadius: 10)
+            }
+        }
+        .animation(.default, value: fileDropActive)
+        .onDrop(of: [.image], isTargeted: $fileDropActive, perform: { providers in
+            guard let provider = providers.first else { return false }
+
+            _ = provider.loadDataRepresentation(for: .image) { data, error in
+                if error == nil, let data {
+                    if let nsImage = NSImage(data: data) {
+                        selectedImage = Image(nsImage: nsImage)
+                    }
+                }
+            }
+
+            return true
+        })
     }
 }
 

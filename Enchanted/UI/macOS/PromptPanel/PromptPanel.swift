@@ -12,19 +12,22 @@ struct PromptPanel: View {
     @State var conversationStore = ConversationStore.shared
     @State var languageModelStore = LanguageModelStore.shared
     var onSubmitPanel: () -> ()
+    var onLayoutUpdate: () -> ()
     
     @MainActor
-    func sendMessage(prompt: String) {
+    func sendMessage(prompt: String, image: Image?) {
         conversationStore.selectedConversation = nil
         conversationStore.sendPrompt(
             userPrompt: prompt,
             model: languageModelStore.selectedModel!,
+            image: image,
             systemPrompt: systemPrompt
         )
         onSubmitPanel()
     }
     
     var body: some View {
-        PromptPanelView(onSubmit: sendMessage)
+        PromptPanelView(onSubmit: sendMessage, onLayoutUpdate: onLayoutUpdate)
+            .edgesIgnoringSafeArea(.all)
     }
 }

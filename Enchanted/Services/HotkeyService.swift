@@ -18,7 +18,6 @@ final class HotkeyService {
         NSApp.activate(ignoringOtherApps: true)
         if let keyCombo = KeyCombo(key: .k, cocoaModifiers: [.command, .control]) {
             let hotKey = HotKey(identifier: "CommandControlK", keyCombo: keyCombo) { hotKey in
-                print("invoked")
                 callback()
             }
             hotKey.register()
