@@ -12,21 +12,16 @@ class FloatingPanel: NSPanel {
     override func sendEvent(_ event: NSEvent) {
         super.sendEvent(event)
         
-        // Check for left mouse down events
-        if event.type == .leftMouseDown {
-            let eventLocation = event.locationInWindow
-            let localLocation = self.contentView?.convert(eventLocation, from: nil) ?? NSPoint.zero
-            let isInside = self.contentView?.bounds.contains(localLocation) ?? false
-            
-            // If the click is outside the panel, close it
-            if !isInside {
+        // escape key closes the panel
+        if event.type == .keyDown {
+            if event.keyCode == 53 {
                 self.orderOut(nil)
             }
         }
     }
     
     init(contentRect: NSRect, backing: NSWindow.BackingStoreType, defer flag: Bool) {
-        super.init(contentRect: contentRect, styleMask: [.nonactivatingPanel, .titled, .resizable, .closable, .fullSizeContentView], backing: backing, defer: flag)
+        super.init(contentRect: contentRect, styleMask: [.nonactivatingPanel, .resizable, .closable, .fullSizeContentView], backing: backing, defer: flag)
         self.isFloatingPanel = true
         self.level = .floating
         self.collectionBehavior.insert(.fullScreenAuxiliary)
@@ -41,14 +36,17 @@ class FloatingPanel: NSPanel {
         self.standardWindowButton(.closeButton)?.isHidden = true
         self.standardWindowButton(.miniaturizeButton)?.isHidden = true
         self.standardWindowButton(.zoomButton)?.isHidden = true
+        self.styleMask.insert(.resizable)
     }
     
     // `canBecomeKey` and `canBecomeMain` are required so that text inputs inside the panel can receive focus
     override var canBecomeKey: Bool {
+        print("canBecomeKey")
         return true
     }
     
     override var canBecomeMain: Bool {
+        print("canBecomeMain")
         return true
     }
 }

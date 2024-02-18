@@ -25,10 +25,12 @@ struct Chat: View {
         withAnimation(.spring) {
             showMenu.toggle()
         }
-        Haptics.shared.mediumTap()
+        Task {
+            await Haptics.shared.mediumTap()
+        }
     }
     
-    @MainActor 
+    @MainActor
     func sendMessage(prompt: String, model: LanguageModelSD, image: Image?, trimmingMessageId: String?) {
         conversationStore.sendPrompt(
             userPrompt: prompt,
@@ -44,10 +46,10 @@ struct Chat: View {
             Task {
                 try await conversationStore.selectConversation(conversation)
                 await languageModelStore.setModel(model: conversation.model)
+                await Haptics.shared.mediumTap()
             }
             showMenu.toggle()
         }
-        Haptics.shared.mediumTap()
     }
     
     @MainActor func onStopGenerateTap() {
@@ -57,8 +59,8 @@ struct Chat: View {
     
     func onConversationDelete(_ conversation: ConversationSD) {
         Task {
+            await Haptics.shared.mediumTap()
             try? await conversationStore.delete(conversation)
-            Haptics.shared.mediumTap()
         }
     }
     
@@ -66,9 +68,9 @@ struct Chat: View {
         withAnimation(.easeOut(duration: 0.3)) {
             conversationStore.selectedConversation = nil
         }
-        Haptics.shared.mediumTap()
         
         Task {
+            await Haptics.shared.mediumTap()
             try? await languageModelStore.loadModels()
         }
     }

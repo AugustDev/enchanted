@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - Conditional View
 extension View {
     /// Whether the view should be empty.
     /// - Parameter bool: Set to `true` to show the view (return EmptyView instead).

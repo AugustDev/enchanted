@@ -39,10 +39,10 @@
     {
       "identity" : "ollamakit",
       "kind" : "remoteSourceControl",
-      "location" : "git@github.com:AugustDev/OllamaKit.git",
+      "location" : "https://github.com/AugustDev/OllamaKit",
       "state" : {
         "branch" : "main",
-        "revision" : "36a471194d6d1833103f9293adce2ed50db3def2"
+        "revision" : "d33b81dd674b71e9718fb4b1a180e7e8bcfb7551"
       }
     },
     {
@@ -61,6 +61,15 @@
       "state" : {
         "revision" : "5df8a4adedd6ae4eb2455ef60ff75183984daeb8",
         "version" : "2.2.0"
+      }
+    },
+    {
+      "identity" : "vortex",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/twostraws/Vortex",
+      "state" : {
+        "revision" : "3eabf0572fd37e943be64b9d2589f97f1999cb26",
+        "version" : "1.0.0"
       }
     }
   ],

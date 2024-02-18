@@ -193,6 +193,7 @@ struct ChatMessageView: View {
                             .padding(.bottom, 2)
                             .frame(height: 27)
                         
+//                        Text(text)
                         Markdown(text)
                             .textSelection(.enabled)
                             .markdownTheme(enchantedTheme)
@@ -203,13 +204,13 @@ struct ChatMessageView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 100)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
 #elseif os(macOS)
                             Image(nsImage: uiImage)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 100)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
 #endif
                             
                         }
