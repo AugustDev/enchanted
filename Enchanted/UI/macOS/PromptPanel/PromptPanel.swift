@@ -5,6 +5,7 @@
 //  Created by Augustinas Malinauskas on 12/02/2024.
 //
 
+#if os(macOS)
 import SwiftUI
 
 struct PromptPanel: View {
@@ -31,3 +32,4 @@ struct PromptPanel: View {
             .edgesIgnoringSafeArea(.all)
     }
 }
+#endif

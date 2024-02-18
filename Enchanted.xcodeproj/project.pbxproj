@@ -62,6 +62,7 @@
 		FFBBF48C2B35051D008D611C /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBBF48B2B35051D008D611C /* UIImage+Extension.swift */; };
 		FFD5FAD22B8130490055AB51 /* Vortex in Frameworks */ = {isa = PBXBuildFile; productRef = FF464B122B8026DA008E5130 /* Vortex */; };
 		FFD5FAD52B8130CE0055AB51 /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = FFD5FAD42B8130CE0055AB51 /* OllamaKit */; };
+		FFE21C782B82353A00A69B9C /* SleepTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE21C772B82353A00A69B9C /* SleepTest.swift */; };
 		FFEC32912B24779A003E5C04 /* EnchantedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC32902B24779A003E5C04 /* EnchantedApp.swift */; };
 		FFEC32972B24779B003E5C04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFEC32962B24779B003E5C04 /* Assets.xcassets */; };
 		FFEC329B2B24779B003E5C04 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFEC329A2B24779B003E5C04 /* Preview Assets.xcassets */; };
@@ -124,6 +125,7 @@
 		FFBBF4872B34F9C8008D611C /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		FFBBF4892B350283008D611C /* SelectedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedImageView.swift; sourceTree = "<group>"; };
 		FFBBF48B2B35051D008D611C /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		FFE21C772B82353A00A69B9C /* SleepTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepTest.swift; sourceTree = "<group>"; };
 		FFEC328D2B24779A003E5C04 /* Enchanted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enchanted.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFEC32902B24779A003E5C04 /* EnchantedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnchantedApp.swift; sourceTree = "<group>"; };
 		FFEC32962B24779B003E5C04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -160,11 +162,11 @@
 				FF9300DB2B7823B0000859F4 /* EmptyConversaitonView.swift */,
 				FF1002532B261D460011A4DC /* MessageListVIew.swift */,
 				FF1002692B2731C60011A4DC /* ModelSelectorView.swift */,
+				FFEC9BE62B813A8D00AFBA63 /* RemovableImage.swift */,
 				FF24B30D2B66BE8500AB618F /* RunningBorder.swift */,
 				FFBBF4892B350283008D611C /* SelectedImageView.swift */,
 				FF9300DD2B782A28000859F4 /* UnreachableAPIView.swift */,
 				FFB0327B2B312F310066A9DB /* Recorder */,
-				FFEC9BE62B813A8D00AFBA63 /* RemovableImage.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -249,6 +251,7 @@
 			children = (
 				FFEC9BE22B81358800AFBA63 /* DeallocPrinter.swift */,
 				FFEC9BDE2B8131B900AFBA63 /* HotKeys.swift */,
+				FFE21C772B82353A00A69B9C /* SleepTest.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -552,6 +555,7 @@
 				FFEC32AA2B24797C003E5C04 /* ChatView_iOS.swift in Sources */,
 				FF0146CD2B3DADCA00A2A9F6 /* HapticsService.swift in Sources */,
 				FF5FA0D62B35169400BC471D /* Binding+Extension.swift in Sources */,
+				FFE21C782B82353A00A69B9C /* SleepTest.swift in Sources */,
 				FF1002502B25C79F0011A4DC /* SwiftDataService.swift in Sources */,
 				FF7FBE4C2B78E384000901F7 /* SamplePrompt.swift in Sources */,
 				FF38F8582B7AB1AD00546B56 /* PanelManager.swift in Sources */,
@@ -729,6 +733,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -774,6 +779,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

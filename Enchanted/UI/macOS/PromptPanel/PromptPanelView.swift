@@ -21,18 +21,17 @@ struct PromptPanelView: View {
     var hotkeys: [HotkeyCombination] {
         [
             HotkeyCombination(keyBase: [.command], key: .kVK_ANSI_V) {
-                print("cmdv")
                 guard let nsImage = Clipboard.shared.getImage() else { return }
-                print("nsimage")
                 let image = Image(nsImage: nsImage)
-                print("image")
                 updateSelectedImage(image)
             }
         ]
     }
     
     func updateSelectedImage(_ image: Image) {
-        selectedImage = image
+        withAnimation(.easeOut(duration: 0.1)) {
+            selectedImage = image
+        }
     }
     
     var dynamicFont: Font {
@@ -53,7 +52,7 @@ struct PromptPanelView: View {
                 .scaledToFit()
                 .frame(width: 20)
                 .foregroundColor(.label)
-            //
+            
             TextField("How can I help today?", text: $prompt, axis: .vertical)
                 .font(dynamicFont)
                 .minimumScaleFactor(0.4)
@@ -76,7 +75,6 @@ struct PromptPanelView: View {
                 .layoutPriority(-1)
         }
         .animation(.none)
-        .layoutPriority(-1)
     }
     
     var body: some View {
@@ -94,18 +92,22 @@ struct PromptPanelView: View {
             
             VStack(alignment: .leading) {
                 inputField
+                    .layoutPriority(-1)
                 
                 DragAndDrop(cornerRadius: 10)
                     .frame(height: 150)
                     .layoutPriority(1)
                     .showIf(fileDropActive)
                 
-                if let selectedImage = selectedImage {
+                if let image = selectedImage {
                     HStack {
-                        selectedImage
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: 150, maxHeight: 150)
+                        RemovableImage(
+                            image: image,
+                            onClick: {selectedImage = nil},
+                            height: 150
+                        )
+                        .layoutPriority(1)
+                        .transition(.scale)
                         
                         Spacer()
                     }
@@ -118,7 +120,7 @@ struct PromptPanelView: View {
                     .showIf(!fileDropActive)
                 }
             }
-            .animation(.default, value: fileDropActive)
+            .animation(.default)
             .padding(12)
             .background {
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
@@ -136,7 +138,7 @@ struct PromptPanelView: View {
             _ = provider.loadDataRepresentation(for: .image) { data, error in
                 if error == nil, let data {
                     if let nsImage = NSImage(data: data) {
-                        selectedImage = Image(nsImage: nsImage)
+                        updateSelectedImage(Image(nsImage: nsImage))
                     }
                 }
             }

@@ -112,7 +112,7 @@ struct InputFieldsView: View {
             }
         }
         .animation(.default, value: fileDropActive)
-        .onDrop(of: [.image], isTargeted: $fileDropActive, perform: { providers in
+        .onDrop(of: [.image], isTargeted: $fileDropActive.animation(), perform: { providers in
             guard let provider = providers.first else { return false }
             
             print("imaage found")
