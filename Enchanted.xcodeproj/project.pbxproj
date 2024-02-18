@@ -33,6 +33,7 @@
 		FF1002732B276EC10011A4DC /* AppColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002722B276EC10011A4DC /* AppColorScheme.swift */; };
 		FF1002752B278C170011A4DC /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002742B278C170011A4DC /* AppStore.swift */; };
 		FF10027A2B27B6070011A4DC /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = FF1002792B27B6070011A4DC /* MarkdownUI */; };
+		FF15EF6A2B826C0300D4A541 /* SimpleFloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15EF692B826C0300D4A541 /* SimpleFloatingButton.swift */; };
 		FF24B30E2B66BE8500AB618F /* RunningBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF24B30D2B66BE8500AB618F /* RunningBorder.swift */; };
 		FF2F03422B795E0B00349855 /* Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2F03412B795E0B00349855 /* Clipboard.swift */; };
 		FF2F03442B79631800349855 /* Button+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2F03432B79631800349855 /* Button+Extension.swift */; };
@@ -98,6 +99,7 @@
 		FF10026C2B2751760011A4DC /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		FF1002722B276EC10011A4DC /* AppColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColorScheme.swift; sourceTree = "<group>"; };
 		FF1002742B278C170011A4DC /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		FF15EF692B826C0300D4A541 /* SimpleFloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleFloatingButton.swift; sourceTree = "<group>"; };
 		FF24B30D2B66BE8500AB618F /* RunningBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningBorder.swift; sourceTree = "<group>"; };
 		FF2F03412B795E0B00349855 /* Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipboard.swift; sourceTree = "<group>"; };
 		FF2F03432B79631800349855 /* Button+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Extension.swift"; sourceTree = "<group>"; };
@@ -224,6 +226,14 @@
 				FF0146CA2B3DA1DF00A2A9F6 /* Settings.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		FF15EF682B826BF400D4A541 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				FF15EF692B826C0300D4A541 /* SimpleFloatingButton.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		FF38F84D2B7A7B5300546B56 /* MenuBar */ = {
@@ -413,6 +423,7 @@
 		FFEC32A72B247896003E5C04 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				FF15EF682B826BF400D4A541 /* Components */,
 				FFEC32A82B24795A003E5C04 /* Chat */,
 				FF10026B2B2751630011A4DC /* Settings */,
 				FF1002552B2624790011A4DC /* Sidebar */,
@@ -515,6 +526,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF1002442B25BB730011A4DC /* ConversationStore.swift in Sources */,
+				FF15EF6A2B826C0300D4A541 /* SimpleFloatingButton.swift in Sources */,
 				FF24B30E2B66BE8500AB618F /* RunningBorder.swift in Sources */,
 				FF1002602B26499B0011A4DC /* ConversationStatusView.swift in Sources */,
 				FF10024C2B25BEA00011A4DC /* MessageSD.swift in Sources */,

@@ -60,7 +60,6 @@ final class LanguageModelStore {
         supportsImages = false
     }
     
-    @MainActor
     func loadModels() async throws {
         print("loading models")
         let localModels = try await swiftDataService.fetchModels()
@@ -77,7 +76,7 @@ final class LanguageModelStore {
         print("completed saveModels()")
         
         models = try await swiftDataService.fetchModels()
-        print("loaded models")
+        sleepTest("loadModels")
     }
     
     func deleteAllModels() async throws {

@@ -12,7 +12,7 @@ import Combine
 import SwiftUI
 
 @Observable
-final class ConversationStore {
+final class ConversationStore: Sendable {
     static let shared = ConversationStore(swiftDataService: SwiftDataService.shared)
     
     private var swiftDataService: SwiftDataService
@@ -21,7 +21,7 @@ final class ConversationStore {
     /// For some reason (SwiftUI bug / too frequent UI updates) updating UI for each stream message sometimes freezes the UI.
     /// Throttling UI updates seem to fix the issue.
     private var currentMessageBuffer: String = ""
-    private let throttler = Throttler(delay: 0.05)
+    private let throttler = Throttler(delay: 0.25)
     
     var conversationState: ConversationState = .completed
     var conversations: [ConversationSD] = []
@@ -32,7 +32,6 @@ final class ConversationStore {
         self.swiftDataService = swiftDataService
     }
     
-    @MainActor
     func loadConversations() async throws {
         print("loading conversations")
         conversations = try await swiftDataService.fetchConversations()
@@ -41,8 +40,8 @@ final class ConversationStore {
     
     func deleteAllConversations() {
         Task {
-            DispatchQueue.main.async { [self] in
-                messages = []
+            DispatchQueue.main.async { [weak self] in
+                self?.messages = []
             }
             selectedConversation = nil
             try? await swiftDataService.deleteConversations()
@@ -60,6 +59,7 @@ final class ConversationStore {
             try? await loadConversations()
         }
     }
+    
     
     func create(_ conversation: ConversationSD) async throws {
         try await swiftDataService.createConversation(conversation)

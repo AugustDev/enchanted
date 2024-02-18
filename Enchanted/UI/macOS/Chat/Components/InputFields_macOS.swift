@@ -39,7 +39,6 @@ struct InputFieldsView: View {
     
     var body: some View {
         HStack(spacing: 20) {
-            
             if let image = selectedImage {
                 RemovableImage(
                     image: image,
@@ -64,37 +63,16 @@ struct InputFieldsView: View {
             /// TextField bypasses drop area
                 .allowsHitTesting(!fileDropActive)
             
-            ZStack {
-                Circle()
-                    .foregroundColor(Color.labelCustom)
-                    .frame(width: 30, height: 30)
-                
-                switch conversationState {
-                case .loading:
-                    Button(action: onStopGenerateTap) {
-                        Image(systemName: "square.fill")
-                            .renderingMode(.template)
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundColor(Color.bgCustom)
-                            .frame(height: 12)
-                    }
-                    .buttonStyle(.plain)
-                default:
-                    Button(action: {
-                        Task {
-                            sendMessage()
-                        }
-                    }) {
-                        Image(systemName: "arrow.up")
-                            .renderingMode(.template)
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundColor(Color.bgCustom)
-                            .frame(height: 15)
-                    }
-                    .buttonStyle(.plain)
-                }
+            SimpleFloatingButton(systemImage: "photo.fill", onClick: {})
+            
+            switch conversationState {
+            case .loading:
+                SimpleFloatingButton(systemImage: "square.fill", onClick: onStopGenerateTap)
+            default:
+                SimpleFloatingButton(
+                    systemImage: "paperplane.fill",
+                    onClick: { Task { sendMessage() } }
+                )
             }
         }
         .padding(.horizontal)
@@ -114,13 +92,9 @@ struct InputFieldsView: View {
         .animation(.default, value: fileDropActive)
         .onDrop(of: [.image], isTargeted: $fileDropActive.animation(), perform: { providers in
             guard let provider = providers.first else { return false }
-            
-            print("imaage found")
             _ = provider.loadDataRepresentation(for: .image) { data, error in
                 if error == nil, let data {
-                    print("ns image")
                     if let nsImage = NSImage(data: data) {
-                        print("selectedimage")
                         selectedImage = Image(nsImage: nsImage)
                     }
                 }

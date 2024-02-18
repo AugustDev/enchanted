@@ -8,17 +8,13 @@
 import Foundation
 import SwiftData
 
-actor SwiftDataService {
-    @MainActor
-    static let shared = SwiftDataService()
-    
+final actor SwiftDataService: ModelActor {
+    let modelContainer: ModelContainer
+    let modelExecutor: ModelExecutor
     private let modelContext: ModelContext
     
-    init(modelContext: ModelContext) {
-        self.modelContext = modelContext
-    }
-
-    @MainActor
+    static let shared = SwiftDataService()
+    
     init() {
         let sharedModelContainer: ModelContainer = {
             let schema = Schema([
@@ -34,7 +30,10 @@ actor SwiftDataService {
                 fatalError("Could not create ModelContainer: \(error)")
             }
         }()
-        self.modelContext = sharedModelContainer.mainContext
+        
+        self.modelContext = ModelContext(sharedModelContainer)
+        modelContainer = sharedModelContainer
+        modelExecutor = DefaultSerialModelExecutor(modelContext: modelContext)
     }
 }
 

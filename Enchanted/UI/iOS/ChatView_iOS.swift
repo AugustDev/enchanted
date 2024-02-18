@@ -159,7 +159,7 @@ struct ChatView: View {
                 default:
                     Button(action: {
                         Task {
-                            Haptics.shared.mediumTap()
+                            await Haptics.shared.mediumTap()
                             
                             guard let selectedModel = selectedModel else { return }
                             
@@ -169,6 +169,7 @@ struct ChatView: View {
                                 selectedImage,
                                 editMessage?.id.uuidString
                             )
+                            
                             withAnimation {
                                 isFocusedInput = false
                                 editMessage = nil

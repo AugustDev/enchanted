@@ -15,7 +15,7 @@ class PanelManager: NSObject, NSApplicationDelegate {
         super.init()
     }
     
-    @objc func togglePanel() {
+    @MainActor @objc func togglePanel() {
         if panel == nil {
             showPanel()
             return
@@ -28,17 +28,17 @@ class PanelManager: NSObject, NSApplicationDelegate {
         }
     }
     
-    @objc func hidePanel() {
+    @MainActor @objc func hidePanel() {
         panel.orderOut(nil)
     }
     
-    @objc func showPanel() {
+    @MainActor @objc func showPanel() {
         createPanel()
         panel.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
     }
     
-    @objc func onSubmitMessage() {
+    @MainActor @objc func onSubmitMessage() {
         hidePanel()
         
         /// Focus Enchanted
@@ -53,7 +53,7 @@ class PanelManager: NSObject, NSApplicationDelegate {
         }
     }
     
-    func createPanel() {
+    @MainActor func createPanel() {
         let contentView = PromptPanel(onSubmitPanel: onSubmitMessage, onLayoutUpdate: updatePanelSizeIfNeeded)
         let hostingView = NSHostingView(rootView: contentView)
         
@@ -66,7 +66,7 @@ class PanelManager: NSObject, NSApplicationDelegate {
         panel.orderFront(nil)
     }
     
-    func updatePanelSizeIfNeeded() {
+    @MainActor func updatePanelSizeIfNeeded() {
         guard let hostingView = panel.contentView as? NSHostingView<PromptPanel> else { return }
         
         DispatchQueue.main.async { [weak self] in
@@ -103,7 +103,7 @@ class PanelManager: NSObject, NSApplicationDelegate {
 }
 
 extension PanelManager {
-    func windowDidResignKey(_ notification: Notification) {
+    @MainActor func windowDidResignKey(_ notification: Notification) {
         if let panel = notification.object as? FloatingPanel, panel == self.panel {
             panel.close()
         }

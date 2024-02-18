@@ -44,3 +44,8 @@ extension MessageSD {
         .init(content: "Elementary particle is defined as an irreducible representation of the poincase group.", role: "assistant")
     ]
 }
+
+// MARK: - @unchecked Sendable
+extension MessageSD: @unchecked Sendable {
+    /// We hide compiler warnings for concurency. We have to make sure to modify the data only via SwiftDataManager to ensure concurrent operations.
+}
