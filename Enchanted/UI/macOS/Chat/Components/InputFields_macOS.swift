@@ -18,6 +18,7 @@ struct InputFieldsView: View {
     
     @State private var selectedImage: Image?
     @State private var fileDropActive: Bool = false
+    @State private var fileSelectingActive: Bool = false
     @FocusState private var isFocusedInput: Bool
     
     @MainActor private func sendMessage() {
@@ -63,7 +64,22 @@ struct InputFieldsView: View {
             /// TextField bypasses drop area
                 .allowsHitTesting(!fileDropActive)
             
-            SimpleFloatingButton(systemImage: "photo.fill", onClick: {})
+            SimpleFloatingButton(systemImage: "photo.fill", onClick: { fileSelectingActive.toggle() })
+                .fileImporter(isPresented: $fileSelectingActive,
+                              allowedContentTypes: [.png, .jpeg, .tiff],
+                              onCompletion: { result in
+                    switch result {
+                    case .success(let url):
+                        guard url.startAccessingSecurityScopedResource() else { return }
+                        if let imageData = try? Data(contentsOf: url),
+                           let nsImage = NSImage(data: imageData) {
+                            selectedImage = Image(nsImage: nsImage)
+                        }
+                        url.stopAccessingSecurityScopedResource()
+                    case .failure(let error):
+                        print(error)
+                    }
+                })
             
             switch conversationState {
             case .loading:

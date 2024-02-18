@@ -20,7 +20,6 @@ struct SimpleFloatingButton: View {
                 .foregroundColor(Color.label)
                 .frame(height: 18)
         }
-//        .buttonStyle(.plain)
         .buttonStyle(GrowingButton())
     }
 }

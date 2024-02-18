@@ -25,6 +25,7 @@ final class LanguageModelSD: Identifiable {
     }
 }
 
+// MARK: - Helpers
 extension LanguageModelSD {
     var prettyName: String {
         guard let modelName = name.components(separatedBy: ":").first else {
@@ -40,6 +41,16 @@ extension LanguageModelSD {
             return components[1]
         }
         return ""
+    }
+    
+    var supportsImages: Bool {
+        let imageSupportedModels = ["llava"]
+        for modelName in imageSupportedModels {
+            if name.contains(modelName) {
+                return true
+            }
+        }
+        return false
     }
     
     static let sample: [LanguageModelSD] = [
