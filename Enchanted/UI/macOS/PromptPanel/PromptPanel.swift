@@ -29,7 +29,7 @@ struct PromptPanel: View {
     }
     
     var body: some View {
-        PromptPanelView(onSubmit: sendMessage, onLayoutUpdate: onLayoutUpdate)
+        PromptPanelView(onSubmit: sendMessage, onLayoutUpdate: onLayoutUpdate, imageSupport: languageModelStore.selectedModel?.supportsImages ?? false)
             .preferredColorScheme(colorScheme.toiOSFormat)
             .edgesIgnoringSafeArea(.all)
     }

@@ -32,14 +32,22 @@ class Clipboard {
         if let image = UIPasteboard.general.image {
             return image
         }
-        #elseif os(macOS)
+#elseif os(macOS)
         let pb = NSPasteboard.general
         let type = NSPasteboard.PasteboardType.tiff
         guard let imgData = pb.data(forType: type) else { return nil }
         return NSImage(data: imgData)
-        #endif
+#endif
         return nil
     }
     
+    func getText() -> String? {
+#if os(iOS)
+        return UIPasteboard.general.string
+#elseif os(macOS)
+        return NSPasteboard.general.string(forType: .string)
+#endif
+    }
 }
+
 

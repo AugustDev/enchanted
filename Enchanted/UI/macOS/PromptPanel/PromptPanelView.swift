@@ -14,6 +14,7 @@ struct PromptPanelView: View {
     @State var prompt: String = ""
     var onSubmit: @MainActor (_ prompt: String, _ image: Image?) -> ()
     var onLayoutUpdate: () -> ()
+    var imageSupport: Bool
     
     @State private var fileDropActive: Bool = false
     @State private var selectedImage: Image?
@@ -21,14 +22,28 @@ struct PromptPanelView: View {
     var hotkeys: [HotkeyCombination] {
         [
             HotkeyCombination(keyBase: [.command], key: .kVK_ANSI_V) {
-                guard let nsImage = Clipboard.shared.getImage() else { return }
-                let image = Image(nsImage: nsImage)
-                updateSelectedImage(image)
+                if let nsImage = Clipboard.shared.getImage() {
+                    let image = Image(nsImage: nsImage)
+                    updateSelectedImage(image)
+                }
+                
+                if let clipboardText = Clipboard.shared.getText() {
+                    prompt = clipboardText
+                }
             }
         ]
     }
     
-    func updateSelectedImage(_ image: Image) {
+    var imageSupportMissing: some View {
+        HStack {
+            Text("This model does not support images. Supported models are llava and bakllava.")
+                .font(.caption2)
+            Spacer()
+        }
+        .padding(.top)
+    }
+    
+    private func updateSelectedImage(_ image: Image) {
         selectedImage = image
     }
     
@@ -98,7 +113,6 @@ struct PromptPanelView: View {
                 
                 if let image = selectedImage {
                     HStack {
-                        
                         RemovableImage(
                             image: image,
                             onClick: {selectedImage = nil},
@@ -118,6 +132,9 @@ struct PromptPanelView: View {
                     .transition(.slide)
                     .showIf(!fileDropActive)
                 }
+                
+                imageSupportMissing
+                    .showIf(!imageSupport && selectedImage != nil)
             }
             .padding(12)
             .background {
@@ -156,7 +173,7 @@ struct PromptPanelView: View {
 }
 
 #Preview {
-    PromptPanelView(onSubmit: {_,_  in}, onLayoutUpdate: {})
+    PromptPanelView(onSubmit: {_,_  in}, onLayoutUpdate: {}, imageSupport: false)
 }
 
 #endif

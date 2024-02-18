@@ -38,6 +38,25 @@ struct InputFieldsView: View {
         }
     }
     
+    private func updateSelectedImage(_ image: Image) {
+        selectedImage = image
+    }
+    
+    var hotkeys: [HotkeyCombination] {
+        [
+            HotkeyCombination(keyBase: [.command], key: .kVK_ANSI_V) {
+                if let nsImage = Clipboard.shared.getImage() {
+                    let image = Image(nsImage: nsImage)
+                    updateSelectedImage(image)
+                }
+                
+                if let clipboardText = Clipboard.shared.getText() {
+                    message = clipboardText
+                }
+            }
+        ]
+    }
+    
     var body: some View {
         HStack(spacing: 20) {
             if let image = selectedImage {
@@ -49,7 +68,7 @@ struct InputFieldsView: View {
                 .padding(5)
             }
             
-            TextField("Message", text: $message, axis: .vertical)
+            TextField("Message", text: $message.animation(.easeOut(duration: 0.3)), axis: .vertical)
                 .focused($isFocusedInput)
                 .frame(minHeight: 40)
                 .font(.system(size: 14))
@@ -63,6 +82,7 @@ struct InputFieldsView: View {
                 }
             /// TextField bypasses drop area
                 .allowsHitTesting(!fileDropActive)
+                .addCustomHotkeys(hotkeys)
             
             SimpleFloatingButton(systemImage: "photo.fill", onClick: { fileSelectingActive.toggle() })
                 .showIf(selectedModel?.supportsImages ?? false)
@@ -87,12 +107,11 @@ struct InputFieldsView: View {
             case .loading:
                 SimpleFloatingButton(systemImage: "square.fill", onClick: onStopGenerateTap)
             default:
-                SimpleFloatingButton(
-                    systemImage: "paperplane.fill",
-                    onClick: { Task { sendMessage() } }
-                )
+                SimpleFloatingButton(systemImage: "paperplane.fill", onClick: { Task { sendMessage() } })
+                .showIf(!message.isEmpty)
             }
         }
+        .transition(.slide)
         .padding(.horizontal)
         .padding(.vertical, 5)
         .overlay(
