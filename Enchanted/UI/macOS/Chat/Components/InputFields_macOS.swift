@@ -65,6 +65,7 @@ struct InputFieldsView: View {
                 .allowsHitTesting(!fileDropActive)
             
             SimpleFloatingButton(systemImage: "photo.fill", onClick: { fileSelectingActive.toggle() })
+                .showIf(selectedModel?.supportsImages ?? false)
                 .fileImporter(isPresented: $fileSelectingActive,
                               allowedContentTypes: [.png, .jpeg, .tiff],
                               onCompletion: { result in
@@ -80,6 +81,7 @@ struct InputFieldsView: View {
                         print(error)
                     }
                 })
+            
             
             switch conversationState {
             case .loading:

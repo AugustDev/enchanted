@@ -114,16 +114,15 @@ struct PromptPanelView: View {
                     .layoutPriority(1)
                     .padding()
                     .background {
-                        RoundedRectangle(cornerRadius: 15, style: .continuous)
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
                             .fill(.thinMaterial)
                     }
                     .showIf(!fileDropActive)
                 }
             }
-            .animation(.default)
             .padding(12)
             .background {
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                RoundedRectangle(cornerRadius: 8)
                     .fill(.ultraThinMaterial)
             }
         }

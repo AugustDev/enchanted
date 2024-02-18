@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct PromptPanel: View {
+    @AppStorage("colorScheme") private var colorScheme: AppColorScheme = .system
     @AppStorage("systemPrompt") private var systemPrompt: String = ""
     @State var conversationStore = ConversationStore.shared
     @State var languageModelStore = LanguageModelStore.shared
@@ -29,6 +30,7 @@ struct PromptPanel: View {
     
     var body: some View {
         PromptPanelView(onSubmit: sendMessage, onLayoutUpdate: onLayoutUpdate)
+            .preferredColorScheme(colorScheme.toiOSFormat)
             .edgesIgnoringSafeArea(.all)
     }
 }
