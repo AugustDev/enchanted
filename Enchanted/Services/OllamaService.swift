@@ -42,6 +42,4 @@ class OllamaService: @unchecked Sendable {
     func reachable() async -> Bool {
         return await ollamaKit.reachable()
     }
-    
-    func chat(prompt: String, model: String) {}
 }
