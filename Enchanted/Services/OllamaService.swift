@@ -8,29 +8,28 @@
 import Foundation
 import OllamaKit
 
-struct OllamaService {
-    static var shared = OllamaService()
+class OllamaService: @unchecked Sendable {
+    static let shared = OllamaService()
     
-    static func reinit(url: String) {
-        OllamaService.shared = OllamaService()
-    }
-    
-    let ollamaKit: OllamaKit
+    var ollamaKit: OllamaKit
     
     init() {
-        var ollamaUrl = "http://localhost"
-        if var endpoint = UserDefaults.standard.string(forKey: "ollamaUri") {
-            if !endpoint.contains("http") {
-                endpoint = "http://" + endpoint
+        ollamaKit = OllamaKit(baseURL: URL(string: "http://localhost:11434")!)
+        initEndpoint()
+    }
+    
+    func initEndpoint(url: String? = nil) {
+        let defaultUrl = "http://localhost:11434"
+        let localStorageUrl = UserDefaults.standard.string(forKey: "ollamaUri")
+        if var ollamaUrl = [localStorageUrl, defaultUrl].compactMap({$0}).filter({$0.count > 0}).first {
+            if !ollamaUrl.contains("http") {
+                ollamaUrl = "http://" + ollamaUrl
             }
-            ollamaUrl = endpoint
-        }
-
-        print("url", ollamaUrl)
-        if let url = URL(string: ollamaUrl) {
-            ollamaKit =  OllamaKit(baseURL: url)
-        } else {
-            ollamaKit = OllamaKit(baseURL: URL(string: "http://localhost")!)
+            
+            if let url = URL(string: ollamaUrl) {
+                ollamaKit =  OllamaKit(baseURL: url)
+                return
+            }
         }
     }
     
@@ -43,6 +42,4 @@ struct OllamaService {
     func reachable() async -> Bool {
         return await ollamaKit.reachable()
     }
-    
-    func chat(prompt: String, model: String) {}
 }

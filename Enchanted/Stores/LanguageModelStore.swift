@@ -17,8 +17,6 @@ final class LanguageModelStore {
     var supportsImages = false
     var selectedModel: LanguageModelSD?
     
-    private var imageModelNames = ["llava"]
-    
     init(swiftDataService: SwiftDataService) {
         self.swiftDataService = swiftDataService
     }
@@ -33,8 +31,6 @@ final class LanguageModelStore {
         } else {
             selectedModel = nil
         }
-        
-        checkModelFeatures()
     }
     
     @MainActor
@@ -47,20 +43,6 @@ final class LanguageModelStore {
         }
     }
     
-    func checkModelFeatures() {
-        for modelName in imageModelNames {
-            if let selectedModelName = selectedModel?.name {
-                if selectedModelName.contains(modelName) {
-                    supportsImages = true
-                    return
-                }
-            }
-        }
-        
-        supportsImages = false
-    }
-    
-    @MainActor
     func loadModels() async throws {
         print("loading models")
         let localModels = try await swiftDataService.fetchModels()
@@ -77,7 +59,7 @@ final class LanguageModelStore {
         print("completed saveModels()")
         
         models = try await swiftDataService.fetchModels()
-        print("loaded models")
+        sleepTest("loadModels")
     }
     
     func deleteAllModels() async throws {

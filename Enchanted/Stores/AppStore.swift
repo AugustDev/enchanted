@@ -25,7 +25,7 @@ final class AppStore {
         stopCheckingReachability()
     }
     
-    private func startCheckingReachability(interval: TimeInterval = 10.0) {
+    private func startCheckingReachability(interval: TimeInterval = 5) {
         timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
             Task { [weak self] in
                 let status = await self?.reachable() ?? false

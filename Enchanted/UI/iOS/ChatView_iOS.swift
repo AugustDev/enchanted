@@ -19,7 +19,6 @@ struct ChatView: View {
     var conversationState: ConversationState
     var onStopGenerateTap: @MainActor () -> ()
     var reachable: Bool
-    var modelSupportsImages: Bool
     var onSelectModel: @MainActor (_ model: LanguageModelSD?) -> ()
     
     private var selectedModel: LanguageModelSD?
@@ -29,7 +28,7 @@ struct ChatView: View {
     @FocusState private var isFocusedInput: Bool
     
     /// Image selection
-    @State private var avatarItem: PhotosPickerItem?
+    @State private var pickerSelectorActive: PhotosPickerItem?
     @State private var selectedImage: Image?
     
     init(
@@ -55,9 +54,30 @@ struct ChatView: View {
         self.conversationState = conversationState
         self.onStopGenerateTap = onStopGenerateTap
         self.reachable = reachable
-        self.modelSupportsImages = modelSupportsImages
         self.onSelectModel = onSelectModel
         self.selectedModel = selectedModel
+    }
+    
+    private func onMessageSubmit() {
+        Task {
+            await Haptics.shared.mediumTap()
+            
+            guard let selectedModel = selectedModel else { return }
+            
+            await onSendMessageTap(
+                message,
+                selectedModel,
+                selectedImage,
+                editMessage?.id.uuidString
+            )
+            
+            withAnimation {
+                isFocusedInput = false
+                editMessage = nil
+                selectedImage = nil
+                message = ""
+            }
+        }
     }
     
     var header: some View {
@@ -95,29 +115,30 @@ struct ChatView: View {
     
     var inputFields: some View {
         HStack(spacing: 10) {
-            PhotosPicker(selection: $avatarItem) {
+            PhotosPicker(selection: $pickerSelectorActive) {
                 Image(systemName: "photo")
                     .resizable()
                     .scaledToFit()
                     .foregroundStyle(.foreground)
                     .frame(height: 19)
             }
-            .onChange(of: avatarItem) {
+            .onChange(of: pickerSelectorActive) {
                 Task {
-                    if let loaded = try? await avatarItem?.loadTransferable(type: Image.self) {
+                    if let loaded = try? await pickerSelectorActive?.loadTransferable(type: Image.self) {
                         selectedImage = loaded
                     } else {
                         print("Failed")
                     }
                 }
             }
-            .showIf(modelSupportsImages)
+            .showIf(selectedModel?.supportsImages ?? false)
             
-
+            
             HStack {
                 SelectedImageView(image: $selectedImage)
                 
                 TextField("Message", text: $message, axis: .vertical)
+                    .autocorrectionDisabled()
                     .focused($isFocusedInput)
                     .frame(minHeight: 40)
                     .font(.system(size: 14))
@@ -139,54 +160,14 @@ struct ChatView: View {
                         style: StrokeStyle(lineWidth: isRecording ? 2 : 0.5)
                     )
             )
-
             
-            ZStack {
-                Circle()
-                    .foregroundColor(Color.labelCustom)
-                    .frame(width: 30, height: 30)
-                
-                switch conversationState {
-                case .loading:
-                    Button(action: onStopGenerateTap) {
-                        Image(systemName: "square.fill")
-                            .renderingMode(.template)
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundColor(Color.bgCustom)
-                            .frame(height: 12)
-                    }
-                default:
-                    Button(action: {
-                        Task {
-                            Haptics.shared.mediumTap()
-                            
-                            guard let selectedModel = selectedModel else { return }
-                            
-                            await onSendMessageTap(
-                                message,
-                                selectedModel,
-                                selectedImage,
-                                editMessage?.id.uuidString
-                            )
-                            withAnimation {
-                                isFocusedInput = false
-                                editMessage = nil
-                                selectedImage = nil
-                                message = ""
-                            }
-                        }
-                    }) {
-                        Image(systemName: "arrow.up")
-                            .renderingMode(.template)
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundColor(Color.bgCustom)
-                            .frame(height: 15)
-                    }
-                    /// MARK :- Check iOS
-                    .buttonStyle(.plain)
-                }
+            switch conversationState {
+            case .loading:
+                SimpleFloatingButton(systemImage: "square.fill", onClick: onStopGenerateTap)
+                    .frame(width: 12)
+            default:
+                SimpleFloatingButton(systemImage: "paperplane.fill", onClick: onMessageSubmit)
+                    .frame(width: 18)
             }
         }
     }

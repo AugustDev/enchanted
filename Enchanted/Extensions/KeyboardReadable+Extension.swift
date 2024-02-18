@@ -11,11 +11,11 @@ import Combine
 #if os(iOS)
 /// Publisher to read keyboard changes.
 protocol KeyboardReadable {
-    var keyboardPublisher: AnyPublisher<Bool, Never> { get }
+    @MainActor var keyboardPublisher: AnyPublisher<Bool, Never> { get }
 }
 
 extension KeyboardReadable {
-    var keyboardPublisher: AnyPublisher<Bool, Never> {
+    @MainActor var keyboardPublisher: AnyPublisher<Bool, Never> {
         Publishers.Merge(
             NotificationCenter.default
                 .publisher(for: UIResponder.keyboardWillShowNotification)

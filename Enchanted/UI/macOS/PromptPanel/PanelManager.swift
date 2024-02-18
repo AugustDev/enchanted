@@ -15,9 +15,9 @@ class PanelManager: NSObject, NSApplicationDelegate {
         super.init()
     }
     
-    @objc func togglePanel() {
+    @MainActor @objc func togglePanel() {
         if panel == nil {
-            createPanel()
+            showPanel()
             return
         }
         
@@ -28,16 +28,17 @@ class PanelManager: NSObject, NSApplicationDelegate {
         }
     }
     
-    @objc func hidePanel() {
+    @MainActor @objc func hidePanel() {
         panel.orderOut(nil)
     }
     
-    @objc func showPanel() {
+    @MainActor @objc func showPanel() {
+        createPanel()
         panel.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
     }
     
-    @objc func onSubmitMessage() {
+    @MainActor @objc func onSubmitMessage() {
         hidePanel()
         
         /// Focus Enchanted
@@ -52,22 +53,57 @@ class PanelManager: NSObject, NSApplicationDelegate {
         }
     }
     
-    func createPanel() {
-        let contentView = PromptPanel(onSubmitPanel: onSubmitMessage)
-            .edgesIgnoringSafeArea(.all)
-            .padding(.bottom, -28)
+    @MainActor func createPanel() {
+        let contentView = PromptPanel(onSubmitPanel: onSubmitMessage, onLayoutUpdate: updatePanelSizeIfNeeded)
+        let hostingView = NSHostingView(rootView: contentView)
         
-        panel = FloatingPanel(contentRect: NSRect(x: 0, y: 0, width: 512, height: 80), backing: .buffered, defer: false)
-        panel.title = "Floating Panel Title"
-        panel.contentView = NSHostingView(rootView: contentView)
+        let idealSize = hostingView.fittingSize
+        
+        panel = FloatingPanel(contentRect: NSRect(x: 0, y: 0, width: idealSize.width, height: idealSize.height), backing: .buffered, defer: false)
+        panel.contentView = hostingView
+        panel.backgroundColor = .clear
         panel.center()
         panel.orderFront(nil)
-        showPanel()
+    }
+    
+    @MainActor func updatePanelSizeIfNeeded() {
+        guard let hostingView = panel.contentView as? NSHostingView<PromptPanel> else { return }
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else { return }
+            let newSize = hostingView.fittingSize
+            
+            if newSize == .zero {
+                return
+            }
+            
+            if strongSelf.panel.frame.size != newSize {
+                NSAnimationContext.runAnimationGroup({ context in
+                    context.duration = 0.2
+                    context.timingFunction = CAMediaTimingFunction(name: .easeOut)
+                    
+                    // Calculate the difference in height
+                    let heightDifference = newSize.height - strongSelf.panel.frame.size.height
+                    
+                    // Adjust the y position to keep the bottom edge constant
+                    let newY = strongSelf.panel.frame.origin.y - heightDifference
+                    
+                    strongSelf.panel.animator().setFrame(
+                        NSRect(x: strongSelf.panel.frame.origin.x,
+                               y: newY, // Use the new Y
+                               width: newSize.width,
+                               height: newSize.height),
+                        display: true)
+                }, completionHandler: {
+                    print("Animation completed")
+                })
+            }
+        }
     }
 }
 
 extension PanelManager {
-    func windowDidResignKey(_ notification: Notification) {
+    @MainActor func windowDidResignKey(_ notification: Notification) {
         if let panel = notification.object as? FloatingPanel, panel == self.panel {
             panel.close()
         }

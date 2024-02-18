@@ -25,6 +25,7 @@ final class LanguageModelSD: Identifiable {
     }
 }
 
+// MARK: - Helpers
 extension LanguageModelSD {
     var prettyName: String {
         guard let modelName = name.components(separatedBy: ":").first else {
@@ -42,9 +43,24 @@ extension LanguageModelSD {
         return ""
     }
     
+    var supportsImages: Bool {
+        let imageSupportedModels = ["llava"]
+        for modelName in imageSupportedModels {
+            if name.contains(modelName) {
+                return true
+            }
+        }
+        return false
+    }
+    
     static let sample: [LanguageModelSD] = [
         .init(name: "Llama:latest"),
         .init(name: "Mistral:latest")
     ]
 }
 
+
+// MARK: - @unchecked Sendable
+extension LanguageModelSD: @unchecked Sendable {
+    /// We hide compiler warnings for concurency. We have to make sure to modify the data only via SwiftDataManager to ensure concurrent operations.
+}

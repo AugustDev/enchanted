@@ -17,6 +17,8 @@ struct InputFieldsView: View {
     @Binding var editMessage: MessageSD?
     
     @State private var selectedImage: Image?
+    @State private var fileDropActive: Bool = false
+    @State private var fileSelectingActive: Bool = false
     @FocusState private var isFocusedInput: Bool
     
     @MainActor private func sendMessage() {
@@ -36,50 +38,80 @@ struct InputFieldsView: View {
         }
     }
     
+    private func updateSelectedImage(_ image: Image) {
+        selectedImage = image
+    }
+    
+    var hotkeys: [HotkeyCombination] {
+        [
+            HotkeyCombination(keyBase: [.command], key: .kVK_ANSI_V) {
+                if let nsImage = Clipboard.shared.getImage() {
+                    let image = Image(nsImage: nsImage)
+                    updateSelectedImage(image)
+                }
+                
+                if let clipboardText = Clipboard.shared.getText() {
+                    message = clipboardText
+                }
+            }
+        ]
+    }
+    
     var body: some View {
-        HStack {
-            TextField("Message", text: $message, axis: .vertical)
+        HStack(spacing: 20) {
+            if let image = selectedImage {
+                RemovableImage(
+                    image: image,
+                    onClick: {selectedImage = nil},
+                    height: 70
+                )
+                .padding(5)
+            }
+            
+            TextField("Message", text: $message.animation(.easeOut(duration: 0.3)), axis: .vertical)
                 .focused($isFocusedInput)
                 .frame(minHeight: 40)
                 .font(.system(size: 14))
                 .textFieldStyle(.plain)
                 .onSubmit {
-                    sendMessage()
+                    if NSApp.currentEvent?.modifierFlags.contains(.shift) == true {
+                        message += "\n"
+                    } else {
+                        sendMessage()
+                    }
                 }
+            /// TextField bypasses drop area
+                .allowsHitTesting(!fileDropActive)
+                .addCustomHotkeys(hotkeys)
             
-            ZStack {
-                Circle()
-                    .foregroundColor(Color.labelCustom)
-                    .frame(width: 30, height: 30)
-                
-                switch conversationState {
-                case .loading:
-                    Button(action: onStopGenerateTap) {
-                        Image(systemName: "square.fill")
-                            .renderingMode(.template)
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundColor(Color.bgCustom)
-                            .frame(height: 12)
-                    }
-                    .buttonStyle(.plain)
-                default:
-                    Button(action: {
-                        Task {
-                            sendMessage()
+            SimpleFloatingButton(systemImage: "photo.fill", onClick: { fileSelectingActive.toggle() })
+                .showIf(selectedModel?.supportsImages ?? false)
+                .fileImporter(isPresented: $fileSelectingActive,
+                              allowedContentTypes: [.png, .jpeg, .tiff],
+                              onCompletion: { result in
+                    switch result {
+                    case .success(let url):
+                        guard url.startAccessingSecurityScopedResource() else { return }
+                        if let imageData = try? Data(contentsOf: url),
+                           let nsImage = NSImage(data: imageData) {
+                            selectedImage = Image(nsImage: nsImage)
                         }
-                    }) {
-                        Image(systemName: "arrow.up")
-                            .renderingMode(.template)
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundColor(Color.bgCustom)
-                            .frame(height: 15)
+                        url.stopAccessingSecurityScopedResource()
+                    case .failure(let error):
+                        print(error)
                     }
-                    .buttonStyle(.plain)
-                }
+                })
+            
+            
+            switch conversationState {
+            case .loading:
+                SimpleFloatingButton(systemImage: "square.fill", onClick: onStopGenerateTap)
+            default:
+                SimpleFloatingButton(systemImage: "paperplane.fill", onClick: { Task { sendMessage() } })
+                .showIf(!message.isEmpty)
             }
         }
+        .transition(.slide)
         .padding(.horizontal)
         .padding(.vertical, 5)
         .overlay(
@@ -89,6 +121,24 @@ struct InputFieldsView: View {
                     style: StrokeStyle(lineWidth: 1)
                 )
         )
+        .overlay {
+            if fileDropActive {
+                DragAndDrop(cornerRadius: 10)
+            }
+        }
+        .animation(.default, value: fileDropActive)
+        .onDrop(of: [.image], isTargeted: $fileDropActive.animation(), perform: { providers in
+            guard let provider = providers.first else { return false }
+            _ = provider.loadDataRepresentation(for: .image) { data, error in
+                if error == nil, let data {
+                    if let nsImage = NSImage(data: data) {
+                        selectedImage = Image(nsImage: nsImage)
+                    }
+                }
+            }
+            
+            return true
+        })
     }
 }
 

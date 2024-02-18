@@ -36,3 +36,8 @@ extension ConversationSD {
         ConversationSD(name: "What is QFT?", updatedAt: Calendar.current.date(byAdding: .day, value: -2, to: Date.now)!)
     ]
 }
+
+// MARK: - @unchecked Sendable
+extension ConversationSD: @unchecked Sendable {
+    /// We hide compiler warnings for concurency. We have to make sure to modify the data only via SwiftDataManager to ensure concurrent operations.
+}
