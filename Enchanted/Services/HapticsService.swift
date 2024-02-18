@@ -8,7 +8,7 @@
 #if os(iOS)
 import UIKit
 
-class Haptics {
+class Haptics: @unchecked Sendable {
     static let shared = Haptics()
     
     private init() { }

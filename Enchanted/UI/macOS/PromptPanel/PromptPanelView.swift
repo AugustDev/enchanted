@@ -29,9 +29,7 @@ struct PromptPanelView: View {
     }
     
     func updateSelectedImage(_ image: Image) {
-        withAnimation(.easeOut(duration: 0.1)) {
-            selectedImage = image
-        }
+        selectedImage = image
     }
     
     var dynamicFont: Font {
@@ -56,11 +54,11 @@ struct PromptPanelView: View {
             TextField("How can I help today?", text: $prompt, axis: .vertical)
                 .font(dynamicFont)
                 .minimumScaleFactor(0.4)
-                .frame(minHeight: 40, maxHeight: 200)
                 .focusEffectDisabled()
                 .background(Color.clear)
                 .focused($focused, equals: true)
                 .textFieldStyle(.plain)
+                .lineLimit(5, reservesSpace: false)
                 .onSubmit {
                     Task { @MainActor in
                         if NSApp.currentEvent?.modifierFlags.contains(.shift) == true {
@@ -74,21 +72,20 @@ struct PromptPanelView: View {
                 .allowsHitTesting(!fileDropActive)
                 .layoutPriority(-1)
         }
-        .animation(.none)
     }
     
     var body: some View {
         VStack(spacing: 0) {
-            //            ZStack(alignment: .top) {
-            //                VortexView(.splash.makeUniqueCopy()) {
-            //                    Circle()
-            //                        .fill(.white)
-            //                        .frame(width: 20, height: 20)
-            //                        .tag("circle")
-            //                }
-            //            }
-            //            .frame(height: 50)
-            //            .background(Color.clear)
+            //                        ZStack(alignment: .top) {
+            //                            VortexView(.splash.makeUniqueCopy()) {
+            //                                Circle()
+            //                                    .fill(.white)
+            //                                    .frame(width: 20, height: 20)
+            //                                    .tag("circle")
+            //                            }
+            //                        }
+            //                        .frame(height: 50)
+            //                        .background(Color.clear)
             
             VStack(alignment: .leading) {
                 inputField
@@ -101,6 +98,7 @@ struct PromptPanelView: View {
                 
                 if let image = selectedImage {
                     HStack {
+                        
                         RemovableImage(
                             image: image,
                             onClick: {selectedImage = nil},
@@ -117,13 +115,13 @@ struct PromptPanelView: View {
                         RoundedRectangle(cornerRadius: 8, style: .continuous)
                             .fill(.thinMaterial)
                     }
+                    .transition(.slide)
                     .showIf(!fileDropActive)
                 }
             }
             .padding(12)
             .background {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(.ultraThinMaterial)
+                RoundedRectangle(cornerRadius: 8).fill(.ultraThinMaterial)
             }
         }
         .frame(minWidth: 500, maxWidth: 500)
