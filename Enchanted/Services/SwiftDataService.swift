@@ -32,6 +32,7 @@ final actor SwiftDataService: ModelActor {
         }()
         
         self.modelContext = ModelContext(sharedModelContainer)
+        self.modelContext.autosaveEnabled = false
         modelContainer = sharedModelContainer
         modelExecutor = DefaultSerialModelExecutor(modelContext: modelContext)
     }

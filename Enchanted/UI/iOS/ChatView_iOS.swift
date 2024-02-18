@@ -138,6 +138,7 @@ struct ChatView: View {
                 SelectedImageView(image: $selectedImage)
                 
                 TextField("Message", text: $message, axis: .vertical)
+                    .autocorrectionDisabled()
                     .focused($isFocusedInput)
                     .frame(minHeight: 40)
                     .font(.system(size: 14))

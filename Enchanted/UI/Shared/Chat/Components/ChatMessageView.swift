@@ -193,6 +193,7 @@ struct ChatMessageView: View {
                             .padding(.bottom, 2)
                             .frame(height: 27)
                         
+//                        Text(text)
                         Markdown(text)
                             .textSelection(.enabled)
                             .markdownTheme(enchantedTheme)

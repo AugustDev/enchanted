@@ -100,6 +100,7 @@
 		FF1002722B276EC10011A4DC /* AppColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColorScheme.swift; sourceTree = "<group>"; };
 		FF1002742B278C170011A4DC /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		FF15EF692B826C0300D4A541 /* SimpleFloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleFloatingButton.swift; sourceTree = "<group>"; };
+		FF15EF6B2B82863400D4A541 /* OllamaKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = OllamaKit; path = ../OllamaKit; sourceTree = "<group>"; };
 		FF24B30D2B66BE8500AB618F /* RunningBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningBorder.swift; sourceTree = "<group>"; };
 		FF2F03412B795E0B00349855 /* Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipboard.swift; sourceTree = "<group>"; };
 		FF2F03432B79631800349855 /* Button+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Extension.swift"; sourceTree = "<group>"; };
@@ -323,6 +324,7 @@
 		FFEC32842B24779A003E5C04 = {
 			isa = PBXGroup;
 			children = (
+				FF15EF6B2B82863400D4A541 /* OllamaKit */,
 				FFEC328F2B24779A003E5C04 /* Enchanted */,
 				FFEC328E2B24779A003E5C04 /* Products */,
 			);

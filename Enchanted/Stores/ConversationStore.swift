@@ -21,7 +21,11 @@ final class ConversationStore: Sendable {
     /// For some reason (SwiftUI bug / too frequent UI updates) updating UI for each stream message sometimes freezes the UI.
     /// Throttling UI updates seem to fix the issue.
     private var currentMessageBuffer: String = ""
-    private let throttler = Throttler(delay: 0.25)
+    #if os(macOS)
+    private let throttler = Throttler(delay: 0.1)
+    #else
+    private let throttler = Throttler(delay: 0.1)
+    #endif
     
     var conversationState: ConversationState = .completed
     var conversations: [ConversationSD] = []
