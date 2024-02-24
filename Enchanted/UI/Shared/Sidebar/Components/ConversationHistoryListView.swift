@@ -65,7 +65,7 @@ struct ConversationHistoryList: View {
                             Text(dailyConversation.name)
                                 .lineLimit(1)
                                 .font(.system(size: 16))
-                                .fontWeight(.medium)
+                                .fontWeight(.regular)
                                 .foregroundColor(Color(.label))
                             Spacer()
                         }

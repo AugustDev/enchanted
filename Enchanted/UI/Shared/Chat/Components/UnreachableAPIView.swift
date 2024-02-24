@@ -41,9 +41,9 @@ struct UnreachableAPIView: View {
         .background(Color(.pink).opacity(0.2))
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .padding()
-        .sheet(isPresented: $showSettings) {
-            Settings()
-        }
+       .sheet(isPresented: $showSettings) {
+           Settings()
+       }
     }
 }
 

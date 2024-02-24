@@ -59,7 +59,6 @@ final class LanguageModelStore {
         print("completed saveModels()")
         
         models = try await swiftDataService.fetchModels()
-        sleepTest("loadModels")
     }
     
     func deleteAllModels() async throws {

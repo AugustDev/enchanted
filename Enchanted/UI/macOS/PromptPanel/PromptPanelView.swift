@@ -91,16 +91,16 @@ struct PromptPanelView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            //                        ZStack(alignment: .top) {
-            //                            VortexView(.splash.makeUniqueCopy()) {
-            //                                Circle()
-            //                                    .fill(.white)
-            //                                    .frame(width: 20, height: 20)
-            //                                    .tag("circle")
-            //                            }
-            //                        }
-            //                        .frame(height: 50)
-            //                        .background(Color.clear)
+            ZStack(alignment: .top) {
+                VortexView(.splash.makeUniqueCopy()) {
+                    Circle()
+                        .fill(.white)
+                        .frame(width: 20, height: 20)
+                        .tag("circle")
+                }
+            }
+            .frame(height: 50)
+            .background(Color.clear)
             
             VStack(alignment: .leading) {
                 inputField
