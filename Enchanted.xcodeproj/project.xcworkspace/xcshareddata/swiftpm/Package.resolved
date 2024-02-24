@@ -42,7 +42,7 @@
       "location" : "https://github.com/AugustDev/OllamaKit",
       "state" : {
         "branch" : "main",
-        "revision" : "d33b81dd674b71e9718fb4b1a180e7e8bcfb7551"
+        "revision" : "faf70d22031fdc66a558275eed49cbebb6ebb89e"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gonzalezreal/swift-markdown-ui",
       "state" : {
-        "revision" : "5df8a4adedd6ae4eb2455ef60ff75183984daeb8",
-        "version" : "2.2.0"
+        "revision" : "ae799d015a5374708f7b4c85f3294c05f2a564e2",
+        "version" : "2.3.0"
       }
     },
     {
