@@ -58,13 +58,13 @@ struct ChatView: View {
                 if !reachable {
                     UnreachableAPIView()
                 }
-                
+
                 InputFieldsView(
                     message: $message,
                     conversationState: conversationState,
                     onStopGenerateTap: onStopGenerateTap,
                     selectedModel: selectedModel,
-                    onSendMessageTap: onSendMessageTap, 
+                    onSendMessageTap: onSendMessageTap,
                     editMessage: $editMessage
                 )
                 .padding()
@@ -79,6 +79,7 @@ struct ChatView: View {
                 onNewConversationTap: onNewConversationTap
             )
         }
+        .toolbarTitleDisplayMode(.inlineLarge)
         .onChange(of: editMessage, initial: false) { _, newMessage in
             if let newMessage = newMessage {
                 message = newMessage.content

@@ -13,9 +13,10 @@ import SwiftUI
 final class AppStore {
     static let shared = AppStore()
     
+    var isReachable: Bool = true
+    
     private var cancellables = Set<AnyCancellable>()
     private var timer: Timer?
-    var isReachable: Bool = true
 
     init() {
         startCheckingReachability()

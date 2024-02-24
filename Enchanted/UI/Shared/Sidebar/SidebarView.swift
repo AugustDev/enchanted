@@ -13,12 +13,13 @@ struct SidebarView: View {
     var onConversationTap: (_ conversation: ConversationSD) -> ()
     var onConversationDelete: (_ conversation: ConversationSD) -> ()
     var onDeleteDailyConversations: (_ date: Date) -> ()
-    @State var showSettings = false
+    @State private var showSettings = false
+    @State private var showRetrieval = false
     
     private func onSettingsTap() {
         Task {
             showSettings.toggle()
-            await Haptics.shared.mediumTap()
+            Haptics.shared.mediumTap()
         }
     }
     
@@ -26,8 +27,12 @@ struct SidebarView: View {
         openWindow(id: "keyboard-shortcuts")
     }
     
+    private func showRetrievalTap() {
+        showRetrieval.toggle()
+    }
+    
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             ScrollView() {
                 ConversationHistoryList(
                     conversations: conversations,
@@ -42,6 +47,8 @@ struct SidebarView: View {
             
 #if os(macOS)
             SidebarButton(title: "Shortcuts", image: "keyboard.fill", onClick: showKeyboardShortcuts)
+            
+            SidebarButton(title: "Retrieval", image: "folder", onClick: showRetrievalTap)
 #endif
             
             SidebarButton(title: "Settings", image: "gearshape.fill", onClick: onSettingsTap)
@@ -50,6 +57,9 @@ struct SidebarView: View {
         .padding()
         .sheet(isPresented: $showSettings) {
             Settings()
+        }
+        .sheet(isPresented: $showRetrieval) {
+            Retrieval()
         }
     }
 }

@@ -21,6 +21,8 @@ final actor SwiftDataService: ModelActor {
                 LanguageModelSD.self,
                 ConversationSD.self,
                 MessageSD.self,
+                DatabaseSD.self,
+                DocumentSD.self
             ])
             let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
             
@@ -124,6 +126,21 @@ extension SwiftDataService {
     func createMessage(_ mesasge: MessageSD) throws {
         self.modelContext.insert(mesasge)
         try modelContext.saveChanges()
+    }
+}
+
+// MARK: - Database
+extension SwiftDataService {
+    func createDatabase(name: String, indexPath: String) throws {
+        let db = DatabaseSD(name: name, indexPath: indexPath)
+        self.modelContext.insert(db)
+        try modelContext.saveChanges()
+    }
+    
+    func getDatabases() throws -> [DatabaseSD] {
+        let sortDescriptor = SortDescriptor(\DatabaseSD.updatedAt, order: .reverse)
+        let fetchDescriptor = FetchDescriptor<DatabaseSD>(sortBy: [sortDescriptor])
+        return try modelContext.fetch(fetchDescriptor)
     }
 }
 

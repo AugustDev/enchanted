@@ -15,23 +15,43 @@ struct ToolbarView: View {
     var onNewConversationTap: () -> ()
     
     var body: some View {
-        ModelSelectorView(
-            modelsList: modelsList,
-            selectedModel: selectedModel,
-            onSelectModel: onSelectModel,
-            showChevron: false
-        )
-        .frame(height: 20)
-        
-        Button(action: onNewConversationTap) {
-            Image(systemName: "square.and.pencil")
-                .renderingMode(.template)
-                .resizable()
-                .scaledToFit()
-                .frame(height: 20)
-                .foregroundColor(Color.labelCustom)
+        HStack {
+            
+            Button(action: onNewConversationTap) {
+                HStack(alignment: .center) {
+                    Image(systemName: "opticaldiscdrive")
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 14)
+                        .foregroundColor(Color.labelCustom)
+                    
+                    Text("Retrieval")
+                        .font(.system(size: 14))
+                }
+                .padding(.vertical, 10)
+                
+            }
+            .keyboardShortcut(KeyEquivalent("r"), modifiers: .command)
+            
+            ModelSelectorView(
+                modelsList: modelsList,
+                selectedModel: selectedModel,
+                onSelectModel: onSelectModel,
+                showChevron: false
+            )
+            .frame(height: 20)
+            
+            Button(action: onNewConversationTap) {
+                Image(systemName: "square.and.pencil")
+                    .renderingMode(.template)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 20)
+                    .foregroundColor(Color.labelCustom)
+            }
+            .keyboardShortcut(KeyEquivalent("n"), modifiers: .command)
         }
-        .keyboardShortcut(KeyEquivalent("n"), modifiers: .command)
     }
 }
 

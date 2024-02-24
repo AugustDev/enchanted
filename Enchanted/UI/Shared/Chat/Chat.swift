@@ -26,7 +26,7 @@ struct Chat: View {
             showMenu.toggle()
         }
         Task {
-            await Haptics.shared.mediumTap()
+            Haptics.shared.mediumTap()
         }
     }
     
@@ -59,7 +59,7 @@ struct Chat: View {
     
     func onConversationDelete(_ conversation: ConversationSD) {
         Task {
-            await Haptics.shared.mediumTap()
+            Haptics.shared.mediumTap()
             try? await conversationStore.delete(conversation)
         }
     }
@@ -70,7 +70,7 @@ struct Chat: View {
         }
         
         Task {
-            await Haptics.shared.mediumTap()
+            Haptics.shared.mediumTap()
             try? await languageModelStore.loadModels()
         }
     }

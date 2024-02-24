@@ -24,8 +24,6 @@ struct SidebarButton: View {
                     .lineLimit(1)
                     .font(.system(size: 14))
                     .fontWeight(.regular)
-                
-                Spacer()
             }
             .padding(8)
             .foregroundColor(Color(.label))

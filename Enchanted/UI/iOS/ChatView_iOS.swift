@@ -60,7 +60,7 @@ struct ChatView: View {
     
     private func onMessageSubmit() {
         Task {
-            await Haptics.shared.mediumTap()
+            Haptics.shared.mediumTap()
             
             guard let selectedModel = selectedModel else { return }
             

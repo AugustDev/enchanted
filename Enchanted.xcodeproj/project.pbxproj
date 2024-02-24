@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		FF0146CB2B3DA1DF00A2A9F6 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0146CA2B3DA1DF00A2A9F6 /* Settings.swift */; };
 		FF0146CD2B3DADCA00A2A9F6 /* HapticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0146CC2B3DADCA00A2A9F6 /* HapticsService.swift */; };
+		FF0BF3642B8A2899007C74E6 /* RetrievalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0BF3632B8A2899007C74E6 /* RetrievalView.swift */; };
+		FF0BF3672B8A2FF2007C74E6 /* DatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0BF3662B8A2FF2007C74E6 /* DatabaseView.swift */; };
+		FF0BF3692B8A3009007C74E6 /* DatabaseSD.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0BF3682B8A3009007C74E6 /* DatabaseSD.swift */; };
+		FF0BF36B2B8A3110007C74E6 /* DocumentSD.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0BF36A2B8A3110007C74E6 /* DocumentSD.swift */; };
+		FF0BF36D2B8A313B007C74E6 /* DocumentStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0BF36C2B8A313B007C74E6 /* DocumentStatus.swift */; };
+		FF0BF3722B8A4408007C74E6 /* Retrieval.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0BF3712B8A4408007C74E6 /* Retrieval.swift */; };
+		FF0BF3742B8A4507007C74E6 /* RetrievalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0BF3732B8A4507007C74E6 /* RetrievalStore.swift */; };
+		FF0BF3762B8A6995007C74E6 /* EmptyDatabaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0BF3752B8A6995007C74E6 /* EmptyDatabaseView.swift */; };
 		FF1002302B2482BA0011A4DC /* ChatMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10022F2B2482BA0011A4DC /* ChatMessageView.swift */; };
 		FF1002322B2483A20011A4DC /* Colours+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002312B2483A20011A4DC /* Colours+Extension.swift */; };
 		FF1002392B24BBF20011A4DC /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002382B24BBF20011A4DC /* Chat.swift */; };
@@ -79,6 +87,14 @@
 /* Begin PBXFileReference section */
 		FF0146CA2B3DA1DF00A2A9F6 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		FF0146CC2B3DADCA00A2A9F6 /* HapticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsService.swift; sourceTree = "<group>"; };
+		FF0BF3632B8A2899007C74E6 /* RetrievalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrievalView.swift; sourceTree = "<group>"; };
+		FF0BF3662B8A2FF2007C74E6 /* DatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseView.swift; sourceTree = "<group>"; };
+		FF0BF3682B8A3009007C74E6 /* DatabaseSD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseSD.swift; sourceTree = "<group>"; };
+		FF0BF36A2B8A3110007C74E6 /* DocumentSD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSD.swift; sourceTree = "<group>"; };
+		FF0BF36C2B8A313B007C74E6 /* DocumentStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentStatus.swift; sourceTree = "<group>"; };
+		FF0BF3712B8A4408007C74E6 /* Retrieval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Retrieval.swift; sourceTree = "<group>"; };
+		FF0BF3732B8A4507007C74E6 /* RetrievalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrievalStore.swift; sourceTree = "<group>"; };
+		FF0BF3752B8A6995007C74E6 /* EmptyDatabaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDatabaseView.swift; sourceTree = "<group>"; };
 		FF10022F2B2482BA0011A4DC /* ChatMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageView.swift; sourceTree = "<group>"; };
 		FF1002312B2483A20011A4DC /* Colours+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colours+Extension.swift"; sourceTree = "<group>"; };
 		FF1002382B24BBF20011A4DC /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
@@ -160,6 +176,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FF0BF3612B8A287E007C74E6 /* Retrieval */ = {
+			isa = PBXGroup;
+			children = (
+				FF0BF3652B8A2FCB007C74E6 /* Components */,
+				FF0BF3712B8A4408007C74E6 /* Retrieval.swift */,
+			);
+			path = Retrieval;
+			sourceTree = "<group>";
+		};
+		FF0BF3652B8A2FCB007C74E6 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				FF0BF3632B8A2899007C74E6 /* RetrievalView.swift */,
+				FF0BF3662B8A2FF2007C74E6 /* DatabaseView.swift */,
+				FF0BF3752B8A6995007C74E6 /* EmptyDatabaseView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		FF10022C2B2481790011A4DC /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,6 +226,7 @@
 				FF1002742B278C170011A4DC /* AppStore.swift */,
 				FF1002432B25BB730011A4DC /* ConversationStore.swift */,
 				FF1002452B25BCE70011A4DC /* LanguageModelStore.swift */,
+				FF0BF3732B8A4507007C74E6 /* RetrievalStore.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -201,6 +237,8 @@
 				FF1002492B25BE740011A4DC /* LanguageModelSD.swift */,
 				FF10024B2B25BEA00011A4DC /* MessageSD.swift */,
 				FF10024D2B25C2A70011A4DC /* ConversationSD.swift */,
+				FF0BF3682B8A3009007C74E6 /* DatabaseSD.swift */,
+				FF0BF36A2B8A3110007C74E6 /* DocumentSD.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -283,10 +321,11 @@
 		FF66A51E2B77788D00FAAC1E /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				FF464B172B810966008E5130 /* Components */,
-				FF38F8542B7AB00100546B56 /* PromptPanel */,
-				FF38F84D2B7A7B5300546B56 /* MenuBar */,
 				FF9300D52B778F1A000859F4 /* Chat */,
+				FF464B172B810966008E5130 /* Components */,
+				FF38F84D2B7A7B5300546B56 /* MenuBar */,
+				FF38F8542B7AB00100546B56 /* PromptPanel */,
+				FF0BF3612B8A287E007C74E6 /* Retrieval */,
 			);
 			path = macOS;
 			sourceTree = "<group>";
@@ -398,6 +437,7 @@
 				FF10025D2B2648460011A4DC /* ConversationState.swift */,
 				FF1002722B276EC10011A4DC /* AppColorScheme.swift */,
 				FF7FBE4B2B78E384000901F7 /* SamplePrompt.swift */,
+				FF0BF36C2B8A313B007C74E6 /* DocumentStatus.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -532,10 +572,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF1002442B25BB730011A4DC /* ConversationStore.swift in Sources */,
+				FF0BF36B2B8A3110007C74E6 /* DocumentSD.swift in Sources */,
 				FF15EF6A2B826C0300D4A541 /* SimpleFloatingButton.swift in Sources */,
 				FF24B30E2B66BE8500AB618F /* RunningBorder.swift in Sources */,
 				FF1002602B26499B0011A4DC /* ConversationStatusView.swift in Sources */,
 				FF10024C2B25BEA00011A4DC /* MessageSD.swift in Sources */,
+				FF0BF3692B8A3009007C74E6 /* DatabaseSD.swift in Sources */,
 				FF10023E2B24F4900011A4DC /* OllamaService.swift in Sources */,
 				FFBBF48C2B35051D008D611C /* UIImage+Extension.swift in Sources */,
 				FF1002302B2482BA0011A4DC /* ChatMessageView.swift in Sources */,
@@ -546,6 +588,7 @@
 				FF10026A2B2731C60011A4DC /* ModelSelectorView.swift in Sources */,
 				FF38F84F2B7A7B6700546B56 /* MenuBarControlView_macOS.swift in Sources */,
 				FFBBF48A2B350283008D611C /* SelectedImageView.swift in Sources */,
+				FF0BF3642B8A2899007C74E6 /* RetrievalView.swift in Sources */,
 				FFEC9BDF2B8131B900AFBA63 /* HotKeys.swift in Sources */,
 				FF2F03492B796A6500349855 /* HotkeyService.swift in Sources */,
 				FF9300E02B783945000859F4 /* InputFields_macOS.swift in Sources */,
@@ -553,6 +596,7 @@
 				FF0146CB2B3DA1DF00A2A9F6 /* Settings.swift in Sources */,
 				FF38F8532B7AA9C400546B56 /* ApplicationEntry.swift in Sources */,
 				FF38F85C2B7ABC2C00546B56 /* PromptPanel.swift in Sources */,
+				FF0BF3722B8A4408007C74E6 /* Retrieval.swift in Sources */,
 				FFEC9BE12B81327B00AFBA63 /* DragAndDrop.swift in Sources */,
 				FF2F03442B79631800349855 /* Button+Extension.swift in Sources */,
 				FF1002682B2668790011A4DC /* Date+Extension.swift in Sources */,
@@ -572,6 +616,7 @@
 				FFEC9BE32B81358800AFBA63 /* DeallocPrinter.swift in Sources */,
 				FFBBF4842B34881B008D611C /* SpeechRecogniser.swift in Sources */,
 				FFEC32AA2B24797C003E5C04 /* ChatView_iOS.swift in Sources */,
+				FF0BF36D2B8A313B007C74E6 /* DocumentStatus.swift in Sources */,
 				FF0146CD2B3DADCA00A2A9F6 /* HapticsService.swift in Sources */,
 				FF5FA0D62B35169400BC471D /* Binding+Extension.swift in Sources */,
 				FFE21C782B82353A00A69B9C /* SleepTest.swift in Sources */,
@@ -587,8 +632,11 @@
 				FF2F03422B795E0B00349855 /* Clipboard.swift in Sources */,
 				FF9300DA2B781D97000859F4 /* ToolbarView_macOS.swift in Sources */,
 				FF1002522B2609980011A4DC /* ModelContext+Extension.swift in Sources */,
+				FF0BF3672B8A2FF2007C74E6 /* DatabaseView.swift in Sources */,
+				FF0BF3742B8A4507007C74E6 /* RetrievalStore.swift in Sources */,
 				FF1002752B278C170011A4DC /* AppStore.swift in Sources */,
 				FF1002732B276EC10011A4DC /* AppColorScheme.swift in Sources */,
+				FF0BF3762B8A6995007C74E6 /* EmptyDatabaseView.swift in Sources */,
 				FF10025E2B2648460011A4DC /* ConversationState.swift in Sources */,
 				FFEC9BE72B813A8D00AFBA63 /* RemovableImage.swift in Sources */,
 			);
