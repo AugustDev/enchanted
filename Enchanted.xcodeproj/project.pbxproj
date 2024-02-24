@@ -39,6 +39,8 @@
 		FF2F03442B79631800349855 /* Button+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2F03432B79631800349855 /* Button+Extension.swift */; };
 		FF2F03492B796A6500349855 /* HotkeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2F03482B796A6500349855 /* HotkeyService.swift */; };
 		FF2F03722B79743400349855 /* Magnet in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = FF2F03712B79743400349855 /* Magnet */; };
+		FF33066C2B83BB31007B33E5 /* SidebarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF33066B2B83BB31007B33E5 /* SidebarButton.swift */; };
+		FF33066E2B83CFEC007B33E5 /* KeyboardShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF33066D2B83CFEC007B33E5 /* KeyboardShortcuts.swift */; };
 		FF38F84F2B7A7B6700546B56 /* MenuBarControlView_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F84E2B7A7B6700546B56 /* MenuBarControlView_macOS.swift */; };
 		FF38F8512B7A919C00546B56 /* MenuBarControl_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F8502B7A919C00546B56 /* MenuBarControl_macOS.swift */; };
 		FF38F8532B7AA9C400546B56 /* ApplicationEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F8522B7AA9C400546B56 /* ApplicationEntry.swift */; };
@@ -104,6 +106,8 @@
 		FF2F03412B795E0B00349855 /* Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipboard.swift; sourceTree = "<group>"; };
 		FF2F03432B79631800349855 /* Button+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Extension.swift"; sourceTree = "<group>"; };
 		FF2F03482B796A6500349855 /* HotkeyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyService.swift; sourceTree = "<group>"; };
+		FF33066B2B83BB31007B33E5 /* SidebarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarButton.swift; sourceTree = "<group>"; };
+		FF33066D2B83CFEC007B33E5 /* KeyboardShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardShortcuts.swift; sourceTree = "<group>"; };
 		FF38F84E2B7A7B6700546B56 /* MenuBarControlView_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarControlView_macOS.swift; sourceTree = "<group>"; };
 		FF38F8502B7A919C00546B56 /* MenuBarControl_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarControl_macOS.swift; sourceTree = "<group>"; };
 		FF38F8522B7AA9C400546B56 /* ApplicationEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationEntry.swift; sourceTree = "<group>"; };
@@ -215,6 +219,8 @@
 			children = (
 				FF10023F2B24F7320011A4DC /* SideBarMenuView.swift */,
 				FF1002592B2624C40011A4DC /* ConversationHistoryListView.swift */,
+				FF33066B2B83BB31007B33E5 /* SidebarButton.swift */,
+				FF33066D2B83CFEC007B33E5 /* KeyboardShortcuts.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -535,6 +541,7 @@
 				FF1002302B2482BA0011A4DC /* ChatMessageView.swift in Sources */,
 				FF1002322B2483A20011A4DC /* Colours+Extension.swift in Sources */,
 				FFB21A872B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift in Sources */,
+				FF33066E2B83CFEC007B33E5 /* KeyboardShortcuts.swift in Sources */,
 				FF66A51D2B76949A00FAAC1E /* Helpers.swift in Sources */,
 				FF10026A2B2731C60011A4DC /* ModelSelectorView.swift in Sources */,
 				FF38F84F2B7A7B6700546B56 /* MenuBarControlView_macOS.swift in Sources */,
@@ -573,6 +580,7 @@
 				FF38F8582B7AB1AD00546B56 /* PanelManager.swift in Sources */,
 				FF10025A2B2624C40011A4DC /* ConversationHistoryListView.swift in Sources */,
 				FF10026D2B2751760011A4DC /* SettingsView.swift in Sources */,
+				FF33066C2B83BB31007B33E5 /* SidebarButton.swift in Sources */,
 				FF1002542B261D460011A4DC /* MessageListVIew.swift in Sources */,
 				FF10024E2B25C2A70011A4DC /* ConversationSD.swift in Sources */,
 				FFEC32912B24779A003E5C04 /* EnchantedApp.swift in Sources */,
