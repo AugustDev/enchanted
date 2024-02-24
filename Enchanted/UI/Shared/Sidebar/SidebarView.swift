@@ -16,8 +16,10 @@ struct SidebarView: View {
     @State var showSettings = false
     
     private func onSettingsTap() {
-        showSettings.toggle()
-        Haptics.shared.mediumTap()
+        Task {
+            showSettings.toggle()
+            await Haptics.shared.mediumTap()
+        }
     }
     
     private func showKeyboardShortcuts() {
