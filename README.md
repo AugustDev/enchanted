@@ -10,7 +10,7 @@
 
 # Enchanted
 
-Enchanted is open source, [Ollama](https://github.com/jmorganca/ollama) compatible, elegant macOS/iOS/iPad app for chatting with privately hosted models such as Llama 2, Mistral, Vicuna, Starling and more. It's essentially ChatGPT app UI that connects to your private Ollama models. You can download Enchanted from the App Store or build yourself from scratch.
+Enchanted is open source, [Ollama](https://github.com/jmorganca/ollama) compatible, elegant macOS/iOS/iPad app for working with privately hosted models such as Llama 2, Mistral, Vicuna, Starling and more. It's essentially ChatGPT app UI that connects to your private models. The goal of Enchanted is to deliver a product allowing secure, private and multimodal experience across all of your devices in iOS ecosystem.
 
 If you like the project, consider leaving a ⭐️ and following on [𝕏](https://twitter.com/amgauge).
 
@@ -40,9 +40,9 @@ Note: You will need to run your own Ollama server to use the app. Read instructi
 
 ### Coming soon
 
+- RAG
 - Download new models from mobile
-- Rename conversations
-- Conversation syncing between
+- Conversation syncing between devices
 - Tabs for macOS
 
 ## Usage instructions
