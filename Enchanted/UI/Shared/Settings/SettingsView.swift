@@ -26,6 +26,17 @@ struct SettingsView: View {
         VStack {
             ZStack {
                 HStack {
+#if os(macOS)
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Cancel")
+                            .font(.system(size: 16))
+                            .foregroundStyle(Color(.label))
+                    }
+#endif
+                    
+
                     Spacer()
                     
                     Button(action: save) {
