@@ -26,6 +26,15 @@ struct SettingsView: View {
         VStack {
             ZStack {
                 HStack {
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Cancel")
+                            .font(.system(size: 16))
+                            .foregroundStyle(Color(.label))
+                    }
+                    
+
                     Spacer()
                     
                     Button(action: save) {
