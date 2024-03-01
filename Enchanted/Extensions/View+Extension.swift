@@ -53,3 +53,45 @@ extension View {
         return image
     }
 }
+
+struct GradientForegroundStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content.foregroundStyle(
+            LinearGradient(
+                colors: [Color(hex: "4285f4"), Color(hex: "9b72cb"), Color(hex: "d96570"), Color(hex: "#d96570")],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+        )
+    }
+}
+
+struct MovingGradientForegroundStyle: ViewModifier {
+    @State private var animateGradient = false
+
+    func body(content: Content) -> some View {
+        content.overlay(
+            LinearGradient(
+                colors: [Color(hex: "4285f4"), Color(hex: "9b72cb")],
+                startPoint: animateGradient ? .leading : .trailing,
+                endPoint: animateGradient ? .trailing : .leading
+            )
+            .animation(Animation.linear(duration: 3).repeatForever(autoreverses: false), value: animateGradient)
+        )
+        .mask(content)
+        .onAppear {
+            animateGradient = true
+        }
+    }
+}
+
+
+extension View {
+    func enchantify() -> some View {
+        modifier(GradientForegroundStyle())
+    }
+    
+    func enchantifyMoving() -> some View {
+        self.modifier(MovingGradientForegroundStyle())
+    }
+}

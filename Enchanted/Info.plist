@@ -9,5 +9,13 @@
 	</dict>
 	<key>com.apple.security.network.client</key>
 	<true/>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>Enchanted can perform operatios on selected text such as fixing grammar, extending texts as well as custom commands.</string>
+	<key>com.apple.security.temporary-exception.apple-events</key>
+	<string>com.apple.systemevents</string>
+	<key>NSAccessibilityUsageDescription</key>
+	<string>Enchanted can perform operatios on selected text such as fixing grammar, extending texts as well as custom commands.</string>
+	<key>com.apple.security.temporary-exception.mach-lookup.global-name</key>
+	<string>YES</string>
 </dict>
 </plist>

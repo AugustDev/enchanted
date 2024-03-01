@@ -14,6 +14,7 @@ struct SidebarView: View {
     var onConversationDelete: (_ conversation: ConversationSD) -> ()
     var onDeleteDailyConversations: (_ date: Date) -> ()
     @State var showSettings = false
+    @State var showCompletions = false
     
     private func onSettingsTap() {
         Task {
@@ -41,6 +42,8 @@ struct SidebarView: View {
             Divider()
             
 #if os(macOS)
+            SidebarButton(title: "Completions", image: "textformat.abc", onClick: {showCompletions.toggle()})
+            
             SidebarButton(title: "Shortcuts", image: "keyboard.fill", onClick: showKeyboardShortcuts)
 #endif
             
@@ -50,6 +53,9 @@ struct SidebarView: View {
         .padding()
         .sheet(isPresented: $showSettings) {
             Settings()
+        }
+        .sheet(isPresented: $showCompletions) {
+            CompletionsEditor()
         }
     }
 }

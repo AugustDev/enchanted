@@ -38,7 +38,6 @@ class Clipboard {
         guard let imgData = pb.data(forType: type) else { return nil }
         return NSImage(data: imgData)
 #endif
-        return nil
     }
     
     func getText() -> String? {

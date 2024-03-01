@@ -29,6 +29,7 @@ final class ConversationSD: Identifiable {
     }
 }
 
+// MARK: - Sample data
 extension ConversationSD {
     static let sample = [
         ConversationSD(name: "New Chat", updatedAt: Date.now),

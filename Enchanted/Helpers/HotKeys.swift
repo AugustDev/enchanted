@@ -63,7 +63,7 @@ fileprivate func hotkeysSubscription(combinations: [HotkeyCombination]) -> Bool 
         
         if basePressedCorrectly && comb.key.isPressed {
             comb.action()
-            return true
+//            return true
         }
     }
     

@@ -28,7 +28,7 @@ struct EmptyConversaitonView: View, KeyboardReadable {
             
             VStack(spacing: 25) {
                 Text("Enchanted")
-                    .font(Font.system(size: 46, weight: .bold))
+                    .font(Font.system(size: 46, weight: .thin))
                     .multilineTextAlignment(.center)
                     .foregroundStyle(
                         LinearGradient(
