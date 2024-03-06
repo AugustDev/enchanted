@@ -8,6 +8,7 @@
 #if os(macOS)
 import SwiftUI
 import Magnet
+import WrappingHStack
 
 struct PanelCompletionsView: View {
     var completions: [CompletionInstructionSD]
@@ -54,22 +55,19 @@ struct PanelCompletionsView: View {
                 }
                 .showIf(selectedCompletion != nil)
             }
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 10) {
-                    ForEach(filetedCompletions) { completion in
-                        CompletionButtonView(
-                            name: completion.name,
-                            keyboardCharacter: completion.keyboardCharacter,
-                            action: {
-                                withAnimation {
-                                    selectedCompletion = completion
-                                    onClick(completion, scheduledTyping)
-                                }
+            WrappingHStack(alignment: .leading) {
+                ForEach(filetedCompletions) { completion in
+                    CompletionButtonView(
+                        name: completion.name,
+                        keyboardCharacter: completion.keyboardCharacter,
+                        action: {
+                            withAnimation {
+                                selectedCompletion = completion
+                                onClick(completion, scheduledTyping)
                             }
-                        )
-                        .keyboardShortcut(KeyEquivalent(completion.keyboardCharacter), modifiers: [])
-                    }
+                        }
+                    )
+                    .keyboardShortcut(KeyEquivalent(completion.keyboardCharacter), modifiers: [])
                 }
             }
             

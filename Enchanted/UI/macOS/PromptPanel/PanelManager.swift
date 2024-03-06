@@ -61,61 +61,13 @@ class PanelManager: NSObject, NSApplicationDelegate {
         }
     }
     
-//    func getIsAuthorized() -> Bool {
-//        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: false, ]
-//        return AXIsProcessTrustedWithOptions(options as CFDictionary)
-//    }
-//    
-//    func checkAuth() {
-//        if getIsAuthorized() {
-//            print("it's authorised")
-//        } else {
-//            print("not auth")
-//        }
-//    }
-//    
-//    func checkAccessibilityPermission() {
-//        let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: false]
-//        let accessEnabled = AXIsProcessTrustedWithOptions(options)
-//        
-//        if !accessEnabled {
-//            DispatchQueue.main.async {
-//                // Show a window or alert with detailed instructions
-//                self.showAccessibilityInstructionsWindow()
-//            }
-//        }
-//    }
-    
-//    @MainActor
-//    func showAccessibilityInstructionsWindow() {
-//        // Implement the function to show a window or alert with instructions on how to enable Accessibility permissions
-//        // This could be a simple NSAlert with a message and a button that opens System Preferences at the correct pane
-//        let alert = NSAlert()
-//        alert.messageText = "Accessibility Permission Needed"
-//        alert.informativeText = "Please grant Accessibility permissions to [Your App Name] via System Preferences > Security & Privacy > Privacy > Accessibility."
-//        alert.addButton(withTitle: "Open System Preferences")
-//        alert.addButton(withTitle: "Cancel")
-//        
-//        let response = alert.runModal()
-//        if response == .alertFirstButtonReturn {
-//            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
-//                NSWorkspace.shared.open(url)
-//            }
-//        }
-//    }
-    
-//    func requestAccessibilityPermissions() {
-//        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true]
-//        let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
-//        
-//        if !accessEnabled {
-//            print("Requesting Accessibility permissions...")
-//        }
-//    }
-    
     
     @MainActor
     @objc func togglePanel() {
+        if panel == nil {
+            Accessibility.shared.showAccessibilityInstructionsWindow()
+        }
+        
         targetApplication = NSWorkspace.shared.runningApplications.first{$0.isActive}
 
         Task {

@@ -51,13 +51,15 @@ struct SidebarView: View {
         .sheet(isPresented: $showSettings) {
             Settings()
         }
+#if os(macOS)
         .sheet(isPresented: $showCompletions) {
             CompletionsEditor()
         }
         .sheet(isPresented: $showKeyboardShortcutas) {
             KeyboardShortcuts()
         }
-
+#endif
+        
     }
 }
 

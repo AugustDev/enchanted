@@ -5,6 +5,7 @@
 //  Created by Augustinas Malinauskas on 29/02/2024.
 //
 
+#if os(macOS)
 import SwiftUI
 
 struct CompletionsEditorView: View {
@@ -13,6 +14,8 @@ struct CompletionsEditorView: View {
     @State var selectedCompletion: CompletionInstructionSD?
     var onSave: () -> ()
     var onDelete: (CompletionInstructionSD) -> ()
+    var accessibilityAccess: Bool
+    var requestAccessibilityAccess: () -> ()
     
     private func close() {
         presentationMode.wrappedValue.dismiss()
@@ -99,6 +102,19 @@ struct CompletionsEditorView: View {
                 }
             }
             .listStyle(PlainListStyle())
+            
+            HStack {
+                Text("Completions require Accessibility access to capture selected text outside Enchanted.")
+                
+                Spacer()
+                
+                Button(action: requestAccessibilityAccess) {
+                    Text("Open Privacy Settings")
+                }
+            }
+            .padding()
+            .background(RoundedRectangle(cornerRadius: 5).fill(Color.red.opacity(0.8)))
+            .showIf(!accessibilityAccess)
         }
         .padding()
         .frame(width: 800, height: 600)
@@ -114,5 +130,6 @@ struct CompletionsEditorView: View {
 }
 
 #Preview {
-    CompletionsEditorView(completions: .constant(CompletionInstructionSD.samples), onSave: {}, onDelete: {_ in })
+    CompletionsEditorView(completions: .constant(CompletionInstructionSD.samples), onSave: {}, onDelete: {_ in }, accessibilityAccess: false, requestAccessibilityAccess: {})
 }
+#endif

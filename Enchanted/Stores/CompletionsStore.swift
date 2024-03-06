@@ -29,6 +29,7 @@ final class CompletionsStore {
     func delete(_ completion: CompletionInstructionSD) {
         Task {
             try? await swiftDataService.deleteCompletionInstruction(completion)
+            load()
         }
     }
     

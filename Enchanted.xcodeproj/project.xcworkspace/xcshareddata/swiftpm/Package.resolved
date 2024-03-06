@@ -19,15 +19,6 @@
       }
     },
     {
-      "identity" : "axswift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/tmandry/AXSwift",
-      "state" : {
-        "revision" : "81dcc36aced905d6464cc25e35f8d13184bbf21c",
-        "version" : "0.3.2"
-      }
-    },
-    {
       "identity" : "magnet",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/AugustDev/Magnet",
@@ -97,6 +88,15 @@
       "state" : {
         "revision" : "3eabf0572fd37e943be64b9d2589f97f1999cb26",
         "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "wrappinghstack",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ksemianov/WrappingHStack",
+      "state" : {
+        "revision" : "3300f68b6bf5f8a75ee7ca8a40f136a558053d10",
+        "version" : "0.2.0"
       }
     }
   ],
