@@ -8,6 +8,24 @@
 #if os(macOS)
 import SwiftUI
 
+//struct XXX: View {
+//    var body: some View {
+//        LabeledContent("Instruction Prompt") {
+//            TextEditor(text: .constant("prompt"))
+////                                .scrollContentBackground(.hidden)
+//                .padding(4) // Inner padding for text content
+//                .frame(height: 50) // Approximate height to match TextField
+//                .background(Color.systemBackground) // Use system background color for inner background
+//                .cornerRadius(8) // Rounded corners similar to TextField
+//                .overlay(
+//                    RoundedRectangle(cornerRadius: 8)
+//                        .stroke(Color.gray.opacity(0.25), lineWidth: 0.5) // Subtle border matching TextField
+//                )
+//                .padding()
+//        }
+//    }
+//}
+
 struct UpsertCompletionView: View {
     @Environment(\.presentationMode) var presentationMode
     @State var name: String = "New Instruction"
@@ -37,7 +55,7 @@ struct UpsertCompletionView: View {
         onSave()
         presentationMode.wrappedValue.dismiss()
     }
-    
+    @FocusState private var isFocused: Bool
     var body: some View {
         VStack {
             HStack {
@@ -65,8 +83,13 @@ struct UpsertCompletionView: View {
                 
                 
                 VStack(alignment: .trailing) {
-                    TextField("Instruction Prompt", text: $prompt, axis: .vertical)
-                        .lineLimit(5, reservesSpace: true)
+                        LabeledContent("Instruction Prompt") {
+                            TextEditor(text: $prompt)
+                                .scrollContentBackground(.hidden)
+                                .lineLimit(6)
+                                .frame(height: 80)
+
+                        }
                     
                     Text("Instruction Prompt gets appended before the selected text and together sent to the LLM.")
                         .font(.caption)

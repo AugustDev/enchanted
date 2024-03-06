@@ -30,10 +30,10 @@
     {
       "identity" : "magnet",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Clipy/Magnet",
+      "location" : "https://github.com/AugustDev/Magnet",
       "state" : {
         "branch" : "master",
-        "revision" : "6ab594e9e16e2502867a4ef1ed8cc40077814c0e"
+        "revision" : "4865f86d9baa24684dedacd6677beb2d8b30d88e"
       }
     },
     {

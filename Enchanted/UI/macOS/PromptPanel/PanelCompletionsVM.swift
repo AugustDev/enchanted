@@ -27,7 +27,14 @@ final class CompletionsPanelVM {
     @MainActor
     func sendPrompt(completion: CompletionInstructionSD, model: LanguageModelSD)  {
         guard let selectedText = selectedText, !isReady else { return }
-        let prompt = completion.instruction + "\n\n" + selectedText
+        var prompt = completion.instruction
+        
+        if prompt.contains("{{text}}") {
+            prompt.replace("{{text}}", with: selectedText)
+        } else {
+            prompt += "\n" + selectedText
+        }
+        
         let messages: [OKChatRequestData.Message] = [
             .init(role: .user, content: prompt)
         ]
@@ -59,7 +66,7 @@ final class CompletionsPanelVM {
     private func handleReceive(_ response: OKChatResponse)  {
         Task {
             if let responseContent = response.message?.content {
-                print("received: (\(responseContent))")
+//                print("received: (\(responseContent))")
                 await sentenceQueue.enqueue(responseContent)
                 self.messageResponse = self.messageResponse + responseContent
             }

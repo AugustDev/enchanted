@@ -15,16 +15,13 @@ struct SidebarView: View {
     var onDeleteDailyConversations: (_ date: Date) -> ()
     @State var showSettings = false
     @State var showCompletions = false
+    @State var showKeyboardShortcutas = false
     
     private func onSettingsTap() {
         Task {
             showSettings.toggle()
             await Haptics.shared.mediumTap()
         }
-    }
-    
-    private func showKeyboardShortcuts() {
-        openWindow(id: "keyboard-shortcuts")
     }
     
     var body: some View {
@@ -44,7 +41,7 @@ struct SidebarView: View {
 #if os(macOS)
             SidebarButton(title: "Completions", image: "textformat.abc", onClick: {showCompletions.toggle()})
             
-            SidebarButton(title: "Shortcuts", image: "keyboard.fill", onClick: showKeyboardShortcuts)
+            SidebarButton(title: "Shortcuts", image: "keyboard.fill", onClick: {showKeyboardShortcutas.toggle()})
 #endif
             
             SidebarButton(title: "Settings", image: "gearshape.fill", onClick: onSettingsTap)
@@ -57,6 +54,10 @@ struct SidebarView: View {
         .sheet(isPresented: $showCompletions) {
             CompletionsEditor()
         }
+        .sheet(isPresented: $showKeyboardShortcutas) {
+            KeyboardShortcuts()
+        }
+
     }
 }
 

@@ -16,7 +16,7 @@ struct PromptPanel: View {
     @State var completionsStore = CompletionsStore.shared
     @State var completionsPanelVM: CompletionsPanelVM
     var onSubmitPanel: () -> ()
-    var onSubmitCompletion: () -> ()
+    var onSubmitCompletion: (_ scheduledTyping: Bool) -> ()
     var onLayoutUpdate: () -> ()
     
     @MainActor
@@ -32,10 +32,10 @@ struct PromptPanel: View {
     }
     
     @MainActor
-    func sendCompletion(_ completion: CompletionInstructionSD) {
+    func sendCompletion(_ completion: CompletionInstructionSD, scheduledTyping: Bool) {
         guard let selectedModel = languageModelStore.selectedModel else { return }
         completionsPanelVM.sendPrompt(completion: completion, model: selectedModel)
-        onSubmitCompletion()
+        onSubmitCompletion(scheduledTyping)
     }
     
     var body: some View {

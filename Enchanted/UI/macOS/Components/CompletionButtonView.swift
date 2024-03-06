@@ -31,7 +31,6 @@ struct CompletionButtonView: View {
             .background(RoundedRectangle(cornerRadius: 5).fill(.bgCustom))
         }
         .buttonStyle(GrowingButton())
-        .keyboardShortcut(KeyEquivalent(keyboardCharacter), modifiers: [])
     }
 }
 

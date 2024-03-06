@@ -19,9 +19,10 @@ final actor Printer {
 }
 
 class PanelManager: NSObject, NSApplicationDelegate {
-    var lastRunningApplication: NSRunningApplication?
+    var targetApplication: NSRunningApplication?
     var panel: FloatingPanel!
     var completionsPanelVM = CompletionsPanelVM()
+    var allowPrinting = true
     let printer = Printer()
     
     override init() {
@@ -35,90 +36,104 @@ class PanelManager: NSObject, NSApplicationDelegate {
     private func handleNewMessages() async {
         let timer = AsyncTimerSequence(interval: .seconds(0.1), clock: .suspending)
         for await _ in timer {
+            // hold printing until user action and ensuring that your driving experience
+            if !allowPrinting {
+                print("allowPrinting - false")
+                continue
+            }
+            
             let sentencesToConsume = await completionsPanelVM.sentenceQueue.dequeueAll().joined()
             
             if sentencesToConsume.isEmpty {
                 continue
             }
             
-            print("printing: \(sentencesToConsume)")
+            // Applicaiton window was changed, cancel.
+            if targetApplication?.localizedName != NSWorkspace.shared.runningApplications.first(where: {$0.isActive})?.localizedName {
+                print("Window change detected")
+                return
+            }
+            
+            print("printing: \((sentencesToConsume)) \(Date())")
 //            await Accessibility.shared.simulateTyping(for: sentencesToConsume)
             await printer.print(sentencesToConsume)
 //            await Accessibility.shared.appleScript(for: sentencesToConsume)
         }
     }
     
-    func getIsAuthorized() -> Bool {
-        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: false, ]
-        return AXIsProcessTrustedWithOptions(options as CFDictionary)
-    }
+//    func getIsAuthorized() -> Bool {
+//        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: false, ]
+//        return AXIsProcessTrustedWithOptions(options as CFDictionary)
+//    }
+//    
+//    func checkAuth() {
+//        if getIsAuthorized() {
+//            print("it's authorised")
+//        } else {
+//            print("not auth")
+//        }
+//    }
+//    
+//    func checkAccessibilityPermission() {
+//        let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: false]
+//        let accessEnabled = AXIsProcessTrustedWithOptions(options)
+//        
+//        if !accessEnabled {
+//            DispatchQueue.main.async {
+//                // Show a window or alert with detailed instructions
+//                self.showAccessibilityInstructionsWindow()
+//            }
+//        }
+//    }
     
-    func checkAuth() {
-        if getIsAuthorized() {
-            print("it's authorised")
-        } else {
-            print("not auth")
-        }
-    }
+//    @MainActor
+//    func showAccessibilityInstructionsWindow() {
+//        // Implement the function to show a window or alert with instructions on how to enable Accessibility permissions
+//        // This could be a simple NSAlert with a message and a button that opens System Preferences at the correct pane
+//        let alert = NSAlert()
+//        alert.messageText = "Accessibility Permission Needed"
+//        alert.informativeText = "Please grant Accessibility permissions to [Your App Name] via System Preferences > Security & Privacy > Privacy > Accessibility."
+//        alert.addButton(withTitle: "Open System Preferences")
+//        alert.addButton(withTitle: "Cancel")
+//        
+//        let response = alert.runModal()
+//        if response == .alertFirstButtonReturn {
+//            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
+//                NSWorkspace.shared.open(url)
+//            }
+//        }
+//    }
     
-    func checkAccessibilityPermission() {
-        let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: false]
-        let accessEnabled = AXIsProcessTrustedWithOptions(options)
-        
-        if !accessEnabled {
-            DispatchQueue.main.async {
-                // Show a window or alert with detailed instructions
-                self.showAccessibilityInstructionsWindow()
-            }
-        }
-    }
-    
-    @MainActor
-    func showAccessibilityInstructionsWindow() {
-        // Implement the function to show a window or alert with instructions on how to enable Accessibility permissions
-        // This could be a simple NSAlert with a message and a button that opens System Preferences at the correct pane
-        let alert = NSAlert()
-        alert.messageText = "Accessibility Permission Needed"
-        alert.informativeText = "Please grant Accessibility permissions to [Your App Name] via System Preferences > Security & Privacy > Privacy > Accessibility."
-        alert.addButton(withTitle: "Open System Preferences")
-        alert.addButton(withTitle: "Cancel")
-        
-        let response = alert.runModal()
-        if response == .alertFirstButtonReturn {
-            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
-                NSWorkspace.shared.open(url)
-            }
-        }
-    }
-    
-    func requestAccessibilityPermissions() {
-        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true]
-        let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
-        
-        if !accessEnabled {
-            print("Requesting Accessibility permissions...")
-        }
-    }
+//    func requestAccessibilityPermissions() {
+//        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true]
+//        let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
+//        
+//        if !accessEnabled {
+//            print("Requesting Accessibility permissions...")
+//        }
+//    }
     
     
     @MainActor
     @objc func togglePanel() {
-        lastRunningApplication = NSWorkspace.shared.runningApplications.first{$0.isActive}
+        targetApplication = NSWorkspace.shared.runningApplications.first{$0.isActive}
 
         Task {
-            completionsPanelVM.selectedText = await Accessibility.shared.getSelectedTextViaCopy()
-            print(completionsPanelVM.selectedText)
+            completionsPanelVM.selectedText = await Accessibility.shared.getSelectedText()
+            print("selected message", completionsPanelVM.selectedText as Any)
             
-            if panel == nil {
+            if panel == nil || !panel.isVisible {
                 showPanel()
+                
+                // subscribe to keybaord event to avoid beep
+                HotkeyService.shared.registerSingleUseEscape(modifiers: []) { [weak self] in
+                    self?.hidePanel()
+                }
+                
                 return
             }
             
-            if panel.isVisible {
-                hidePanel()
-            } else {
-                showPanel()
-            }
+            hidePanel()
         }
     }
     
@@ -136,6 +151,7 @@ class PanelManager: NSObject, NSApplicationDelegate {
     
     @MainActor
     @objc func onSubmitMessage() {
+        allowPrinting = true
         hidePanel()
         
         /// Focus Enchanted
@@ -151,11 +167,21 @@ class PanelManager: NSObject, NSApplicationDelegate {
     }
     
     @MainActor
-    @objc func onSubmitCompletion() {
-        hidePanel()
-        lastRunningApplication?.activate()
+    @objc func onSubmitCompletion(scheduledTyping: Bool) {
+        allowPrinting = true
+        
+        if scheduledTyping {
+            self.allowPrinting = false
+            HotkeyService.shared.registerSingleUseSpace(modifiers: []) { [weak self] in
+                self?.allowPrinting = true
+                self?.hidePanel()
+            }
+        } else {
+            hidePanel()
+        }
+        targetApplication?.activate()
     }
-
+    
     @MainActor
     func createPanel() {
         let contentView = PromptPanel(
