@@ -14,18 +14,16 @@ final class CompletionInstructionSD: Identifiable {
     var name: String
     var keyboardCharacterStr: String
     var instruction: String
-    var delay: Float
     var order: Int
     
     var keyboardCharacter: Character {
         keyboardCharacterStr.first ?? "x"
     }
     
-    init(name: String, keyboardCharacterStr: String, instruction: String, delay: Float = 0.0, order: Int) {
+    init(name: String, keyboardCharacterStr: String, instruction: String, order: Int) {
         self.name = name
         self.keyboardCharacterStr = keyboardCharacterStr
         self.instruction = instruction
-        self.delay = delay
         self.order = order
     }
 }
