@@ -29,6 +29,8 @@ class PanelManager: NSObject, NSApplicationDelegate {
         super.init()
         
         Task {
+            await NSApp.setActivationPolicy(.regular)
+            await NSApp.activate(ignoringOtherApps: true)
             await handleNewMessages()
         }
     }

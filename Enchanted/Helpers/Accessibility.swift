@@ -13,14 +13,11 @@ import CoreGraphics
 
 class Accessibility {
     static let shared = Accessibility()
-    private var isBusy: Bool = false
-    
+
     /// Check if Enchanted has the right permissions
     func checkAccessibility() -> Bool {
-        let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: false]
-        let accessEnabled = AXIsProcessTrustedWithOptions(options)
-        print("checking accessibility \(accessEnabled)")
-        return accessEnabled
+        let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: false, ]
+        return AXIsProcessTrustedWithOptions(options as CFDictionary)
     }
     
     @MainActor
@@ -29,17 +26,8 @@ class Accessibility {
             return
         }
         
-        let alert = NSAlert()
-        alert.messageText = "Accessibility Permission Needed"
-        alert.informativeText = "Please grant Accessibility permissions to Enchanted via System Preferences > Security & Privacy > Privacy > Accessibility."
-        alert.addButton(withTitle: "Open System Preferences")
-        alert.addButton(withTitle: "Cancel")
-        
-        let response = alert.runModal()
-        if response == .alertFirstButtonReturn {
-            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
-                NSWorkspace.shared.open(url)
-            }
+        if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
+            NSWorkspace.shared.open(url)
         }
     }
     

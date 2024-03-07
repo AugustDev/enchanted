@@ -70,7 +70,9 @@ struct EmptyConversaitonView: View, KeyboardReadable {
                 }
                 .onAppear {
                     for index in 0..<4 {
-                        visibleItems.insert(index)
+                        DispatchQueue.main.async {
+                            visibleItems.insert(index)
+                        }
                     }
                 }
                 .frame(maxWidth: 700)
@@ -83,15 +85,19 @@ struct EmptyConversaitonView: View, KeyboardReadable {
             Spacer()
         }
         .onAppear {
-            withAnimation {
-                prompts = SamplePrompts.samples.shuffled()
-                showPromptsAnimation = true
+            DispatchQueue.main.async {
+                withAnimation {
+                    prompts = SamplePrompts.samples.shuffled()
+                    showPromptsAnimation = true
+                }
             }
         }
 #if os(iOS)
         .onReceive(keyboardPublisher) { newIsKeyboardVisible in
-            withAnimation {
-                isKeyboardVisible = newIsKeyboardVisible
+            DispatchQueue.main.async {
+                withAnimation {
+                    isKeyboardVisible = newIsKeyboardVisible
+                }
             }
         }
 #endif

@@ -16,6 +16,7 @@ struct CompletionsEditor: View {
     private func requestAccessibility() {
         Task {
             await Accessibility.shared.showAccessibilityInstructionsWindow()
+            Accessibility.shared.simulateCopyKeyPress()
         }
     }
     
