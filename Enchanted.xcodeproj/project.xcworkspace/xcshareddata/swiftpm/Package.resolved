@@ -1,4 +1,5 @@
 {
+  "originHash" : "5ab8135bb7491a11d5d5f5e45e52eedcdb6d5d9cc31b72a44d00105aef626d9a",
   "pins" : [
     {
       "identity" : "activityindicatorview",
@@ -100,5 +101,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
