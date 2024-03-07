@@ -32,7 +32,7 @@ final class CompletionsPanelVM {
         if prompt.contains("{{text}}") {
             prompt.replace("{{text}}", with: selectedText)
         } else {
-            prompt += "\n" + selectedText
+            prompt += " " + selectedText
         }
         
         let messages: [OKChatRequestData.Message] = [
