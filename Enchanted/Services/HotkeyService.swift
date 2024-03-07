@@ -9,13 +9,11 @@
 import Foundation
 import Magnet
 import SwiftUI
- 
+
 final class HotkeyService {
     static let shared = HotkeyService()
     
-    @MainActor func register(callback: @escaping () -> ()?) {
-        NSApp.setActivationPolicy(.regular)
-        NSApp.activate(ignoringOtherApps: true)
+    func register(callback: @escaping () -> ()?) {
         if let keyCombo = KeyCombo(key: .k, cocoaModifiers: [.command, .control]) {
             let hotKey = HotKey(identifier: "CommandControlK", keyCombo: keyCombo) { hotKey in
                 callback()
@@ -23,8 +21,8 @@ final class HotkeyService {
             hotKey.register()
         }
     }
-
-    @MainActor func registerSingleUseSpace(modifiers: NSEvent.ModifierFlags, completion: @escaping () -> ()?) {
+    
+    func registerSingleUseSpace(modifiers: NSEvent.ModifierFlags, completion: @escaping () -> ()?) {
         if let keyCombo = KeyCombo(key: .space, cocoaModifiers: modifiers) {
             let hotKey = HotKey(identifier: "space", keyCombo: keyCombo) { hotKey in
                 completion()
@@ -34,7 +32,7 @@ final class HotkeyService {
         }
     }
     
-    @MainActor func registerSingleUseEscape(modifiers: NSEvent.ModifierFlags, completion: @escaping () -> ()?) {
+    func registerSingleUseEscape(modifiers: NSEvent.ModifierFlags, completion: @escaping () -> ()?) {
         if let keyCombo = KeyCombo(key: .escape, cocoaModifiers: modifiers) {
             let hotKey = HotKey(identifier: "escape", keyCombo: keyCombo) { hotKey in
                 completion()

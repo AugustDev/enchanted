@@ -17,7 +17,7 @@ struct EnchantedApp: App {
     var body: some Scene {
         WindowGroup {
             ApplicationEntry()
-                .task {
+                .task(priority: .background) {
 #if os(macOS)
                     HotkeyService.shared.register(callback: {panelManager.togglePanel()})
 #endif
