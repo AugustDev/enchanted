@@ -7,38 +7,103 @@
 
 #if os(macOS)
 import SwiftUI
+import Carbon
+import AsyncAlgorithms
+
+final actor Printer {
+    func print(_ message: String) {
+        Clipboard.shared.setString(message)
+        usleep(50000)
+        Accessibility.simulatePasteCommand()
+    }
+}
 
 class PanelManager: NSObject, NSApplicationDelegate {
+    var targetApplication: NSRunningApplication?
     var panel: FloatingPanel!
+    var completionsPanelVM = CompletionsPanelVM()
+    var allowPrinting = true
+    let printer = Printer()
     
     override init() {
         super.init()
+        
+        Task {
+            await handleNewMessages()
+        }
     }
     
-    @MainActor @objc func togglePanel() {
+    private func handleNewMessages() async {
+        let timer = AsyncTimerSequence(interval: .seconds(0.1), clock: .suspending)
+        for await _ in timer {
+            // hold printing until user action and ensuring that your driving experience
+            if !allowPrinting {
+                print("allowPrinting - false")
+                continue
+            }
+            
+            let sentencesToConsume = await completionsPanelVM.sentenceQueue.dequeueAll().joined()
+            
+            if sentencesToConsume.isEmpty {
+                continue
+            }
+            
+            // Applicaiton window was changed, cancel.
+            if targetApplication?.localizedName != NSWorkspace.shared.runningApplications.first(where: {$0.isActive})?.localizedName {
+                print("Window change detected")
+                return
+            }
+            
+            print("printing: \((sentencesToConsume)) \(Date())")
+//            await Accessibility.shared.simulateTyping(for: sentencesToConsume)
+            await printer.print(sentencesToConsume)
+//            await Accessibility.shared.appleScript(for: sentencesToConsume)
+        }
+    }
+    
+    
+    @MainActor
+    @objc func togglePanel() {
         if panel == nil {
-            showPanel()
-            return
+            Accessibility.shared.showAccessibilityInstructionsWindow()
         }
         
-        if panel.isVisible {
+        targetApplication = NSWorkspace.shared.runningApplications.first{$0.isActive}
+
+        Task {
+            completionsPanelVM.selectedText = await Accessibility.shared.getSelectedText()
+            print("selected message", completionsPanelVM.selectedText as Any)
+            
+            if panel == nil || !panel.isVisible {
+                showPanel()
+                
+                // subscribe to keybaord event to avoid beep
+                HotkeyService.shared.registerSingleUseEscape(modifiers: []) { [weak self] in
+                    self?.hidePanel()
+                }
+                
+                return
+            }
+            
             hidePanel()
-        } else {
-            showPanel()
         }
     }
     
-    @MainActor @objc func hidePanel() {
+    @MainActor
+    @objc func hidePanel() {
         panel.orderOut(nil)
     }
     
-    @MainActor @objc func showPanel() {
+    @MainActor
+    @objc func showPanel() {
         createPanel()
         panel.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
     }
     
-    @MainActor @objc func onSubmitMessage() {
+    @MainActor
+    @objc func onSubmitMessage() {
+        allowPrinting = true
         hidePanel()
         
         /// Focus Enchanted
@@ -53,13 +118,38 @@ class PanelManager: NSObject, NSApplicationDelegate {
         }
     }
     
-    @MainActor func createPanel() {
-        let contentView = PromptPanel(onSubmitPanel: onSubmitMessage, onLayoutUpdate: updatePanelSizeIfNeeded)
-        let hostingView = NSHostingView(rootView: contentView)
+    @MainActor
+    @objc func onSubmitCompletion(scheduledTyping: Bool) {
+        allowPrinting = true
         
+        if scheduledTyping {
+            self.allowPrinting = false
+            HotkeyService.shared.registerSingleUseSpace(modifiers: []) { [weak self] in
+                self?.allowPrinting = true
+                self?.hidePanel()
+            }
+        } else {
+            hidePanel()
+        }
+        targetApplication?.activate()
+    }
+    
+    @MainActor
+    func createPanel() {
+        let contentView = PromptPanel(
+            completionsPanelVM: completionsPanelVM,
+            onSubmitPanel: onSubmitMessage,
+            onSubmitCompletion: onSubmitCompletion,
+            onLayoutUpdate: updatePanelSizeIfNeeded
+        )
+        let hostingView = NSHostingView(rootView: contentView)
         let idealSize = hostingView.fittingSize
         
-        panel = FloatingPanel(contentRect: NSRect(x: 0, y: 0, width: idealSize.width, height: idealSize.height), backing: .buffered, defer: false)
+        panel = FloatingPanel(
+            contentRect: NSRect(x: 0, y: 0, width: idealSize.width, height: idealSize.height),
+            backing: .buffered,
+            defer: false
+        )
         panel.contentView = hostingView
         panel.backgroundColor = .clear
         panel.center()

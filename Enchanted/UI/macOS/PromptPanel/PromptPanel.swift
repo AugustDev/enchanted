@@ -13,7 +13,10 @@ struct PromptPanel: View {
     @AppStorage("systemPrompt") private var systemPrompt: String = ""
     @State var conversationStore = ConversationStore.shared
     @State var languageModelStore = LanguageModelStore.shared
+    @State var completionsStore = CompletionsStore.shared
+    @State var completionsPanelVM: CompletionsPanelVM
     var onSubmitPanel: () -> ()
+    var onSubmitCompletion: (_ scheduledTyping: Bool) -> ()
     var onLayoutUpdate: () -> ()
     
     @MainActor
@@ -28,10 +31,27 @@ struct PromptPanel: View {
         onSubmitPanel()
     }
     
+    @MainActor
+    func sendCompletion(_ completion: CompletionInstructionSD, scheduledTyping: Bool) {
+        guard let selectedModel = languageModelStore.selectedModel else { return }
+        completionsPanelVM.sendPrompt(completion: completion, model: selectedModel)
+        onSubmitCompletion(scheduledTyping)
+    }
+    
     var body: some View {
-        PromptPanelView(onSubmit: sendMessage, onLayoutUpdate: onLayoutUpdate, imageSupport: languageModelStore.selectedModel?.supportsImages ?? false)
-            .preferredColorScheme(colorScheme.toiOSFormat)
-            .edgesIgnoringSafeArea(.all)
+        Group {
+            if let selectedText = completionsPanelVM.selectedText, !selectedText.isEmpty {
+                PanelCompletionsView(completions: completionsStore.completions, onClick: sendCompletion)
+            } else {
+                PromptPanelView(
+                    onSubmit: sendMessage,
+                    onLayoutUpdate: onLayoutUpdate,
+                    imageSupport: languageModelStore.selectedModel?.supportsImages ?? false
+                )
+            }
+        }
+        .preferredColorScheme(colorScheme.toiOSFormat)
+        .edgesIgnoringSafeArea(.all)
     }
 }
 #endif

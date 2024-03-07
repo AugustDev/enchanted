@@ -23,6 +23,26 @@ final class HotkeyService {
             hotKey.register()
         }
     }
+
+    @MainActor func registerSingleUseSpace(modifiers: NSEvent.ModifierFlags, completion: @escaping () -> ()?) {
+        if let keyCombo = KeyCombo(key: .space, cocoaModifiers: modifiers) {
+            let hotKey = HotKey(identifier: "space", keyCombo: keyCombo) { hotKey in
+                completion()
+                hotKey.unregister()
+            }
+            hotKey.register()
+        }
+    }
+    
+    @MainActor func registerSingleUseEscape(modifiers: NSEvent.ModifierFlags, completion: @escaping () -> ()?) {
+        if let keyCombo = KeyCombo(key: .escape, cocoaModifiers: modifiers) {
+            let hotKey = HotKey(identifier: "escape", keyCombo: keyCombo) { hotKey in
+                completion()
+                hotKey.unregister()
+            }
+            hotKey.register()
+        }
+    }
 }
 
 #endif

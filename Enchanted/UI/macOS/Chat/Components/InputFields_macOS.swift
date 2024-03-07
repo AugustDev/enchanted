@@ -49,10 +49,6 @@ struct InputFieldsView: View {
                     let image = Image(nsImage: nsImage)
                     updateSelectedImage(image)
                 }
-                
-                if let clipboardText = Clipboard.shared.getText() {
-                    message = clipboardText
-                }
             }
         ]
     }

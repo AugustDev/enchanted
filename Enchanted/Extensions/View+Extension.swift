@@ -53,3 +53,65 @@ extension View {
         return image
     }
 }
+
+struct GradientForegroundStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content.foregroundStyle(
+            LinearGradient(
+                colors: [Color(hex: "4285f4"), Color(hex: "9b72cb"), Color(hex: "d96570"), Color(hex: "#d96570")],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+        )
+    }
+}
+
+struct MovingGradientForegroundStyle: ViewModifier {
+    @State private var animateGradient = false
+
+    func body(content: Content) -> some View {
+        content.overlay(
+            LinearGradient(
+                colors: [Color(hex: "4285f4"), Color(hex: "9b72cb")],
+                startPoint: animateGradient ? .leading : .trailing,
+                endPoint: animateGradient ? .trailing : .leading
+            )
+            .animation(Animation.linear(duration: 3).repeatForever(autoreverses: false), value: animateGradient)
+        )
+        .mask(content)
+        .onAppear {
+            animateGradient = true
+        }
+    }
+}
+
+
+extension View {
+    func enchantify() -> some View {
+        modifier(GradientForegroundStyle())
+    }
+    
+    func enchantifyMoving() -> some View {
+        self.modifier(MovingGradientForegroundStyle())
+    }
+}
+
+
+extension View {
+    /// Adds an underlying hidden button with a performing action that is triggered on pressed shortcut
+    /// - Parameters:
+    ///   - key: Key equivalents consist of a letter, punctuation, or function key that can be combined with an optional set of modifier keys to specify a keyboard shortcut.
+    ///   - modifiers: A set of key modifiers that you can add to a gesture.
+    ///   - perform: Action to perform when the shortcut is pressed
+    public func onKeyboardShortcut(key: KeyEquivalent, modifiers: EventModifiers = .command, perform: @escaping () -> ()) -> some View {
+        ZStack {
+            Button("") {
+                perform()
+            }
+            .hidden()
+            .keyboardShortcut(key, modifiers: modifiers)
+            
+            self
+        }
+    }
+}
