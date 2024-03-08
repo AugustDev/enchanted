@@ -30,7 +30,9 @@ struct CompletionsEditor: View {
         )
         .onAppear {
             timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
-                accessibilityStatus = Accessibility.shared.checkAccessibility()
+                withAnimation {
+                    accessibilityStatus = Accessibility.shared.checkAccessibility()
+                }
             }
         }
         .onDisappear {

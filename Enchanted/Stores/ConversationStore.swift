@@ -21,15 +21,15 @@ final class ConversationStore: Sendable {
     /// For some reason (SwiftUI bug / too frequent UI updates) updating UI for each stream message sometimes freezes the UI.
     /// Throttling UI updates seem to fix the issue.
     private var currentMessageBuffer: String = ""
-    #if os(macOS)
+#if os(macOS)
     private let throttler = Throttler(delay: 0.1)
-    #else
+#else
     private let throttler = Throttler(delay: 0.1)
-    #endif
+#endif
     
-    var conversationState: ConversationState = .completed
-    var conversations: [ConversationSD] = []
-    var selectedConversation: ConversationSD?
+    @MainActor var conversationState: ConversationState = .completed
+    @MainActor var conversations: [ConversationSD] = []
+    @MainActor var selectedConversation: ConversationSD?
     @MainActor var messages: [MessageSD] = []
     
     init(swiftDataService: SwiftDataService) {
@@ -38,7 +38,10 @@ final class ConversationStore: Sendable {
     
     func loadConversations() async throws {
         print("loading conversations")
-        conversations = try await swiftDataService.fetchConversations()
+        let fetchedConversations = try await swiftDataService.fetchConversations()
+        DispatchQueue.main.async {
+            self.conversations = fetchedConversations
+        }
         print("loaded conversations")
     }
     
@@ -46,8 +49,8 @@ final class ConversationStore: Sendable {
         Task {
             DispatchQueue.main.async { [weak self] in
                 self?.messages = []
+                self?.selectedConversation = nil
             }
-            selectedConversation = nil
             try? await swiftDataService.deleteConversations()
             try? await loadConversations()
         }
@@ -57,8 +60,8 @@ final class ConversationStore: Sendable {
         Task {
             DispatchQueue.main.async { [self] in
                 messages = []
+                selectedConversation = nil
             }
-            selectedConversation = nil
             try? await swiftDataService.deleteConversations()
             try? await loadConversations()
         }
@@ -69,29 +72,33 @@ final class ConversationStore: Sendable {
         try await swiftDataService.createConversation(conversation)
     }
     
-    @MainActor func reloadConversation(_ conversation: ConversationSD) async throws {
+    func reloadConversation(_ conversation: ConversationSD) async throws {
         let (messages, selectedConversation) = try await (
             swiftDataService.fetchMessages(conversation.id),
             swiftDataService.getConversation(conversation.id)
         )
         
-        withAnimation(.easeInOut(duration: 0.3)) {
-            self.messages = messages
-            self.selectedConversation = selectedConversation
+        DispatchQueue.main.async {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                self.messages = messages
+                self.selectedConversation = selectedConversation
+            }
         }
     }
     
-    @MainActor func selectConversation(_ conversation: ConversationSD) async throws {
+    func selectConversation(_ conversation: ConversationSD) async throws {
         try await reloadConversation(conversation)
     }
     
     func delete(_ conversation: ConversationSD) async throws {
-        selectedConversation = nil
         try await swiftDataService.deleteConversation(conversation)
-        conversations = try await swiftDataService.fetchConversations()
+        let fetchedConversations = try await swiftDataService.fetchConversations()
+        DispatchQueue.main.async {
+            self.selectedConversation = nil
+            self.conversations = fetchedConversations
+        }
     }
     
-    //    @MainActor
     @MainActor func stopGenerate() {
         generation?.cancel()
         handleComplete()
@@ -158,18 +165,21 @@ final class ConversationStore: Sendable {
             try? await loadConversations()
             
             if await OllamaService.shared.ollamaKit.reachable() {
-                let request = OKChatRequestData(model: model.name, messages: messageHistory)
-                generation = OllamaService.shared.ollamaKit.chat(data: request)
-                    .sink(receiveCompletion: { [weak self] completion in
-                        switch completion {
-                        case .finished:
-                            self?.handleComplete()
-                        case .failure(let error):
-                            self?.handleError(error.localizedDescription)
-                        }
-                    }, receiveValue: { [weak self] response in
-                        self?.handleReceive(response)
-                    })
+                DispatchQueue.global(qos: .background).async {
+                    let request = OKChatRequestData(model: model.name, messages: messageHistory)
+                    self.generation = OllamaService.shared.ollamaKit.chat(data: request)
+                        .sink(receiveCompletion: { [weak self] completion in
+                            switch completion {
+                            case .finished:
+                                self?.handleComplete()
+                            case .failure(let error):
+                                self?.handleError(error.localizedDescription)
+                            }
+                        }, receiveValue: { [weak self] response in
+                            self?.handleReceive(response)
+                        })
+                    
+                }
             } else {
                 self.handleError("Server unreachable")
             }

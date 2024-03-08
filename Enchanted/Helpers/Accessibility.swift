@@ -11,7 +11,7 @@ import AppKit
 import ApplicationServices
 import CoreGraphics
 
-class Accessibility {
+final class Accessibility {
     static let shared = Accessibility()
 
     /// Check if Enchanted has the right permissions
@@ -20,7 +20,6 @@ class Accessibility {
         return AXIsProcessTrustedWithOptions(options as CFDictionary)
     }
     
-    @MainActor
     func showAccessibilityInstructionsWindow() {
         if checkAccessibility() {
             return

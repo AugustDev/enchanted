@@ -13,9 +13,9 @@ final class LanguageModelStore {
     static let shared = LanguageModelStore(swiftDataService: SwiftDataService.shared)
     
     private var swiftDataService: SwiftDataService
-    var models: [LanguageModelSD] = []
-    var supportsImages = false
-    var selectedModel: LanguageModelSD?
+    @MainActor var models: [LanguageModelSD] = []
+    @MainActor var supportsImages = false
+    @MainActor var selectedModel: LanguageModelSD?
     
     init(swiftDataService: SwiftDataService) {
         self.swiftDataService = swiftDataService
@@ -58,11 +58,17 @@ final class LanguageModelStore {
         try await swiftDataService.saveModels(models: updateModelsList)
         print("completed saveModels()")
         
-        models = try await swiftDataService.fetchModels()
+        let fetchedModels = try await swiftDataService.fetchModels()
+        
+        DispatchQueue.main.async {
+            self.models = fetchedModels
+        }
     }
     
     func deleteAllModels() async throws {
-        models = []
+        DispatchQueue.main.async {
+            self.models = []
+        }
         try await swiftDataService.deleteModels()
     }
 }

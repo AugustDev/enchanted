@@ -113,7 +113,11 @@ struct CompletionsEditorView: View {
                 }
             }
             .padding()
-            .background(RoundedRectangle(cornerRadius: 5).fill(Color.red.opacity(0.8)))
+            .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(.red, lineWidth: 1)
+                )
+            .background(RoundedRectangle(cornerRadius: 5).fill(Color.red.opacity(0.05)))
             .showIf(!accessibilityAccess)
         }
         .padding()
