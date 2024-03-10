@@ -65,8 +65,10 @@ struct Chat: View {
     }
     
     func newConversation() {
-        withAnimation(.easeOut(duration: 0.3)) {
-            conversationStore.selectedConversation = nil
+        DispatchQueue.main.async {
+            withAnimation(.easeOut(duration: 0.3)) {
+                self.conversationStore.selectedConversation = nil
+            }
         }
         
         Task {

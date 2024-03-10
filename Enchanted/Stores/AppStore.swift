@@ -15,7 +15,7 @@ final class AppStore {
     
     private var cancellables = Set<AnyCancellable>()
     private var timer: Timer?
-    var isReachable: Bool = true
+    @MainActor var isReachable: Bool = true
 
     init() {
         startCheckingReachability()
@@ -35,8 +35,10 @@ final class AppStore {
     }
     
     private func updateReachable(_ isReachable: Bool) {
-        withAnimation {
-            self.isReachable = isReachable
+        DispatchQueue.main.async {
+            withAnimation {
+                self.isReachable = isReachable
+            }
         }
     }
 
