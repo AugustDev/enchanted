@@ -49,6 +49,7 @@ final class LanguageModelStore {
         print("completed loadLocal()")
         let remoteModels = try await OllamaService.shared.getModels()
         print("completed loadRemote()")
+        print(remoteModels)
         
         _ = localModels.map { model in
             model.isAvailable == remoteModels.contains(model)
