@@ -42,7 +42,7 @@ struct ConversationHistoryList: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 17) {
+        List {
             ForEach(conversationGroups, id:\.self) { conversationGroup in
                 
                 HStack {
@@ -61,15 +61,21 @@ struct ConversationHistoryList: View {
                 
                 ForEach(conversationGroup.conversations, id:\.self) { dailyConversation in
                     HStack {
-                        Button(action: {onTap(dailyConversation)}) {
-                            Text(dailyConversation.name)
-                                .lineLimit(1)
-                                .font(.system(size: 16))
-                                .fontWeight(.regular)
-                                .foregroundColor(Color(.label))
-                            Spacer()
+                        Text(dailyConversation.name)
+                            .lineLimit(1)
+                            .font(.system(size: 16))
+                            .fontWeight(.regular)
+                            .foregroundColor(Color(.label))
+                    }
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                    .onTapGesture {
+                        onTap(dailyConversation)
+                    }
+                    .buttonStyle(.plain)
+                    .swipeActions {
+                        Button(role: .destructive, action: { onDelete(dailyConversation) }) {
+                            Label("Delete", systemImage: "trash")
                         }
-                        .buttonStyle(.plain)
                     }
                     .contextMenu(menuItems: {
                         Button(role: .destructive, action: { onDelete(dailyConversation) }) {
@@ -86,5 +92,5 @@ struct ConversationHistoryList: View {
 
 
 #Preview {
-        ConversationHistoryList(conversations: ConversationSD.sample, onTap: {_ in}, onDelete: {_ in}, onDeleteDailyConversations: {_ in})
+    ConversationHistoryList(conversations: ConversationSD.sample, onTap: {_ in}, onDelete: {_ in}, onDeleteDailyConversations: {_ in})
 }

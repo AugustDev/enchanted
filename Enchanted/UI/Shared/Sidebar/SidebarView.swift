@@ -26,15 +26,12 @@ struct SidebarView: View {
     
     var body: some View {
         VStack {
-            ScrollView() {
-                ConversationHistoryList(
-                    conversations: conversations,
-                    onTap: onConversationTap,
-                    onDelete: onConversationDelete,
-                    onDeleteDailyConversations: onDeleteDailyConversations
-                )
-            }
-            .scrollIndicators(.never)
+            ConversationHistoryList(
+                conversations: conversations,
+                onTap: onConversationTap,
+                onDelete: onConversationDelete,
+                onDeleteDailyConversations: onDeleteDailyConversations
+            )
             
             Divider()
             
@@ -47,7 +44,6 @@ struct SidebarView: View {
             SidebarButton(title: "Settings", image: "gearshape.fill", onClick: onSettingsTap)
             
         }
-        .padding()
         .sheet(isPresented: $showSettings) {
             Settings()
         }
