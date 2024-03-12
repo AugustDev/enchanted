@@ -46,7 +46,7 @@ struct Chat: View {
             Task {
                 try await conversationStore.selectConversation(conversation)
                 await languageModelStore.setModel(model: conversation.model)
-                await Haptics.shared.mediumTap()
+                Haptics.shared.mediumTap()
             }
             showMenu.toggle()
         }

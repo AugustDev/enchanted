@@ -36,6 +36,7 @@ final class LanguageModelStore {
     @MainActor
     func setModel(modelName: String) {
         for model in models {
+            print(model)
             if model.name == modelName {
                 setModel(model: model)
                 return
@@ -44,25 +45,13 @@ final class LanguageModelStore {
     }
     
     func loadModels() async throws {
-        print("loading models")
-        let localModels = try await swiftDataService.fetchModels()
-        print("completed loadLocal()")
-        let remoteModels = try await OllamaService.shared.getModels()
-        print("completed loadRemote()")
-        print(remoteModels)
+        let remoteModelNames = try await OllamaService.shared.getModels()
+        try await swiftDataService.saveModels(models: remoteModelNames.map{LanguageModelSD(name: $0)})
         
-        _ = localModels.map { model in
-            model.isAvailable == remoteModels.contains(model)
-        }
-        
-        let updateModelsList = Array(Set(localModels + remoteModels))
-        try await swiftDataService.saveModels(models: updateModelsList)
-        print("completed saveModels()")
-        
-        let fetchedModels = try await swiftDataService.fetchModels()
+        let storedModels = (try? await swiftDataService.fetchModels()) ?? []
         
         DispatchQueue.main.async {
-            self.models = fetchedModels
+            self.models = storedModels.filter{remoteModelNames.contains($0.name)}
         }
     }
     

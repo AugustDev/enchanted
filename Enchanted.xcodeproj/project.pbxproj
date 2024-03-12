@@ -34,6 +34,8 @@
 		FF1002752B278C170011A4DC /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002742B278C170011A4DC /* AppStore.swift */; };
 		FF10027A2B27B6070011A4DC /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = FF1002792B27B6070011A4DC /* MarkdownUI */; };
 		FF15EF6A2B826C0300D4A541 /* SimpleFloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15EF692B826C0300D4A541 /* SimpleFloatingButton.swift */; };
+		FF1BC3C52BA0753400A58043 /* Splash in Frameworks */ = {isa = PBXBuildFile; productRef = FF1BC3C42BA0753400A58043 /* Splash */; };
+		FF1BC3C72BA0757700A58043 /* SplashSyntaxHighlighter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1BC3C62BA0757700A58043 /* SplashSyntaxHighlighter+Extension.swift */; };
 		FF24B30E2B66BE8500AB618F /* RunningBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF24B30D2B66BE8500AB618F /* RunningBorder.swift */; };
 		FF2F03422B795E0B00349855 /* Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2F03412B795E0B00349855 /* Clipboard.swift */; };
 		FF2F03442B79631800349855 /* Button+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2F03432B79631800349855 /* Button+Extension.swift */; };
@@ -76,6 +78,7 @@
 		FFD5FAD52B8130CE0055AB51 /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = FFD5FAD42B8130CE0055AB51 /* OllamaKit */; };
 		FFE21C782B82353A00A69B9C /* SleepTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE21C772B82353A00A69B9C /* SleepTest.swift */; };
 		FFE2C8232B9A657A00BD82F3 /* Accessibility.plist in Resources */ = {isa = PBXBuildFile; fileRef = FFE2C8222B9A657A00BD82F3 /* Accessibility.plist */; };
+		FFEB9CA82BA04304004B1F3D /* NotificationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEB9CA72BA04304004B1F3D /* NotificationMessage.swift */; };
 		FFEC32912B24779A003E5C04 /* EnchantedApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC32902B24779A003E5C04 /* EnchantedApp.swift */; };
 		FFEC32972B24779B003E5C04 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFEC32962B24779B003E5C04 /* Assets.xcassets */; };
 		FFEC329B2B24779B003E5C04 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFEC329A2B24779B003E5C04 /* Preview Assets.xcassets */; };
@@ -115,6 +118,7 @@
 		FF1002722B276EC10011A4DC /* AppColorScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColorScheme.swift; sourceTree = "<group>"; };
 		FF1002742B278C170011A4DC /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		FF15EF692B826C0300D4A541 /* SimpleFloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleFloatingButton.swift; sourceTree = "<group>"; };
+		FF1BC3C62BA0757700A58043 /* SplashSyntaxHighlighter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplashSyntaxHighlighter+Extension.swift"; sourceTree = "<group>"; };
 		FF24B30D2B66BE8500AB618F /* RunningBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningBorder.swift; sourceTree = "<group>"; };
 		FF2F03412B795E0B00349855 /* Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipboard.swift; sourceTree = "<group>"; };
 		FF2F03432B79631800349855 /* Button+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Extension.swift"; sourceTree = "<group>"; };
@@ -155,6 +159,7 @@
 		FFBBF48B2B35051D008D611C /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		FFE21C772B82353A00A69B9C /* SleepTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepTest.swift; sourceTree = "<group>"; };
 		FFE2C8222B9A657A00BD82F3 /* Accessibility.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Accessibility.plist; sourceTree = "<group>"; };
+		FFEB9CA72BA04304004B1F3D /* NotificationMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationMessage.swift; sourceTree = "<group>"; };
 		FFEC328D2B24779A003E5C04 /* Enchanted.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enchanted.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFEC32902B24779A003E5C04 /* EnchantedApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnchantedApp.swift; sourceTree = "<group>"; };
 		FFEC32962B24779B003E5C04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -174,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFFD00C62B94CA1300392AE6 /* Magnet in Frameworks */,
+				FF1BC3C52BA0753400A58043 /* Splash in Frameworks */,
 				FFD5FAD52B8130CE0055AB51 /* OllamaKit in Frameworks */,
 				FFD5FAD22B8130490055AB51 /* Vortex in Frameworks */,
 				FF10027A2B27B6070011A4DC /* MarkdownUI in Frameworks */,
@@ -433,6 +439,7 @@
 				FFBBF48B2B35051D008D611C /* UIImage+Extension.swift */,
 				FFBBF4872B34F9C8008D611C /* View+Extension.swift */,
 				FFB21A862B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift */,
+				FF1BC3C62BA0757700A58043 /* SplashSyntaxHighlighter+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -443,6 +450,7 @@
 				FF10025D2B2648460011A4DC /* ConversationState.swift */,
 				FF1002722B276EC10011A4DC /* AppColorScheme.swift */,
 				FF7FBE4B2B78E384000901F7 /* SamplePrompt.swift */,
+				FFEB9CA72BA04304004B1F3D /* NotificationMessage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -516,6 +524,7 @@
 				FFFD00C52B94CA1300392AE6 /* Magnet */,
 				FFFD00C82B94CB5E00392AE6 /* AsyncAlgorithms */,
 				FF911DF02B98F08800915E94 /* WrappingHStack */,
+				FF1BC3C42BA0753400A58043 /* Splash */,
 			);
 			productName = Enchanted;
 			productReference = FFEC328D2B24779A003E5C04 /* Enchanted.app */;
@@ -553,6 +562,7 @@
 				FFFD00C42B94CA1300392AE6 /* XCRemoteSwiftPackageReference "Magnet" */,
 				FFFD00C72B94CB5E00392AE6 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
 				FF911DEF2B98F08800915E94 /* XCRemoteSwiftPackageReference "WrappingHStack" */,
+				FF1BC3C32BA0753400A58043 /* XCRemoteSwiftPackageReference "Splash" */,
 			);
 			productRefGroup = FFEC328E2B24779A003E5C04 /* Products */;
 			projectDirPath = "";
@@ -592,6 +602,7 @@
 				FF1002302B2482BA0011A4DC /* ChatMessageView.swift in Sources */,
 				FF1002322B2483A20011A4DC /* Colours+Extension.swift in Sources */,
 				FFB21A872B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift in Sources */,
+				FF1BC3C72BA0757700A58043 /* SplashSyntaxHighlighter+Extension.swift in Sources */,
 				FF33066E2B83CFEC007B33E5 /* KeyboardShortcuts.swift in Sources */,
 				FF66A51D2B76949A00FAAC1E /* Helpers.swift in Sources */,
 				FF10026A2B2731C60011A4DC /* ModelSelectorView.swift in Sources */,
@@ -613,6 +624,7 @@
 				FF38F8512B7A919C00546B56 /* MenuBarControl_macOS.swift in Sources */,
 				FF38F85A2B7AB28300546B56 /* PromptPanelView.swift in Sources */,
 				FF1002462B25BCE70011A4DC /* LanguageModelStore.swift in Sources */,
+				FFEB9CA82BA04304004B1F3D /* NotificationMessage.swift in Sources */,
 				FF10025C2B2625BE0011A4DC /* SidebarView.swift in Sources */,
 				FF1002392B24BBF20011A4DC /* Chat.swift in Sources */,
 				FFB0327D2B312F3D0066A9DB /* RecordingView.swift in Sources */,
@@ -911,6 +923,14 @@
 				minimumVersion = 2.2.0;
 			};
 		};
+		FF1BC3C32BA0753400A58043 /* XCRemoteSwiftPackageReference "Splash" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/JohnSundell/Splash";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.16.0;
+			};
+		};
 		FF464B112B8026DA008E5130 /* XCRemoteSwiftPackageReference "Vortex" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/twostraws/Vortex";
@@ -963,6 +983,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FF1002782B27B6070011A4DC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
 			productName = MarkdownUI;
+		};
+		FF1BC3C42BA0753400A58043 /* Splash */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF1BC3C32BA0753400A58043 /* XCRemoteSwiftPackageReference "Splash" */;
+			productName = Splash;
 		};
 		FF464B122B8026DA008E5130 /* Vortex */ = {
 			isa = XCSwiftPackageProductDependency;

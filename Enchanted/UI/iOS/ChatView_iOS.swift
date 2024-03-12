@@ -171,6 +171,11 @@ struct ChatView: View {
                     .frame(width: 18)
             }
         }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            // allow focusing text area on greater tap area
+            isFocusedInput = true
+        }
     }
     
     var body: some View {
