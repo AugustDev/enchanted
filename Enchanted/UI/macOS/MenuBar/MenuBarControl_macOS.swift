@@ -9,8 +9,9 @@
 import SwiftUI
 
 struct MenuBarControl: View {
+    @State private var appStore = AppStore.shared
     var body: some View {
-        MenuBarControlView()
+        MenuBarControlView(notifications: appStore.notifications)
     }
 }
 #endif

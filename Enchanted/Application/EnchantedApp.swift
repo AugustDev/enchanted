@@ -10,6 +10,7 @@ import SwiftData
 
 @main
 struct EnchantedApp: App {
+    @State private var appStore = AppStore.shared
 #if os(macOS)
     @NSApplicationDelegateAdaptor(PanelManager.self) var panelManager
 #endif
@@ -30,14 +31,18 @@ struct EnchantedApp: App {
 #endif
         
 #if os(macOS)
-#if false
+//#if false
         MenuBarExtra {
             MenuBarControl()
         } label: {
-            MenuBarControlView.icon
+            if let iconName = appStore.menuBarIcon {
+                Image(systemName: iconName)
+            } else {
+                MenuBarControlView.icon
+            }
         }
         .menuBarExtraStyle(.window)
-#endif
+//#endif
 #endif
     }
 }

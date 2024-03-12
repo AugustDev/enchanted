@@ -7,8 +7,10 @@
 
 import SwiftUI
 import MarkdownUI
+import Splash
 
 struct ChatMessageView: View {
+    @Environment(\.colorScheme) var colorScheme
     var avatarName: String
     var name: String
     var text: String
@@ -164,6 +166,15 @@ struct ChatMessageView: View {
                 .markdownMargin(top: 24, bottom: 24)
         }
     
+    private var codeHighlightColorScheme: Splash.Theme {
+        switch colorScheme {
+        case .dark:
+          return .wwdc17(withFont: .init(size: 16))
+        default:
+          return .sunset(withFont: .init(size: 16))
+        }
+    }
+    
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack {
@@ -193,9 +204,9 @@ struct ChatMessageView: View {
                             .padding(.bottom, 2)
                             .frame(height: 27)
                         
-//                        Text(text)
                         Markdown(text)
                             .textSelection(.enabled)
+                            .markdownCodeSyntaxHighlighter(.splash(theme: codeHighlightColorScheme))
                             .markdownTheme(enchantedTheme)
                         
                         if let uiImage = uiImage {
@@ -248,7 +259,7 @@ struct ChatMessageView: View {
     }
 }
 
-extension Color {
+extension SwiftUI.Color {
     fileprivate static let text = Color(
         light: Color(rgba: 0x0606_06ff), dark: Color(rgba: 0xfbfb_fcff)
     )
