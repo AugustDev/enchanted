@@ -35,9 +35,6 @@ final class LanguageModelStore {
     
     @MainActor
     func setModel(modelName: String) {
-        print("model name", modelName)
-        print(models)
-        
         for model in models {
             print(model)
             if model.name == modelName {

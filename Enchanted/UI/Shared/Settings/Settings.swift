@@ -16,6 +16,7 @@ struct Settings: View {
     @AppStorage("vibrations") private var vibrations: Bool = true
     @AppStorage("colorScheme") private var colorScheme = AppColorScheme.system
     @AppStorage("defaultOllamaModel") private var defaultOllamaModel: String = ""
+    @AppStorage("ollamaBearerToken") private var ollamaBearerToken: String = ""
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -27,7 +28,7 @@ struct Settings: View {
             ollamaUri = String(ollamaUri.dropLast())
         }
         
-        OllamaService.shared.initEndpoint(url: ollamaUri)
+        OllamaService.shared.initEndpoint(url: ollamaUri, bearerToken: ollamaBearerToken)
         Task {
             await Haptics.shared.mediumTap()
             try? await languageModelStore.loadModels()
@@ -55,6 +56,7 @@ struct Settings: View {
             vibrations: $vibrations,
             colorScheme: $colorScheme,
             defaultOllamModel: $defaultOllamaModel, 
+            ollamaBearerToken: $ollamaBearerToken,
             save: save,
             checkServer: checkServer,
             deleteAllConversations: conversationStore.deleteAllConversations, 
