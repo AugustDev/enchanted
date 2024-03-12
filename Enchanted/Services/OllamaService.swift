@@ -33,10 +33,9 @@ class OllamaService: @unchecked Sendable {
         }
     }
     
-    func getModels() async throws -> [LanguageModelSD]  {
+    func getModels() async throws -> [String]  {
         let response = try await ollamaKit.models()
-        let models = response.models.map{model in LanguageModelSD(name: model.name)}
-        return models
+        return response.models.map{$0.name}
     }
     
     func reachable() async -> Bool {
