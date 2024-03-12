@@ -20,6 +20,7 @@ final actor Printer {
 
 class PanelManager: NSObject, NSApplicationDelegate {
     var targetApplication: NSRunningApplication?
+    var lastPrintApplication: NSRunningApplication?
     var panel: FloatingPanel!
     var completionsPanelVM = CompletionsPanelVM()
     var allowPrinting = true
@@ -38,6 +39,12 @@ class PanelManager: NSObject, NSApplicationDelegate {
     private func handleNewMessages() async {
         let timer = AsyncTimerSequence(interval: .seconds(0.1), clock: .suspending)
         for await _ in timer {
+            // If user focused different application stop writing
+            if lastPrintApplication != nil && lastPrintApplication?.localizedName != NSWorkspace.shared.runningApplications.first(where: {$0.isActive})?.localizedName {
+                print("Window change detected, stopping")
+                return
+            }
+            
             // hold printing until user action and ensuring that your driving experience
             if !allowPrinting {
                 print("allowPrinting - false")
@@ -50,16 +57,9 @@ class PanelManager: NSObject, NSApplicationDelegate {
                 continue
             }
             
-            // Applicaiton window was changed, cancel.
-            if targetApplication?.localizedName != NSWorkspace.shared.runningApplications.first(where: {$0.isActive})?.localizedName {
-                print("Window change detected")
-                return
-            }
-            
             print("printing: \((sentencesToConsume)) \(Date())")
-//            await Accessibility.shared.simulateTyping(for: sentencesToConsume)
             await printer.print(sentencesToConsume)
-//            await Accessibility.shared.appleScript(for: sentencesToConsume)
+            lastPrintApplication = NSWorkspace.shared.runningApplications.first{$0.isActive}
         }
     }
     
@@ -73,7 +73,7 @@ class PanelManager: NSObject, NSApplicationDelegate {
         targetApplication = NSWorkspace.shared.runningApplications.first{$0.isActive}
 
         Task {
-            completionsPanelVM.selectedText = await Accessibility.shared.getSelectedText()
+            completionsPanelVM.selectedText = Accessibility.shared.getSelectedText()
             print("selected message", completionsPanelVM.selectedText as Any)
             
             if panel == nil || !panel.isVisible {
