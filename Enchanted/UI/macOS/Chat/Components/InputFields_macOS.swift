@@ -104,7 +104,7 @@ struct InputFieldsView: View {
                 SimpleFloatingButton(systemImage: "square.fill", onClick: onStopGenerateTap)
             default:
                 SimpleFloatingButton(systemImage: "paperplane.fill", onClick: { Task { sendMessage() } })
-                .showIf(!message.isEmpty)
+                    .showIf(!message.isEmpty)
             }
         }
         .transition(.slide)
@@ -135,6 +135,11 @@ struct InputFieldsView: View {
             
             return true
         })
+        .contentShape(Rectangle())
+        .onTapGesture {
+            // allow focusing text area on greater tap area
+            isFocusedInput = true
+        }
     }
 }
 

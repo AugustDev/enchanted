@@ -1,5 +1,5 @@
 {
-  "originHash" : "5ab8135bb7491a11d5d5f5e45e52eedcdb6d5d9cc31b72a44d00105aef626d9a",
+  "originHash" : "296b8f815386856ae8cad4b4d35d8e4f655586b0d27111939442184e40904bd0",
   "pins" : [
     {
       "identity" : "activityindicatorview",
@@ -43,7 +43,7 @@
       "location" : "https://github.com/AugustDev/OllamaKit",
       "state" : {
         "branch" : "main",
-        "revision" : "d9284533d59c0c0241120baec9f082246e3e37d6"
+        "revision" : "487bbb54e2f7dc8ea09d8542e21899376c89602d"
       }
     },
     {
@@ -53,6 +53,15 @@
       "state" : {
         "revision" : "8f8fabaa8509c1a653d6c2c3c87396a4c493d876",
         "version" : "2.4.0"
+      }
+    },
+    {
+      "identity" : "splash",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/JohnSundell/Splash",
+      "state" : {
+        "revision" : "7f4df436eb78fe64fe2c32c58006e9949fa28ad8",
+        "version" : "0.16.0"
       }
     },
     {

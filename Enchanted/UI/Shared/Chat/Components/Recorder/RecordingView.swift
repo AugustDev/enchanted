@@ -10,7 +10,7 @@ import SwiftUI
 import AVFoundation
 
 struct RecordingView: View {
-    @StateObject var speechRecognizer = SpeechRecognizer()
+    @StateObject var speechRecognizer: SpeechRecognizer
     @Binding var isRecording: Bool
     var onComplete: (_ transcription: String) -> () = {_ in}
     
@@ -64,7 +64,7 @@ struct RecordingView: View {
 
 struct MeetingView_Previews: PreviewProvider {
     static var previews: some View {
-        RecordingView(isRecording: .constant(true))
+        RecordingView(speechRecognizer: SpeechRecognizer(), isRecording: .constant(true))
     }
 }
 

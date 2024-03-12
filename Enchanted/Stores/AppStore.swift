@@ -15,7 +15,9 @@ final class AppStore {
     
     private var cancellables = Set<AnyCancellable>()
     private var timer: Timer?
-    var isReachable: Bool = true
+    @MainActor var isReachable: Bool = true
+    @MainActor var notifications: [NotificationMessage] = []
+    @MainActor var menuBarIcon: String? = nil
 
     init() {
         startCheckingReachability()
@@ -35,8 +37,10 @@ final class AppStore {
     }
     
     private func updateReachable(_ isReachable: Bool) {
-        withAnimation {
-            self.isReachable = isReachable
+        DispatchQueue.main.async {
+            withAnimation {
+                self.isReachable = isReachable
+            }
         }
     }
 
@@ -48,5 +52,9 @@ final class AppStore {
     private func reachable() async -> Bool {
         let status = await OllamaService.shared.reachable()
         return status
+    }
+    
+    @MainActor func uiLog(message: String, status: NotificationMessage.Status) {
+        notifications = [NotificationMessage(message: message, status: status)] + notifications.suffix(5)
     }
 }

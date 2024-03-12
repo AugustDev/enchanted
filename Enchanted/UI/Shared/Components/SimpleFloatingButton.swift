@@ -21,6 +21,7 @@ struct SimpleFloatingButton: View {
                 .frame(height: 18)
         }
         .buttonStyle(GrowingButton())
+        .contentShape(Rectangle())
     }
 }
 

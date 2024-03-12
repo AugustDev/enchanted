@@ -14,6 +14,7 @@ struct SettingsView: View {
     @Binding var vibrations: Bool
     @Binding var colorScheme: AppColorScheme
     @Binding var defaultOllamModel: String
+    @Binding var ollamaBearerToken: String
     @State var ollamaStatus: Bool?
     var save: () -> ()
     var checkServer: () -> ()
@@ -88,18 +89,26 @@ struct SettingsView: View {
                                 .frame(width: 24, height: 24)
                         }
                     }
+                    
+                    
+                    TextField("Bearer Token", text: $ollamaBearerToken)
+                        .disableAutocorrection(true)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+    #if os(iOS)
+                        .autocapitalization(.none)
+    #endif
+                    
+                    Section(header: Text("APP").font(.headline).padding(.top, 20)) {
+                        
+    #if os(iOS)
+                        Toggle(isOn: $vibrations, label: {
+                            Label("Vibrations", systemImage: "water.waves")
+                                .foregroundStyle(Color.label)
+                        })
+    #endif
                 }
-                
-                Section(header: Text("APP").font(.headline).padding(.top, 20)) {
-                    
-#if os(iOS)
-                    Toggle(isOn: $vibrations, label: {
-                        Label("Vibrations", systemImage: "water.waves")
-                            .foregroundStyle(Color.label)
-                    })
-#endif
-                    
-                    
+            
+       
                     Picker(selection: $colorScheme) {
                         ForEach(AppColorScheme.allCases, id:\.self) { scheme in
                             Text(scheme.toString).tag(scheme.id)
@@ -141,6 +150,7 @@ struct SettingsView: View {
         vibrations: .constant(true),
         colorScheme: .constant(.light),
         defaultOllamModel: .constant("llama2"),
+        ollamaBearerToken: .constant("x"),
         save: {},
         checkServer: {},
         deleteAllConversations: {},

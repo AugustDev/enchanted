@@ -14,6 +14,7 @@ struct PromptPanel: View {
     @State var conversationStore = ConversationStore.shared
     @State var languageModelStore = LanguageModelStore.shared
     @State var completionsStore = CompletionsStore.shared
+    @State var appStore = AppStore.shared
     @State var completionsPanelVM: CompletionsPanelVM
     var onSubmitPanel: () -> ()
     var onSubmitCompletion: (_ scheduledTyping: Bool) -> ()
@@ -36,6 +37,7 @@ struct PromptPanel: View {
         guard let selectedModel = languageModelStore.selectedModel else { return }
         completionsPanelVM.sendPrompt(completion: completion, model: selectedModel)
         onSubmitCompletion(scheduledTyping)
+        appStore.uiLog(message: "Sending completion - **\(completion.name)**", status: .info)
     }
     
     var body: some View {

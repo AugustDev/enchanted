@@ -9,19 +9,43 @@
 import SwiftUI
 
 struct MenuBarControlView: View {
+    var notifications: [NotificationMessage]
     var body: some View {
-        Grid(horizontalSpacing: 12, verticalSpacing: 12) {
-            GridRow {
-                HStack {
-                    ControlView(icon: "checkmark.circle", title: "Ollama", subtitle: "Online")
-                    ControlView(icon: "x.circle", title: "Enchanted", subtitle: "Online")
-                }
-                .padding(12)
-                .background {
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(.ultraThinMaterial)
+        VStack {
+            Grid(horizontalSpacing: 12, verticalSpacing: 12) {
+                GridRow {
+                    HStack {
+                        ControlView(icon: "checkmark.circle", title: "Ollama", subtitle: "Online")
+                        ControlView(icon: "x.circle", title: "Enchanted", subtitle: "Online")
+                    }
+                    .padding(12)
+                    .background {
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(.ultraThinMaterial)
+                    }
                 }
             }
+            
+            VStack(alignment: .leading) {
+                Text("Events")
+                    .font(.title3)
+                
+                ForEach(notifications) { notification in
+                    HStack {
+                        Text(notification.message)
+                            .lineLimit(1)
+                        Spacer()
+                    }
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(RoundedRectangle(cornerRadius: 6).fill(notification.status == .info ? Color.blue.opacity(0.2) : Color.red.opacity(0.2)))
+                    .listRowSeparator(.hidden)
+                }
+                .listStyle(PlainListStyle())
+                .scrollContentBackground(.hidden)
+            }
+            .showIf(notifications.count > 0)
+            .padding(.top, 10)
         }
         .padding()
     }
@@ -51,7 +75,7 @@ struct MenuBarControlView: View {
 }
 
 extension MenuBarControlView {
-    static var icon: Image = {
+    static let icon: Image = {
         let image: NSImage = {
             let ratio = $0.size.height / $0.size.width
             $0.size.height = 18
@@ -64,6 +88,6 @@ extension MenuBarControlView {
 }
 
 #Preview {
-    MenuBarControlView()
+    MenuBarControlView(notifications: NotificationMessage.sample)
 }
 #endif

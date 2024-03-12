@@ -26,6 +26,7 @@ struct ChatView: View {
     @State private var isRecording = false
     @State private var editMessage: MessageSD?
     @FocusState private var isFocusedInput: Bool
+    @StateObject var speechRecognizer = SpeechRecognizer()
     
     /// Image selection
     @State private var pickerSelectorActive: PhotosPickerItem?
@@ -143,7 +144,7 @@ struct ChatView: View {
                     .frame(minHeight: 40)
                     .font(.system(size: 14))
                 
-                RecordingView(isRecording: $isRecording.animation()) { transcription in
+                RecordingView(speechRecognizer: speechRecognizer, isRecording: $isRecording.animation()) { transcription in
                     self.message = transcription
                 }
             }
@@ -169,6 +170,11 @@ struct ChatView: View {
                 SimpleFloatingButton(systemImage: "paperplane.fill", onClick: onMessageSubmit)
                     .frame(width: 18)
             }
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            // allow focusing text area on greater tap area
+            isFocusedInput = true
         }
     }
     
