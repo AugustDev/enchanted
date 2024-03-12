@@ -23,6 +23,11 @@ struct EnchantedApp: App {
                     HotkeyService.shared.register(callback: {panelManager.togglePanel()})
 #endif
                 }
+#if os(macOS)
+                .onAppear {
+                    NSWindow.allowsAutomaticWindowTabbing = false
+                }
+#endif
         }
 #if os(macOS)
         Window("Keyboard Shortcuts", id: "keyboard-shortcuts") {
