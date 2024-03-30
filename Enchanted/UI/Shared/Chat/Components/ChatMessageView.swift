@@ -11,11 +11,17 @@ import Splash
 
 struct ChatMessageView: View {
     @Environment(\.colorScheme) var colorScheme
-    var avatarName: String
-    var name: String
-    var text: String
-    var uiImage: PlatformImage?
+    var message: MessageSD
+    @Binding var editMessage: MessageSD?
     @State private var mouseHover = false
+    
+    var roleName: String  { 
+        message.role == "user" ? "AM" : "AI"
+    }
+    
+    var image: PlatformImage? {
+        message.image != nil ? PlatformImage(data: message.image!) : nil
+    }
     
     let enchantedTheme = Theme()
         .text {
@@ -179,12 +185,12 @@ struct ChatMessageView: View {
         ZStack(alignment: .topTrailing) {
             VStack {
                 HStack(alignment: .top, spacing: 12) {
-                    if name == "user" {
+                    if message.role == "user" {
                         ZStack {
                             Circle()
                                 .foregroundColor(.green)
                             
-                            Text(avatarName)
+                            Text(roleName)
                                 .font(.system(size: 11))
                                 .foregroundStyle(.background)
                             
@@ -198,18 +204,18 @@ struct ChatMessageView: View {
                     }
                     
                     VStack(alignment: .leading) {
-                        Text(name.capitalized)
+                        Text(message.role.capitalized)
                             .font(.system(size: 16))
                             .fontWeight(.medium)
                             .padding(.bottom, 2)
                             .frame(height: 27)
                         
-                        Markdown(text)
+                        Markdown(message.content)
                             .textSelection(.enabled)
                             .markdownCodeSyntaxHighlighter(.splash(theme: codeHighlightColorScheme))
                             .markdownTheme(enchantedTheme)
                         
-                        if let uiImage = uiImage {
+                        if let uiImage = image {
 #if os(iOS)
                             Image(uiImage: uiImage)
                                 .resizable()
@@ -232,14 +238,27 @@ struct ChatMessageView: View {
             }
             
 #if os(macOS)
-            Button(action: {Clipboard.shared.setString(text)}) {
-                Text("Copy")
+            HStack {
+                Button(action: {Clipboard.shared.setString(message.content)}) {
+                    Text("Copy")
+                }
+                .buttonStyle(GrowingButton())
+                .padding(8)
+                .background(Color.gray5Custom)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .showIf(mouseHover)
+                
+                Button(action: {editMessage = message}) {
+                    Text("Edit")
+                }
+                .buttonStyle(GrowingButton())
+                .padding(8)
+                .background(Color.gray5Custom)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .showIf(mouseHover)
+                .showIf(message.role == "user")
             }
-            .buttonStyle(GrowingButton())
-            .padding(8)
-            .background(Color.gray5Custom)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .showIf(mouseHover)
+        
 #endif
         }
 #if os(macOS)
@@ -254,7 +273,7 @@ struct ChatMessageView: View {
 
 #Preview {
     Group {
-        ChatMessageView(avatarName: "AM", name: "user", text: "The derivative of a function describes how function changes.")
+        ChatMessageView(message: MessageSD.sample[0], editMessage: .constant(nil))
             .previewLayout(.sizeThatFits)
     }
 }
