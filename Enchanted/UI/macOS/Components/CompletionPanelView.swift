@@ -10,10 +10,28 @@ import SwiftUI
 import Magnet
 import WrappingHStack
 
+enum CompletionsPromptMode {
+    case completionsInCurrentWindow
+    case completionsInWindowDelayed
+    case completionsInApp
+    
+    var next: CompletionsPromptMode {
+        switch self {
+        case .completionsInApp:
+            return .completionsInCurrentWindow
+        case .completionsInCurrentWindow:
+            return .completionsInWindowDelayed
+        case .completionsInWindowDelayed:
+            return .completionsInApp
+        }
+    }
+}
+
 struct PanelCompletionsView: View {
     var completions: [CompletionInstructionSD]
-    var onClick: @MainActor (_ completion: CompletionInstructionSD, _ scheduledTyping: Bool) -> ()
-    @State var scheduledTyping = false
+    var completionInWindow: @MainActor (_ completion: CompletionInstructionSD, _ scheduledTyping: Bool) -> ()
+    var completionInApp: @MainActor (_ completion: CompletionInstructionSD) -> ()
+    @State var completionMode: CompletionsPromptMode = .completionsInApp
     @State var selectedCompletion: CompletionInstructionSD? = nil
     
     var filetedCompletions: [CompletionInstructionSD] {
@@ -41,11 +59,19 @@ struct PanelCompletionsView: View {
                 Spacer()
                 
                 HStack(alignment: .lastTextBaseline) {
-                    Image(systemName: "space")
-                    Text("Mode")
+                    
+                    switch completionMode {
+                    case .completionsInApp:
+                        Text("Response in App")
+                    case .completionsInCurrentWindow:
+                        Text("Response in Window")
+                    case .completionsInWindowDelayed:
+                        Image(systemName: "space")
+                        Text("Response in Window")
+                    }
+
                 }
                 .padding(.horizontal, 8)
-                .showIf(scheduledTyping)
                 .showIf(selectedCompletion == nil)
                 
                 HStack(alignment: .firstTextBaseline) {
@@ -63,7 +89,14 @@ struct PanelCompletionsView: View {
                         action: {
                             withAnimation {
                                 selectedCompletion = completion
-                                onClick(completion, scheduledTyping)
+                                switch completionMode {
+                                case .completionsInCurrentWindow:
+                                    completionInWindow(completion, false)
+                                case .completionsInWindowDelayed:
+                                    completionInWindow(completion, true)
+                                case .completionsInApp:
+                                    completionInApp(completion)
+                                }
                             }
                         }
                     )
@@ -78,7 +111,7 @@ struct PanelCompletionsView: View {
         }
         .onKeyboardShortcut(key: .space, modifiers: []) {
             withAnimation {
-                scheduledTyping.toggle()
+                completionMode = completionMode.next
             }
         }
         .frame(minWidth: 500, maxWidth: 500)
@@ -88,7 +121,8 @@ struct PanelCompletionsView: View {
 #Preview {
     PanelCompletionsView(
         completions: CompletionInstructionSD.samples,
-        onClick: {_,_  in}
+        completionInWindow: {_,_  in},
+        completionInApp: {_ in}
     )
 }
 #endif

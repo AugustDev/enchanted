@@ -23,7 +23,7 @@ class PanelManager: NSObject, NSApplicationDelegate {
     var lastPrintApplication: NSRunningApplication?
     var panel: FloatingPanel!
     var completionsPanelVM = CompletionsPanelVM()
-    var allowPrinting = true
+    @MainActor var allowPrinting = true
     let printer = Printer()
     
     override init() {
@@ -37,17 +37,15 @@ class PanelManager: NSObject, NSApplicationDelegate {
     }
     
     private func handleNewMessages() async {
-        let timer = AsyncTimerSequence(interval: .seconds(0.1), clock: .suspending)
+        let timer = AsyncTimerSequence(interval: .seconds(1.1), clock: .continuous)
         for await _ in timer {
             // If user focused different application stop writing
             if lastPrintApplication != nil && lastPrintApplication?.localizedName != NSWorkspace.shared.runningApplications.first(where: {$0.isActive})?.localizedName {
-                print("Window change detected, stopping")
-                return
+                continue
             }
             
             // hold printing until user action and ensuring that your driving experience
-            if !allowPrinting {
-                print("allowPrinting - false")
+            if await !allowPrinting {
                 continue
             }
             
