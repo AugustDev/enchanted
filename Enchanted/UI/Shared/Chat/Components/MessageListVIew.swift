@@ -16,15 +16,15 @@ struct MessageListView: View {
     var conversationState: ConversationState
     @Binding var editMessage: MessageSD?
     
+    func onEditMessageTap() -> (MessageSD) -> Void {
+        return { message in
+            editMessage = message
+        }
+    }
+    
     var body: some View {
         ScrollViewReader { scrollViewProxy in
             List(messages, id:\.self) { message in
-                let roleName = message.role == "user" ? "AM" : "AI"
-#if os(iOS)
-                let uiImage: UIImage? = message.image != nil ? UIImage(data: message.image!) : nil
-#elseif os(macOS)
-                let uiImage: NSImage? = message.image != nil ? NSImage(data: message.image!) : nil
-#endif
                 let userContextMenu = ContextMenu(menuItems: {
                     Button(action: {Clipboard.shared.setString(message.content)}) {
                         Label("Copy", systemImage: "doc.on.doc")
@@ -47,10 +47,8 @@ struct MessageListView: View {
                     }
                 })
                 ChatMessageView(
-                    avatarName: roleName,
-                    name: message.role,
-                    text: message.content,
-                    uiImage: uiImage
+                    message: message,
+                    editMessage: $editMessage
                 )
                 .id(message.id)
                 .listRowInsets(EdgeInsets())

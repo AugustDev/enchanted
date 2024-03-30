@@ -13,25 +13,25 @@ class Haptics: @unchecked Sendable {
     
     private init() { }
 
-    @MainActor private func play(_ feedbackStyle: UIImpactFeedbackGenerator.FeedbackStyle) {
+    private func play(_ feedbackStyle: UIImpactFeedbackGenerator.FeedbackStyle) {
         let vibrations = UserDefaults.standard.bool(forKey: "vibrations")
         if vibrations {
             UIImpactFeedbackGenerator(style: feedbackStyle).impactOccurred()
         }
     }
     
-    @MainActor private func notify(_ feedbackType: UINotificationFeedbackGenerator.FeedbackType) {
+    private func notify(_ feedbackType: UINotificationFeedbackGenerator.FeedbackType) {
         let vibrations = UserDefaults.standard.bool(forKey: "vibrations")
         if vibrations {
             UINotificationFeedbackGenerator().notificationOccurred(feedbackType)
         }
     }
     
-    @MainActor func lightTap() {
+    func lightTap() {
         play(.light)
     }
     
-    @MainActor func mediumTap() {
+    func mediumTap() {
         play(.medium)
     }
 }

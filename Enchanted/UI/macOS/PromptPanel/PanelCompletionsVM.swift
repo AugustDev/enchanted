@@ -24,9 +24,7 @@ final class CompletionsPanelVM {
         self.onReceiveText = onReceiveText
     }
     
-    @MainActor
-    func sendPrompt(completion: CompletionInstructionSD, model: LanguageModelSD)  {
-        guard let selectedText = selectedText, !isReady else { return }
+    static func constructPrompt(completion: CompletionInstructionSD, selectedText: String) -> String {
         var prompt = completion.instruction
         
         if prompt.contains("{{text}}") {
@@ -34,6 +32,14 @@ final class CompletionsPanelVM {
         } else {
             prompt += " " + selectedText
         }
+        
+        return prompt
+    }
+    
+    @MainActor
+    func sendPrompt(completion: CompletionInstructionSD, model: LanguageModelSD)  {
+        guard let selectedText = selectedText, !isReady else { return }
+        let prompt = CompletionsPanelVM.constructPrompt(completion: completion, selectedText: selectedText)
         
         let messages: [OKChatRequestData.Message] = [
             .init(role: .user, content: prompt)
