@@ -36,11 +36,13 @@ final class LanguageModelStore {
     @MainActor
     func setModel(modelName: String) {
         for model in models {
-            print(model)
             if model.name == modelName {
                 setModel(model: model)
                 return
             }
+        }
+        if let lastModel = models.last {
+            setModel(model: lastModel)
         }
     }
     
