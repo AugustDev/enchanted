@@ -31,6 +31,17 @@ struct Chat: View {
     }
     
     @MainActor
+    func updateSelectedModel() {
+        if languageModelStore.selectedModel == nil {
+            if defaultOllamaModel != "" {
+                languageModelStore.setModel(modelName: defaultOllamaModel)
+            } else {
+                languageModelStore.setModel(model: languageModelStore.models.first)
+            }
+        }
+    }
+    
+    @MainActor
     func sendMessage(prompt: String, model: LanguageModelSD, image: Image?, trimmingMessageId: String?) {
         conversationStore.sendPrompt(
             userPrompt: prompt,
@@ -126,22 +137,14 @@ struct Chat: View {
         }
         .onChange(of: languageModelStore.models, { _, modelsList in
             if languageModelStore.selectedModel == nil {
-                if defaultOllamaModel != "" {
-                    languageModelStore.setModel(modelName: defaultOllamaModel)
-                } else {
-                    languageModelStore.setModel(model: languageModelStore.models.first)
-                }
+                updateSelectedModel()
             }
         })
         .onChange(of: conversationStore.selectedConversation, initial: true, { _, newConversation in
             if let conversation = newConversation {
                 languageModelStore.setModel(model: conversation.model)
             } else {
-                if defaultOllamaModel != "" {
-                    languageModelStore.setModel(modelName: defaultOllamaModel)
-                } else {
-                    languageModelStore.setModel(model: languageModelStore.models.first)
-                }
+                updateSelectedModel()
             }
         })
     }
