@@ -36,7 +36,7 @@ struct EnchantedApp: App {
 #endif
         
 #if os(macOS)
-//#if false
+#if false
         MenuBarExtra {
             MenuBarControl()
         } label: {
@@ -47,7 +47,7 @@ struct EnchantedApp: App {
             }
         }
         .menuBarExtraStyle(.window)
-//#endif
+#endif
 #endif
     }
 }

@@ -37,7 +37,7 @@ class PanelManager: NSObject, NSApplicationDelegate {
     }
     
     private func handleNewMessages() async {
-        let timer = AsyncTimerSequence(interval: .seconds(1.1), clock: .continuous)
+        let timer = AsyncTimerSequence(interval: .seconds(0.1), clock: .continuous)
         for await _ in timer {
             // If user focused different application stop writing
             if lastPrintApplication != nil && lastPrintApplication?.localizedName != NSWorkspace.shared.runningApplications.first(where: {$0.isActive})?.localizedName {
