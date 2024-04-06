@@ -72,7 +72,6 @@ final class CompletionsPanelVM {
     private func handleReceive(_ response: OKChatResponse)  {
         Task {
             if let responseContent = response.message?.content {
-//                print("received: (\(responseContent))")
                 await sentenceQueue.enqueue(responseContent)
                 self.messageResponse = self.messageResponse + responseContent
             }

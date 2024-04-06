@@ -32,6 +32,7 @@ struct CompletionsEditor: View {
             timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { _ in
                 withAnimation {
                     accessibilityStatus = Accessibility.shared.checkAccessibility()
+                    print("accessibility", accessibilityStatus)
                 }
             }
         }

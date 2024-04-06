@@ -58,22 +58,6 @@ struct PanelCompletionsView: View {
                 
                 Spacer()
                 
-                HStack(alignment: .lastTextBaseline) {
-                    
-                    switch completionMode {
-                    case .completionsInApp:
-                        Text("Response in App")
-                    case .completionsInCurrentWindow:
-                        Text("Response in Window")
-                    case .completionsInWindowDelayed:
-                        Image(systemName: "space")
-                        Text("Response in Window")
-                    }
-
-                }
-                .padding(.horizontal, 8)
-                .showIf(selectedCompletion == nil)
-                
                 HStack(alignment: .firstTextBaseline) {
                     Text("Tap")
                     Image(systemName: "space")
@@ -103,6 +87,30 @@ struct PanelCompletionsView: View {
                     .keyboardShortcut(KeyEquivalent(completion.keyboardCharacter), modifiers: [])
                 }
             }
+            .padding(.bottom, 10)
+            
+            HStack(alignment: .center) {
+                switch completionMode {
+                case .completionsInApp:
+                    Text("Response in **App**.")
+                case .completionsInCurrentWindow:
+                    Text("Response in **Window**.")
+                case .completionsInWindowDelayed:
+                    Text("Response in **Window** with trigger.")
+                }
+                
+                Text("SPACE")
+                    .font(.caption2)
+                    .padding(.horizontal, 7)
+                    .padding(.vertical, 2)
+                    .background(RoundedRectangle(cornerRadius: 3).fill(.bgCustom))
+                
+                Text("to switch")
+                
+            }
+            
+            .padding(.horizontal, 8)
+            .showIf(selectedCompletion == nil)
             
         }
         .padding()

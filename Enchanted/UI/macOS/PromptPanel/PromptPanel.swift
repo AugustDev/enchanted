@@ -42,7 +42,7 @@ struct PromptPanel: View {
     
     @MainActor
     func completionInApp(_ completion: CompletionInstructionSD) {
-        guard let selectedModel = languageModelStore.selectedModel else { return }
+        guard languageModelStore.selectedModel != nil else { return }
         let prompt = CompletionsPanelVM.constructPrompt(completion: completion, selectedText: completionsPanelVM.selectedText ?? "")
         sendMessage(prompt: prompt, image: nil)
         appStore.uiLog(message: "In App Completion - **\(completion.name)**", status: .info)
@@ -64,7 +64,6 @@ struct PromptPanel: View {
                 )
             }
         }
-        .preferredColorScheme(colorScheme.toiOSFormat)
         .edgesIgnoringSafeArea(.all)
     }
 }
