@@ -92,11 +92,11 @@ struct PanelCompletionsView: View {
             HStack(alignment: .center) {
                 switch completionMode {
                 case .completionsInApp:
-                    Text("Response in **App**.")
+                    Text("Respond in **App**.")
                 case .completionsInCurrentWindow:
-                    Text("Response in **Window**.")
+                    Text("Respond in **Window**.")
                 case .completionsInWindowDelayed:
-                    Text("Response in **Window** with trigger.")
+                    Text("Respond in **Window** with trigger.")
                 }
                 
                 Text("SPACE")
@@ -115,7 +115,7 @@ struct PanelCompletionsView: View {
         }
         .padding()
         .background {
-            RoundedRectangle(cornerRadius: 8).fill(.ultraThinMaterial)
+            RoundedRectangle(cornerRadius: 8).fill(.ultraThickMaterial)
         }
         .onKeyboardShortcut(key: .space, modifiers: []) {
             withAnimation {

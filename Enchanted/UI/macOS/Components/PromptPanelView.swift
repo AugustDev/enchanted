@@ -138,7 +138,7 @@ struct PromptPanelView: View {
             }
             .padding(12)
             .background {
-                RoundedRectangle(cornerRadius: 8).fill(.ultraThinMaterial)
+                RoundedRectangle(cornerRadius: 8).fill(.ultraThickMaterial)
             }
         }
         .frame(minWidth: 500, maxWidth: 500)

@@ -32,6 +32,7 @@ final class Accessibility {
     
     func getSelectedText() -> String? {
         if let text = getSelectedTextAX(), text.count > 1  {
+            print("getSelectedTextAX", text)
             return text
         }
         
@@ -58,6 +59,7 @@ final class Accessibility {
     
     
     func getSelectedTextViaCopy(retryAttempts: Int = 1) -> String? {
+        
         let pasteboard = NSPasteboard.general
         let originalContents = pasteboard.pasteboardItems?.compactMap { $0.string(forType: .string) } ?? []
         pasteboard.clearContents()
@@ -85,6 +87,65 @@ final class Accessibility {
         }
         
         return newContent
+        
+        
+        print("via copy invocation")
+        DispatchQueue.main.async {
+            print("one", NSPasteboard.general.string(forType: .string))
+            sleep(1)
+            print("two", NSPasteboard.general.string(forType: .string))
+            sleep(1)
+            print("three", NSPasteboard.general.string(forType: .string))
+            sleep(1)
+            print("four", NSPasteboard.general.string(forType: .string))
+            
+        }
+//        let pasteboard = NSPasteboard.general
+//        let originalContents = pasteboard.pasteboardItems?.compactMap { $0.string(forType: .string) } ?? []
+//        print("step 1", pasteboard.string(forType: .string))
+//        pasteboard.clearContents()
+//        pasteboard.setString("", forType: .string)
+//        print("step 2", pasteboard.string(forType: .string))
+//        usleep(1000000)
+//        sleep(1)
+//        var attempts = 0
+//        var newContent: String?
+        
+
+//        while attempts < retryAttempts && newContent == nil {
+            
+//            simulateCopyKeyPress()
+//            usleep(100000)
+            
+
+//            print("step 3", pasteboard.string(forType: .string))
+//            newContent = pasteboard.string(forType: .string)
+//            print("pasteboard content", newContent)
+//            print("step 3.5", pasteboard.string(forType: .string))
+//            if let newContent = newContent, !newContent.isEmpty {
+//                break
+//            } else {
+//                newContent = nil
+//            }
+//            attempts += 1
+//        }
+        
+//        if newContent == nil {
+//            pasteboard.clearContents()
+//            for item in originalContents {
+//                pasteboard.setString(item, forType: .string)
+//            }
+//        }
+        
+//        defer {
+//            pasteboard.clearContents()
+//        }
+//        
+//        print("step 4", pasteboard.string(forType: .string))
+//        print("returning via copy method", newContent)
+        
+        return nil
+//        return newContent
     }
     
     func simulateCopyKeyPress() {

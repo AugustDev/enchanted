@@ -11,7 +11,8 @@ import Carbon
 import AsyncAlgorithms
 
 final actor Printer {
-    func print(_ message: String) {
+    func write(_ message: String) {
+        print("clipboard printing", message)
         Clipboard.shared.setString(message)
         usleep(50000)
         Accessibility.simulatePasteCommand()
@@ -56,7 +57,7 @@ class PanelManager: NSObject, NSApplicationDelegate {
             }
             
             print("printing: \((sentencesToConsume)) \(Date())")
-            await printer.print(sentencesToConsume)
+            await printer.write(sentencesToConsume)
             lastPrintApplication = NSWorkspace.shared.runningApplications.first{$0.isActive}
         }
     }
@@ -64,7 +65,8 @@ class PanelManager: NSObject, NSApplicationDelegate {
     
     @MainActor
     @objc func togglePanel() {
-        if panel == nil {
+        let accessibilityStatus = Accessibility.shared.checkAccessibility()
+        if !accessibilityStatus {
             Accessibility.shared.showAccessibilityInstructionsWindow()
         }
         
@@ -82,7 +84,7 @@ class PanelManager: NSObject, NSApplicationDelegate {
                     self?.hidePanel()
                 }
                 
-                return
+                return
             }
             
             hidePanel()
