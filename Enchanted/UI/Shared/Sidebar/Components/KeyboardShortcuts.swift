@@ -13,7 +13,7 @@ struct KeyboardShortcut: Identifiable {
     var description: String
 }
 
-struct KeyboardShortcuts: View {
+struct KeyboardShortcutsDemo: View {
     @Environment(\.presentationMode) var presentationMode
     var shortcuts = [
         KeyboardShortcut(id: 1, keys: ["⌃", "⌘", "K"], description: "Open Panel Window"),
@@ -59,5 +59,5 @@ struct KeyboardShortcuts: View {
 }
 
 #Preview {
-    KeyboardShortcuts()
+    KeyboardShortcutsDemo()
 }

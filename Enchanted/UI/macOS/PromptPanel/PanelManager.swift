@@ -80,9 +80,9 @@ class PanelManager: NSObject, NSApplicationDelegate {
                 showPanel()
                 
                 // subscribe to keybaord event to avoid beep
-                HotkeyService.shared.registerSingleUseEscape(modifiers: []) { [weak self] in
-                    self?.hidePanel()
-                }
+//                HotkeyService.shared.registerSingleUseEscape(modifiers: []) { [weak self] in
+//                    self?.hidePanel()
+//                }
                 
                 return
             }

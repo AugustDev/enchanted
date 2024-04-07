@@ -8,6 +8,13 @@
 import SwiftUI
 import SwiftData
 
+#if os(macOS)
+import KeyboardShortcuts
+extension KeyboardShortcuts.Name {
+    static let togglePanelMode = Self("togglePanelMode1", default: .init(.k, modifiers: [.command, .option]))
+}
+#endif
+
 @main
 struct EnchantedApp: App {
     @State private var appStore = AppStore.shared
@@ -18,12 +25,11 @@ struct EnchantedApp: App {
     var body: some Scene {
         WindowGroup {
             ApplicationEntry()
-                .task(priority: .background) {
 #if os(macOS)
-                    HotkeyService.shared.register(callback: {panelManager.togglePanel()})
-#endif
+                .onKeyboardShortcut(KeyboardShortcuts.Name.togglePanelMode, type: .keyDown) {
+                    print("heya")
+                    panelManager.togglePanel()
                 }
-#if os(macOS)
                 .onAppear {
                     NSWindow.allowsAutomaticWindowTabbing = false
                 }
@@ -31,7 +37,7 @@ struct EnchantedApp: App {
         }
 #if os(macOS)
         Window("Keyboard Shortcuts", id: "keyboard-shortcuts") {
-            KeyboardShortcuts()
+            KeyboardShortcutsDemo()
         }
 #endif
         

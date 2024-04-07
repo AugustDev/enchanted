@@ -56,7 +56,7 @@ struct SidebarView: View {
             CompletionsEditor()
         }
         .sheet(isPresented: $showKeyboardShortcutas) {
-            KeyboardShortcuts()
+            KeyboardShortcutsDemo()
         }
 #endif
         

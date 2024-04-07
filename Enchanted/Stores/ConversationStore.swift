@@ -59,8 +59,8 @@ final class ConversationStore: Sendable {
     func deleteDailyConversations(_ date: Date) {
         Task {
             DispatchQueue.main.async { [self] in
-                messages = []
                 selectedConversation = nil
+                messages = []
             }
             try? await swiftDataService.deleteConversations()
             try? await loadConversations()

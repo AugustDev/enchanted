@@ -49,6 +49,7 @@
 		FF38F8582B7AB1AD00546B56 /* PanelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F8572B7AB1AD00546B56 /* PanelManager.swift */; };
 		FF38F85A2B7AB28300546B56 /* PromptPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F8592B7AB28300546B56 /* PromptPanelView.swift */; };
 		FF38F85C2B7ABC2C00546B56 /* PromptPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF38F85B2B7ABC2C00546B56 /* PromptPanel.swift */; };
+		FF4A605D2BC3587800D7BD4F /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = FF4A605C2BC3587800D7BD4F /* KeyboardShortcuts */; };
 		FF5FA0D62B35169400BC471D /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF5FA0D52B35169400BC471D /* Binding+Extension.swift */; };
 		FF66A51D2B76949A00FAAC1E /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF66A51C2B76949A00FAAC1E /* Helpers.swift */; };
 		FF6B7B132B3EE7AC00E8FEA3 /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6B7B122B3EE7AC00E8FEA3 /* Throttler.swift */; };
@@ -186,6 +187,7 @@
 				FF911DF12B98F08800915E94 /* WrappingHStack in Frameworks */,
 				FF1002662B2653EE0011A4DC /* ActivityIndicatorView in Frameworks */,
 				FFFD00C92B94CB5E00392AE6 /* AsyncAlgorithms in Frameworks */,
+				FF4A605D2BC3587800D7BD4F /* KeyboardShortcuts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,6 +527,7 @@
 				FFFD00C82B94CB5E00392AE6 /* AsyncAlgorithms */,
 				FF911DF02B98F08800915E94 /* WrappingHStack */,
 				FF1BC3C42BA0753400A58043 /* Splash */,
+				FF4A605C2BC3587800D7BD4F /* KeyboardShortcuts */,
 			);
 			productName = Enchanted;
 			productReference = FFEC328D2B24779A003E5C04 /* Enchanted.app */;
@@ -563,6 +566,7 @@
 				FFFD00C72B94CB5E00392AE6 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
 				FF911DEF2B98F08800915E94 /* XCRemoteSwiftPackageReference "WrappingHStack" */,
 				FF1BC3C32BA0753400A58043 /* XCRemoteSwiftPackageReference "Splash" */,
+				FF4A605B2BC3587800D7BD4F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 			);
 			productRefGroup = FFEC328E2B24779A003E5C04 /* Products */;
 			projectDirPath = "";
@@ -939,6 +943,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		FF4A605B2BC3587800D7BD4F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		FF911DEF2B98F08800915E94 /* XCRemoteSwiftPackageReference "WrappingHStack" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ksemianov/WrappingHStack";
@@ -993,6 +1005,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FF464B112B8026DA008E5130 /* XCRemoteSwiftPackageReference "Vortex" */;
 			productName = Vortex;
+		};
+		FF4A605C2BC3587800D7BD4F /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF4A605B2BC3587800D7BD4F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
 		};
 		FF911DF02B98F08800915E94 /* WrappingHStack */ = {
 			isa = XCSwiftPackageProductDependency;

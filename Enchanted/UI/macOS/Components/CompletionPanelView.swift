@@ -12,7 +12,6 @@ import WrappingHStack
 
 enum CompletionsPromptMode {
     case completionsInCurrentWindow
-    case completionsInWindowDelayed
     case completionsInApp
     
     var next: CompletionsPromptMode {
@@ -20,8 +19,6 @@ enum CompletionsPromptMode {
         case .completionsInApp:
             return .completionsInCurrentWindow
         case .completionsInCurrentWindow:
-            return .completionsInWindowDelayed
-        case .completionsInWindowDelayed:
             return .completionsInApp
         }
     }
@@ -40,6 +37,25 @@ struct PanelCompletionsView: View {
         }
         return completions
     }
+    
+    let customCompletionText: some View = Button(action: {}) {
+        HStack {
+            Text("TAB")
+                .textCase(.uppercase)
+                .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
+                .background(Color.gray.opacity(0.2))
+                .cornerRadius(5)
+                .font(.system(size: 10, weight: .medium, design: .default))
+            
+            TextField("TAB", text: .constant("x"))
+                .font(.system(size: 12))
+        }
+        .padding(.vertical, 4)
+        .padding(.horizontal, 8)
+        .foregroundStyle(.label)
+        .background(RoundedRectangle(cornerRadius: 5).fill(.bgCustom))
+    }
+        .buttonStyle(GrowingButton())
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -76,8 +92,6 @@ struct PanelCompletionsView: View {
                                 switch completionMode {
                                 case .completionsInCurrentWindow:
                                     completionInWindow(completion, false)
-                                case .completionsInWindowDelayed:
-                                    completionInWindow(completion, true)
                                 case .completionsInApp:
                                     completionInApp(completion)
                                 }
@@ -95,8 +109,6 @@ struct PanelCompletionsView: View {
                     Text("Respond in **App**.")
                 case .completionsInCurrentWindow:
                     Text("Respond in **Window**.")
-                case .completionsInWindowDelayed:
-                    Text("Respond in **Window** with trigger.")
                 }
                 
                 Text("SPACE")

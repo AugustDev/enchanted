@@ -7,6 +7,7 @@
 
 #if os(macOS)
 import SwiftUI
+import KeyboardShortcuts
 
 struct CompletionsEditorView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -62,7 +63,8 @@ struct CompletionsEditorView: View {
                 .padding(.bottom, 10)
                 .fixedSize(horizontal: false, vertical: true)
             
-            HStack {
+            HStack(alignment: .center) {
+                KeyboardShortcuts.Recorder("Keyboard shortcut", name: .togglePanelMode)
                 Spacer()
                 Button(action: newCompletion) {
                     Text("New Completion")
