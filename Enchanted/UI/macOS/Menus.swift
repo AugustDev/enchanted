@@ -24,7 +24,6 @@ struct Menus: Commands {
    @FocusedValue(\.showSettings) var showSettings
 
    var body: some Commands {
-       SidebarCommands()
        CommandGroup(replacing: .appSettings) {
            Button("Settings") {
                showSettings?.wrappedValue = true
