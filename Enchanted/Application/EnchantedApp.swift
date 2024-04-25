@@ -34,6 +34,8 @@ struct EnchantedApp: App {
                     NSWindow.allowsAutomaticWindowTabbing = false
                 }
 #endif
+        }.commands {
+            Menus()
         }
 #if os(macOS)
         Window("Keyboard Shortcuts", id: "keyboard-shortcuts") {

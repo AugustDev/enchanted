@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3396E0762BD877D500213816 /* Menus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3396E0752BD877D500213816 /* Menus.swift */; };
 		FF0146CB2B3DA1DF00A2A9F6 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0146CA2B3DA1DF00A2A9F6 /* Settings.swift */; };
 		FF0146CD2B3DADCA00A2A9F6 /* HapticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0146CC2B3DADCA00A2A9F6 /* HapticsService.swift */; };
 		FF1002302B2482BA0011A4DC /* ChatMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10022F2B2482BA0011A4DC /* ChatMessageView.swift */; };
@@ -94,6 +95,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3396E0752BD877D500213816 /* Menus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menus.swift; sourceTree = "<group>"; };
 		FF0146CA2B3DA1DF00A2A9F6 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		FF0146CC2B3DADCA00A2A9F6 /* HapticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsService.swift; sourceTree = "<group>"; };
 		FF10022F2B2482BA0011A4DC /* ChatMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageView.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 		FF66A51E2B77788D00FAAC1E /* macOS */ = {
 			isa = PBXGroup;
 			children = (
+				3396E0752BD877D500213816 /* Menus.swift */,
 				FF9300D52B778F1A000859F4 /* Chat */,
 				FF6D821A2B9141F0001183A8 /* CompletionsEditor */,
 				FF464B172B810966008E5130 /* Components */,
@@ -660,6 +663,7 @@
 				FF10024E2B25C2A70011A4DC /* ConversationSD.swift in Sources */,
 				FFEC32912B24779A003E5C04 /* EnchantedApp.swift in Sources */,
 				FF2F03422B795E0B00349855 /* Clipboard.swift in Sources */,
+				3396E0762BD877D500213816 /* Menus.swift in Sources */,
 				FF9300DA2B781D97000859F4 /* ToolbarView_macOS.swift in Sources */,
 				FF1002522B2609980011A4DC /* ModelContext+Extension.swift in Sources */,
 				FF1002752B278C170011A4DC /* AppStore.swift in Sources */,

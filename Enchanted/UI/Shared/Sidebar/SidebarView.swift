@@ -48,6 +48,7 @@ struct SidebarView: View {
             
         }
         .padding()
+        .focusedSceneValue(\.showSettings, $showSettings)
         .sheet(isPresented: $showSettings) {
             Settings()
         }
