@@ -48,7 +48,9 @@ struct SidebarView: View {
             
         }
         .padding()
+#if os(macOS)
         .focusedSceneValue(\.showSettings, $showSettings)
+#endif
         .sheet(isPresented: $showSettings) {
             Settings()
         }
