@@ -64,7 +64,7 @@ You're done! Make a prompt.
 2. Install ngrok forward your Ollama server to make it accessible publicly
 
    ```shell
-   ngrok http 11434
+   ngrok http 11434 --host-header="localhost:11434"
    ```
 
 3. Copy "Forwarding" URL that will look something like `https://b377-82-132-216-51.ngrok-free.app`. Your Ollama server API is now accessible through this temporary URL.
