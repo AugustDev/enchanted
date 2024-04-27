@@ -24,52 +24,55 @@ struct MessageListView: View {
     
     var body: some View {
         ScrollViewReader { scrollViewProxy in
-            List(messages, id:\.self) { message in
-                let userContextMenu = ContextMenu(menuItems: {
-                    Button(action: {Clipboard.shared.setString(message.content)}) {
-                        Label("Copy", systemImage: "doc.on.doc")
+            ScrollView(.vertical, showsIndicators: false) {
+                LazyVStack {
+                    ForEach(messages, id:\.self) { message in
+                        let userContextMenu = ContextMenu(menuItems: {
+                            Button(action: {Clipboard.shared.setString(message.content)}) {
+                                Label("Copy", systemImage: "doc.on.doc")
+                            }
+                            
+                            if message.role == "user" {
+                                Button(action: {
+                                    withAnimation { editMessage = message }
+                                }) {
+                                    Label("Edit", systemImage: "pencil")
+                                }
+                            }
+                            
+                            if editMessage?.id == message.id {
+                                Button(action: {
+                                    withAnimation { editMessage = nil }
+                                }) {
+                                    Label("Unselect", systemImage: "pencil")
+                                }
+                            }
+                        })
+                        ChatMessageView(
+                            message: message,
+                            editMessage: $editMessage
+                        )
+                        .simultaneousGesture(DragGesture().onChanged { _ in })
+                        .id(message.id)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                        .padding(.vertical, 10)
+                        .contextMenu(userContextMenu)
+                        .padding(.horizontal, 10)
+                        .runningBorder(animated: message.id == editMessage?.id)
                     }
-                    
-                    if message.role == "user" {
-                        Button(action: {
-                            withAnimation { editMessage = message }
-                        }) {
-                            Label("Edit", systemImage: "pencil")
-                        }
+                    .scrollContentBackground(.hidden)
+                    .onAppear {
+                        scrollToBottom(scrollViewProxy)
                     }
-                    
-                    if editMessage?.id == message.id {
-                        Button(action: {
-                            withAnimation { editMessage = nil }
-                        }) {
-                            Label("Unselect", systemImage: "pencil")
-                        }
+                    .onChange(of: messages) {
+                        scrollToBottom(scrollViewProxy)
                     }
-                })
-                ChatMessageView(
-                    message: message,
-                    editMessage: $editMessage
-                )
-                .id(message.id)
-                .listRowInsets(EdgeInsets())
-                .listRowSeparator(.hidden)
-                .padding(.vertical, 10)
-                .contextMenu(userContextMenu)
-                .padding(.horizontal, 10)
-                .runningBorder(animated: message.id == editMessage?.id)
+                    .onChange(of: messages.last?.content) {
+                        scrollToBottom(scrollViewProxy)
+                    }
+                }
             }
-            .scrollContentBackground(.hidden)
-            .onAppear {
-                scrollToBottom(scrollViewProxy)
-            }
-            .onChange(of: messages) {
-                scrollToBottom(scrollViewProxy)
-            }
-            .onChange(of: messages.last?.content) {
-                scrollToBottom(scrollViewProxy)
-            }
-            .listStyle(.inset)
-            .scrollIndicators(.never)
         }
         .scrollDismissesKeyboard(.interactively)
     }
