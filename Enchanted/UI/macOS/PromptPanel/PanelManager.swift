@@ -42,6 +42,10 @@ class PanelManager: NSObject, NSApplicationDelegate {
         for await _ in timer {
             // If user focused different application stop writing
             if lastPrintApplication != nil && lastPrintApplication?.localizedName != NSWorkspace.shared.runningApplications.first(where: {$0.isActive})?.localizedName {
+                // dequeue all and stop execution
+                await completionsPanelVM.cancel()
+                _ = await completionsPanelVM.sentenceQueue.dequeueAll()
+                lastPrintApplication = nil
                 continue
             }
             
@@ -57,8 +61,8 @@ class PanelManager: NSObject, NSApplicationDelegate {
             }
             
             print("printing: \((sentencesToConsume)) \(Date())")
-            await printer.write(sentencesToConsume)
             lastPrintApplication = NSWorkspace.shared.runningApplications.first{$0.isActive}
+            await printer.write(sentencesToConsume)
         }
     }
     

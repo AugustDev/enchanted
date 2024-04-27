@@ -108,7 +108,7 @@ struct PanelCompletionsView: View {
                 case .completionsInApp:
                     Text("Respond in **App**.")
                 case .completionsInCurrentWindow:
-                    Text("Respond in **Window**.")
+                    Text("Respond in current **Window**.")
                 }
                 
                 Text("SPACE")

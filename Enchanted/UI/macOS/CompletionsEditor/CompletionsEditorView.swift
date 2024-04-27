@@ -27,7 +27,8 @@ struct CompletionsEditorView: View {
             name: "New Completion",
             keyboardCharacterStr: "x",
             instruction: "",
-            order: completions.count
+            order: completions.count,
+            modelTemperature: 0.8
         )
         withAnimation {
             completions.append(newCompletion)

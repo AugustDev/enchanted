@@ -15,16 +15,18 @@ final class CompletionInstructionSD: Identifiable {
     var keyboardCharacterStr: String
     var instruction: String
     var order: Int
+    var modelTemperature: Float? = 0.8
     
     var keyboardCharacter: Character {
         keyboardCharacterStr.first ?? "x"
     }
     
-    init(name: String, keyboardCharacterStr: String, instruction: String, order: Int) {
+    init(name: String, keyboardCharacterStr: String, instruction: String, order: Int, modelTemperature: Float = 0.8) {
         self.name = name
         self.keyboardCharacterStr = keyboardCharacterStr
         self.instruction = instruction
         self.order = order
+        self.modelTemperature = modelTemperature
     }
 }
 
@@ -32,7 +34,7 @@ final class CompletionInstructionSD: Identifiable {
 extension CompletionInstructionSD {
     static let samples: [CompletionInstructionSD] = [
         .init(name: "Fix Grammar", keyboardCharacterStr: "f", instruction: "Fix grammar for the text below", order: 1),
-        .init(name: "Summarize", keyboardCharacterStr: "s", instruction: "Summarize the following text, focusing strictly on the key facts and core arguments. Exclude any model-generated politeness or introductory phrases. Provide a direct, concise summary.", order: 2),
+        .init(name: "Summarize", keyboardCharacterStr: "s", instruction: "Summarize the following text, focusing strictly on the key facts and core arguments. Exclude any model-generated politeness or introductory phrases. Provide a direct, concise summary in bulletpoints.", order: 2),
         .init(name: "Write More", keyboardCharacterStr: "w", instruction: "Elaborate on the following content, providing additional insights, examples, detailed explanations, and related concepts. Dive deeper into the topic to offer a comprehensive understanding and explore various dimensions not covered in the original text.", order: 3),
         .init(name: "Politely Decline", keyboardCharacterStr: "d", instruction: "Write a response politely declining the offer below", order: 4)
     ]

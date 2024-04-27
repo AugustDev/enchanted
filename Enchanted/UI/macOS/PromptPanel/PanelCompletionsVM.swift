@@ -44,7 +44,8 @@ final class CompletionsPanelVM {
         let messages: [OKChatRequestData.Message] = [
             .init(role: .user, content: prompt)
         ]
-        let request = OKChatRequestData(model: model.name, messages: messages)
+        var request = OKChatRequestData(model: model.name, messages: messages)
+        request.options = OKCompletionOptions(temperature: completion.modelTemperature ?? 0.8)
         currentMessageBuffer = ""
         messageResponse = ""
         
@@ -86,5 +87,10 @@ final class CompletionsPanelVM {
     @MainActor
     private func handleComplete() {
         print("model response ", self.messageResponse)
+    }
+    
+    @MainActor
+    func cancel() {
+        generation?.cancel()
     }
 }

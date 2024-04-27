@@ -13,6 +13,7 @@ struct UpsertCompletionView: View {
     @State var name: String = "New Instruction"
     @State var prompt: String = ""
     @State var keyboardShortcutKey: String = "x"
+    @State var temperature: String = "0.8"
     
     var existingCompletion: CompletionInstructionSD?
     var onSave: () -> ()
@@ -25,6 +26,7 @@ struct UpsertCompletionView: View {
             _name = State(initialValue: completion.name)
             _prompt = State(initialValue: completion.instruction)
             _keyboardShortcutKey = State(initialValue: completion.keyboardCharacter.lowercased())
+            _temperature = State(initialValue: String(format: "%.2f", completion.modelTemperature ?? 0.8))
         }
     }
     
@@ -32,6 +34,7 @@ struct UpsertCompletionView: View {
         existingCompletion?.name = name
         existingCompletion?.instruction = prompt
         existingCompletion?.keyboardCharacterStr = keyboardShortcutKey
+        existingCompletion?.modelTemperature = Float(temperature) ?? 0.8
         onSave()
         presentationMode.wrappedValue.dismiss()
     }
@@ -63,13 +66,13 @@ struct UpsertCompletionView: View {
                 
                 
                 VStack(alignment: .trailing) {
-                        LabeledContent("Instruction Prompt") {
-                            TextEditor(text: $prompt)
-                                .scrollContentBackground(.hidden)
-                                .lineLimit(6)
-                                .frame(height: 80)
-
-                        }
+                    LabeledContent("Instruction Prompt") {
+                        TextEditor(text: $prompt)
+                            .scrollContentBackground(.hidden)
+                            .lineLimit(6)
+                            .frame(height: 80)
+                        
+                    }
                     
                     Text("Instruction Prompt gets appended before the selected text and together sent to the LLM.")
                         .font(.caption)
@@ -89,6 +92,9 @@ struct UpsertCompletionView: View {
                         .font(.caption)
                         .foregroundColor(.gray)
                 }
+                
+                TextField("Temperature", text: $temperature)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
             }
             .padding(.bottom, 20)
             

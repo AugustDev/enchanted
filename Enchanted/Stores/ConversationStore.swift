@@ -166,7 +166,9 @@ final class ConversationStore: Sendable {
             
             if await OllamaService.shared.ollamaKit.reachable() {
                 DispatchQueue.global(qos: .background).async {
-                    let request = OKChatRequestData(model: model.name, messages: messageHistory)
+                    var request = OKChatRequestData(model: model.name, messages: messageHistory)
+                    request.options = OKCompletionOptions(temperature: 0)
+                    
                     self.generation = OllamaService.shared.ollamaKit.chat(data: request)
                         .sink(receiveCompletion: { [weak self] completion in
                             switch completion {
