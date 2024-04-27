@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SidebarView: View {
     @Environment(\.openWindow) var openWindow
+    var selectedConversation: ConversationSD?
     var conversations: [ConversationSD]
     var onConversationTap: (_ conversation: ConversationSD) -> ()
     var onConversationDelete: (_ conversation: ConversationSD) -> ()
@@ -28,6 +29,7 @@ struct SidebarView: View {
         VStack {
             ScrollView() {
                 ConversationHistoryList(
+                    selectedConversation: selectedConversation,
                     conversations: conversations,
                     onTap: onConversationTap,
                     onDelete: onConversationDelete,
@@ -67,5 +69,5 @@ struct SidebarView: View {
 }
 
 #Preview {
-    SidebarView(conversations: ConversationSD.sample, onConversationTap: {_ in}, onConversationDelete: {_ in}, onDeleteDailyConversations: {_ in})
+    SidebarView(selectedConversation: ConversationSD.sample[0], conversations: ConversationSD.sample, onConversationTap: {_ in}, onConversationDelete: {_ in}, onDeleteDailyConversations: {_ in})
 }

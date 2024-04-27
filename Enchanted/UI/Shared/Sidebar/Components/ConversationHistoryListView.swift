@@ -22,6 +22,7 @@ struct ConversationGroup: Hashable {
 }
 
 struct ConversationHistoryList: View {
+    var selectedConversation: ConversationSD?
     var conversations: [ConversationSD]
     var onTap: (_ conversation: ConversationSD) -> ()
     var onDelete: (_ conversation: ConversationSD) -> ()
@@ -62,6 +63,12 @@ struct ConversationHistoryList: View {
                 ForEach(conversationGroup.conversations, id:\.self) { dailyConversation in
                     HStack {
                         Button(action: {onTap(dailyConversation)}) {
+                            let isSelected = selectedConversation?.name == dailyConversation.name && selectedConversation?.createdAt == dailyConversation.createdAt
+                            if isSelected {
+                                Text("•")
+                                    .font(.system(size: 16))
+                                    .foregroundColor(.blue)
+                            }
                             Text(dailyConversation.name)
                                 .lineLimit(1)
                                 .font(.system(size: 16))

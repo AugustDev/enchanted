@@ -112,6 +112,7 @@ struct Chat: View {
 #else
             SideBarStack(sidebarWidth: 300,showSidebar: $showMenu, sidebar: {
                 SidebarView(
+                    selectedConversation: conversationStore.selectedConversation,
                     conversations: conversationStore.conversations,
                     onConversationTap: onConversationTap,
                     onConversationDelete: onConversationDelete,
