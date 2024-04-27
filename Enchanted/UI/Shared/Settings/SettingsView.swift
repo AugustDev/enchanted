@@ -67,11 +67,14 @@ struct SettingsView: View {
                         .autocapitalization(.none)
 #endif
                     
-                    TextField("System prompt", text: $systemPrompt, axis: .vertical)
-                        .lineLimit(5, reservesSpace: true)
-#if os(iOS)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-#endif
+                    VStack(alignment: .leading) {
+                        Text("System prompt")
+                        TextEditor(text: $systemPrompt)
+                            .font(.system(size: 13))
+                            .cornerRadius(4)
+                            .multilineTextAlignment(.leading)
+                            .frame(minHeight: 100)
+                    }
                     
                     Picker(selection: $defaultOllamModel) {
                         ForEach(ollamaLangugeModels, id:\.self) { model in
@@ -146,7 +149,7 @@ struct SettingsView: View {
 #Preview {
     SettingsView(
         ollamaUri: .constant(""),
-        systemPrompt: .constant(""),
+        systemPrompt: .constant("You are an intelligent assistant solving complex problems. You are an intelligent assistant solving complex problems. You are an intelligent assistant solving complex problems."),
         vibrations: .constant(true),
         colorScheme: .constant(.light),
         defaultOllamModel: .constant("llama2"),

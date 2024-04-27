@@ -62,6 +62,7 @@ struct Settings: View {
             deleteAllConversations: conversationStore.deleteAllConversations, 
             ollamaLangugeModels: languageModelStore.models
         )
+        .frame(maxWidth: 700)
         .onChange(of: defaultOllamaModel) { _, modelName in
             languageModelStore.setModel(modelName: modelName)
         }
