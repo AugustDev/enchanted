@@ -61,23 +61,25 @@ struct ConversationHistoryList: View {
                 })
                 
                 ForEach(conversationGroup.conversations, id:\.self) { dailyConversation in
-                    HStack {
-                        Button(action: {onTap(dailyConversation)}) {
-                            let isSelected = selectedConversation?.name == dailyConversation.name && selectedConversation?.createdAt == dailyConversation.createdAt
-                            if isSelected {
-                                Text("•")
-                                    .font(.system(size: 16))
-                                    .foregroundColor(.blue)
-                            }
+                    Button(action: {onTap(dailyConversation)}) {
+                        HStack {
+                            Circle()
+                                .frame(width: 6, height: 6)
+                                .animation(.easeOut(duration: 0.15))
+                                .transition(.opacity)
+                                .showIf(selectedConversation == dailyConversation)
+                            
                             Text(dailyConversation.name)
                                 .lineLimit(1)
                                 .font(.system(size: 16))
-                                .fontWeight(.regular)
                                 .foregroundColor(Color(.label))
+                                .animation(.easeOut(duration: 0.15))
+                                .transition(.opacity)
                             Spacer()
                         }
-                        .buttonStyle(.plain)
+                        .animation(.easeOut(duration: 0.15))
                     }
+                    .buttonStyle(.plain)
                     .contextMenu(menuItems: {
                         Button(role: .destructive, action: { onDelete(dailyConversation) }) {
                             Label("Delete", systemImage: "trash")
@@ -93,5 +95,5 @@ struct ConversationHistoryList: View {
 
 
 #Preview {
-        ConversationHistoryList(conversations: ConversationSD.sample, onTap: {_ in}, onDelete: {_ in}, onDeleteDailyConversations: {_ in})
+    ConversationHistoryList(selectedConversation: ConversationSD.sample[0], conversations: ConversationSD.sample, onTap: {_ in}, onDelete: {_ in}, onDeleteDailyConversations: {_ in})
 }
