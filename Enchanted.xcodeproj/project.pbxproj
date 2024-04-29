@@ -78,6 +78,7 @@
 		FFBBF48C2B35051D008D611C /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBBF48B2B35051D008D611C /* UIImage+Extension.swift */; };
 		FFD5FAD22B8130490055AB51 /* Vortex in Frameworks */ = {isa = PBXBuildFile; productRef = FF464B122B8026DA008E5130 /* Vortex */; };
 		FFD5FAD52B8130CE0055AB51 /* OllamaKit in Frameworks */ = {isa = PBXBuildFile; productRef = FFD5FAD42B8130CE0055AB51 /* OllamaKit */; };
+		FFD74E362BDFAA4E0064E71C /* IsScrolling in Frameworks */ = {isa = PBXBuildFile; productRef = FFD74E352BDFAA4E0064E71C /* IsScrolling */; };
 		FFE21C782B82353A00A69B9C /* SleepTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE21C772B82353A00A69B9C /* SleepTest.swift */; };
 		FFE2C8232B9A657A00BD82F3 /* Accessibility.plist in Resources */ = {isa = PBXBuildFile; fileRef = FFE2C8222B9A657A00BD82F3 /* Accessibility.plist */; };
 		FFEB9CA82BA04304004B1F3D /* NotificationMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEB9CA72BA04304004B1F3D /* NotificationMessage.swift */; };
@@ -186,6 +187,7 @@
 				FF1BC3C52BA0753400A58043 /* Splash in Frameworks */,
 				FFD5FAD52B8130CE0055AB51 /* OllamaKit in Frameworks */,
 				FFD5FAD22B8130490055AB51 /* Vortex in Frameworks */,
+				FFD74E362BDFAA4E0064E71C /* IsScrolling in Frameworks */,
 				FF10027A2B27B6070011A4DC /* MarkdownUI in Frameworks */,
 				FF911DF12B98F08800915E94 /* WrappingHStack in Frameworks */,
 				FF1002662B2653EE0011A4DC /* ActivityIndicatorView in Frameworks */,
@@ -533,6 +535,7 @@
 				FF911DF02B98F08800915E94 /* WrappingHStack */,
 				FF1BC3C42BA0753400A58043 /* Splash */,
 				FF4A605C2BC3587800D7BD4F /* KeyboardShortcuts */,
+				FFD74E352BDFAA4E0064E71C /* IsScrolling */,
 			);
 			productName = Enchanted;
 			productReference = FFEC328D2B24779A003E5C04 /* Enchanted.app */;
@@ -572,6 +575,7 @@
 				FF911DEF2B98F08800915E94 /* XCRemoteSwiftPackageReference "WrappingHStack" */,
 				FF1BC3C32BA0753400A58043 /* XCRemoteSwiftPackageReference "Splash" */,
 				FF4A605B2BC3587800D7BD4F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				FFD74E342BDFAA4E0064E71C /* XCRemoteSwiftPackageReference "IsScrolling" */,
 			);
 			productRefGroup = FFEC328E2B24779A003E5C04 /* Products */;
 			projectDirPath = "";
@@ -973,6 +977,14 @@
 				kind = branch;
 			};
 		};
+		FFD74E342BDFAA4E0064E71C /* XCRemoteSwiftPackageReference "IsScrolling" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/fatbobman/IsScrolling";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.2;
+			};
+		};
 		FFFD00C42B94CA1300392AE6 /* XCRemoteSwiftPackageReference "Magnet" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AugustDev/Magnet";
@@ -1026,6 +1038,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FFD5FAD32B8130CE0055AB51 /* XCRemoteSwiftPackageReference "OllamaKit" */;
 			productName = OllamaKit;
+		};
+		FFD74E352BDFAA4E0064E71C /* IsScrolling */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FFD74E342BDFAA4E0064E71C /* XCRemoteSwiftPackageReference "IsScrolling" */;
+			productName = IsScrolling;
 		};
 		FFFD00C52B94CA1300392AE6 /* Magnet */ = {
 			isa = XCSwiftPackageProductDependency;

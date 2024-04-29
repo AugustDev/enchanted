@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "isscrolling",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/fatbobman/IsScrolling",
+      "state" : {
+        "revision" : "7def8d8f789a326b6f725a76cee8ec3fa69511df",
+        "version" : "1.1.2"
+      }
+    },
+    {
       "identity" : "keyboardshortcuts",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sindresorhus/KeyboardShortcuts",
