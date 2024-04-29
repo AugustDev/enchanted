@@ -84,6 +84,10 @@ struct Chat: View, Sendable {
             await Haptics.shared.mediumTap()
             try? await languageModelStore.loadModels()
         }
+        
+#if os(iOS)
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+#endif
     }
     
     var body: some View {
