@@ -33,7 +33,6 @@
 		FF10026D2B2751760011A4DC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10026C2B2751760011A4DC /* SettingsView.swift */; };
 		FF1002732B276EC10011A4DC /* AppColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002722B276EC10011A4DC /* AppColorScheme.swift */; };
 		FF1002752B278C170011A4DC /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002742B278C170011A4DC /* AppStore.swift */; };
-		FF10027A2B27B6070011A4DC /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = FF1002792B27B6070011A4DC /* MarkdownUI */; };
 		FF15EF6A2B826C0300D4A541 /* SimpleFloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15EF692B826C0300D4A541 /* SimpleFloatingButton.swift */; };
 		FF1BC3C52BA0753400A58043 /* Splash in Frameworks */ = {isa = PBXBuildFile; productRef = FF1BC3C42BA0753400A58043 /* Splash */; };
 		FF1BC3C72BA0757700A58043 /* SplashSyntaxHighlighter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1BC3C62BA0757700A58043 /* SplashSyntaxHighlighter+Extension.swift */; };
@@ -90,6 +89,7 @@
 		FFEC9BE12B81327B00AFBA63 /* DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC9BE02B81327B00AFBA63 /* DragAndDrop.swift */; };
 		FFEC9BE32B81358800AFBA63 /* DeallocPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC9BE22B81358800AFBA63 /* DeallocPrinter.swift */; };
 		FFEC9BE72B813A8D00AFBA63 /* RemovableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFEC9BE62B813A8D00AFBA63 /* RemovableImage.swift */; };
+		FFF993592BDFBDCC004DCF19 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = FFF993582BDFBDCC004DCF19 /* MarkdownUI */; };
 		FFFD00C22B92607800392AE6 /* CompletionsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFD00C12B92607800392AE6 /* CompletionsStore.swift */; };
 		FFFD00C62B94CA1300392AE6 /* Magnet in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = FFFD00C52B94CA1300392AE6 /* Magnet */; };
 		FFFD00C92B94CB5E00392AE6 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = FFFD00C82B94CB5E00392AE6 /* AsyncAlgorithms */; };
@@ -188,11 +188,11 @@
 				FFD5FAD52B8130CE0055AB51 /* OllamaKit in Frameworks */,
 				FFD5FAD22B8130490055AB51 /* Vortex in Frameworks */,
 				FFD74E362BDFAA4E0064E71C /* IsScrolling in Frameworks */,
-				FF10027A2B27B6070011A4DC /* MarkdownUI in Frameworks */,
 				FF911DF12B98F08800915E94 /* WrappingHStack in Frameworks */,
 				FF1002662B2653EE0011A4DC /* ActivityIndicatorView in Frameworks */,
 				FFFD00C92B94CB5E00392AE6 /* AsyncAlgorithms in Frameworks */,
 				FF4A605D2BC3587800D7BD4F /* KeyboardShortcuts in Frameworks */,
+				FFF993592BDFBDCC004DCF19 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,7 +527,6 @@
 			name = Enchanted;
 			packageProductDependencies = (
 				FF1002652B2653EE0011A4DC /* ActivityIndicatorView */,
-				FF1002792B27B6070011A4DC /* MarkdownUI */,
 				FF464B122B8026DA008E5130 /* Vortex */,
 				FFD5FAD42B8130CE0055AB51 /* OllamaKit */,
 				FFFD00C52B94CA1300392AE6 /* Magnet */,
@@ -536,6 +535,7 @@
 				FF1BC3C42BA0753400A58043 /* Splash */,
 				FF4A605C2BC3587800D7BD4F /* KeyboardShortcuts */,
 				FFD74E352BDFAA4E0064E71C /* IsScrolling */,
+				FFF993582BDFBDCC004DCF19 /* MarkdownUI */,
 			);
 			productName = Enchanted;
 			productReference = FFEC328D2B24779A003E5C04 /* Enchanted.app */;
@@ -567,7 +567,6 @@
 			mainGroup = FFEC32842B24779A003E5C04;
 			packageReferences = (
 				FF1002642B2653EE0011A4DC /* XCRemoteSwiftPackageReference "ActivityIndicatorView" */,
-				FF1002782B27B6070011A4DC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 				FF464B112B8026DA008E5130 /* XCRemoteSwiftPackageReference "Vortex" */,
 				FFD5FAD32B8130CE0055AB51 /* XCRemoteSwiftPackageReference "OllamaKit" */,
 				FFFD00C42B94CA1300392AE6 /* XCRemoteSwiftPackageReference "Magnet" */,
@@ -576,6 +575,7 @@
 				FF1BC3C32BA0753400A58043 /* XCRemoteSwiftPackageReference "Splash" */,
 				FF4A605B2BC3587800D7BD4F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 				FFD74E342BDFAA4E0064E71C /* XCRemoteSwiftPackageReference "IsScrolling" */,
+				FFF993572BDFBDCC004DCF19 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			productRefGroup = FFEC328E2B24779A003E5C04 /* Products */;
 			projectDirPath = "";
@@ -929,14 +929,6 @@
 				minimumVersion = 1.1.1;
 			};
 		};
-		FF1002782B27B6070011A4DC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.2.0;
-			};
-		};
 		FF1BC3C32BA0753400A58043 /* XCRemoteSwiftPackageReference "Splash" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/JohnSundell/Splash";
@@ -985,6 +977,14 @@
 				minimumVersion = 1.1.2;
 			};
 		};
+		FFF993572BDFBDCC004DCF19 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AugustDev/swift-markdown-ui";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		FFFD00C42B94CA1300392AE6 /* XCRemoteSwiftPackageReference "Magnet" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AugustDev/Magnet";
@@ -1008,11 +1008,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FF1002642B2653EE0011A4DC /* XCRemoteSwiftPackageReference "ActivityIndicatorView" */;
 			productName = ActivityIndicatorView;
-		};
-		FF1002792B27B6070011A4DC /* MarkdownUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = FF1002782B27B6070011A4DC /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
-			productName = MarkdownUI;
 		};
 		FF1BC3C42BA0753400A58043 /* Splash */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1043,6 +1038,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FFD74E342BDFAA4E0064E71C /* XCRemoteSwiftPackageReference "IsScrolling" */;
 			productName = IsScrolling;
+		};
+		FFF993582BDFBDCC004DCF19 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FFF993572BDFBDCC004DCF19 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
 		};
 		FFFD00C52B94CA1300392AE6 /* Magnet */ = {
 			isa = XCSwiftPackageProductDependency;
