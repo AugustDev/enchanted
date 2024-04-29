@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "isscrolling",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/fatbobman/IsScrolling",
+      "state" : {
+        "revision" : "7def8d8f789a326b6f725a76cee8ec3fa69511df",
+        "version" : "1.1.2"
+      }
+    },
+    {
       "identity" : "keyboardshortcuts",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sindresorhus/KeyboardShortcuts",
@@ -102,10 +111,10 @@
     {
       "identity" : "swift-markdown-ui",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/gonzalezreal/swift-markdown-ui",
+      "location" : "https://github.com/AugustDev/swift-markdown-ui",
       "state" : {
-        "revision" : "ae799d015a5374708f7b4c85f3294c05f2a564e2",
-        "version" : "2.3.0"
+        "branch" : "main",
+        "revision" : "acb83e45394334a04ba0cf3487e4d07f4709eeb4"
       }
     },
     {

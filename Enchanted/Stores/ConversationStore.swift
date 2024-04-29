@@ -79,10 +79,8 @@ final class ConversationStore: Sendable {
         )
         
         DispatchQueue.main.async {
-            withAnimation(.easeInOut(duration: 0.3)) {
                 self.messages = messages
                 self.selectedConversation = selectedConversation
-            }
         }
     }
     

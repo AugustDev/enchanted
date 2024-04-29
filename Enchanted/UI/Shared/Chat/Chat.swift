@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Chat: View {
+struct Chat: View, Sendable {
     @State private var languageModelStore: LanguageModelStore
     @State private var conversationStore: ConversationStore
     @State private var appStore: AppStore
@@ -53,14 +53,12 @@ struct Chat: View {
     }
     
     func onConversationTap(_ conversation: ConversationSD) {
-        withAnimation(.bouncy(duration: 0.3)) {
-            Task {
-                try await conversationStore.selectConversation(conversation)
-                await languageModelStore.setModel(model: conversation.model)
-                Haptics.shared.mediumTap()
-            }
-            showMenu.toggle()
+        Task {
+            try await conversationStore.selectConversation(conversation)
+            await languageModelStore.setModel(model: conversation.model)
+            Haptics.shared.mediumTap()
         }
+        showMenu.toggle()
     }
     
     @MainActor func onStopGenerateTap() {
