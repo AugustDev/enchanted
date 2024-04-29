@@ -118,19 +118,7 @@ struct ChatMessageView: View {
             .fixedSize(horizontal: false, vertical: true)
         }
         .codeBlock { configuration in
-            ScrollView(.horizontal) {
-                configuration.label
-                    .fixedSize(horizontal: false, vertical: true)
-                    .relativeLineSpacing(.em(0.225))
-                    .markdownTextStyle {
-                        FontFamilyVariant(.monospaced)
-                        FontSize(.em(0.85))
-                    }
-                    .padding(16)
-            }
-            .background(Color.secondaryBackground)
-            .clipShape(RoundedRectangle(cornerRadius: 6))
-            .markdownMargin(top: 0, bottom: 16)
+            codeBlock(configuration)
         }
         .listItem { configuration in
             configuration.label
@@ -305,4 +293,43 @@ extension SwiftUI.Color {
     )
     fileprivate static let checkbox = Color(rgba: 0xb9b9_bbff)
     fileprivate static let checkboxBackground = Color(rgba: 0xeeee_efff)
+}
+
+@ViewBuilder
+private func codeBlock(_ configuration: CodeBlockConfiguration) -> some View {
+  VStack(spacing: 0) {
+    HStack {
+      Text(configuration.language ?? "plain text")
+        .font(.system(.caption, design: .monospaced))
+        .fontWeight(.semibold)
+      Spacer()
+
+        Button(action: {
+            Clipboard.shared.setString(configuration.content)
+        }) {
+            Image(systemName: "clipboard")
+                .padding(7)
+        }
+        .buttonStyle(GrowingButton())
+    }
+    .padding(.horizontal)
+    .padding(.vertical, 8)
+    .background(Color.secondaryBackground)
+
+    Divider()
+
+    ScrollView(.horizontal) {
+      configuration.label
+            .fixedSize(horizontal: false, vertical: true)
+            .relativeLineSpacing(.em(0.225))
+            .markdownTextStyle {
+                FontFamilyVariant(.monospaced)
+                FontSize(.em(0.85))
+            }
+            .padding(16)
+    }
+  }
+  .background(Color.secondaryBackground)
+  .clipShape(RoundedRectangle(cornerRadius: 8))
+  .markdownMargin(top: .zero, bottom: .em(0.8))
 }
