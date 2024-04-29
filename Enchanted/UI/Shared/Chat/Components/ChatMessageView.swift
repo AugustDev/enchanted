@@ -8,10 +8,12 @@
 import SwiftUI
 import MarkdownUI
 import Splash
+import ActivityIndicatorView
 
 struct ChatMessageView: View {
     @Environment(\.colorScheme) var colorScheme
     var message: MessageSD
+    var showLoader: Bool = false
     @Binding var editMessage: MessageSD?
     @State private var mouseHover = false
     
@@ -196,6 +198,7 @@ struct ChatMessageView: View {
                             
                         }
                         .frame(width: 24, height: 24)
+                        
                     } else {
                         Image("logo-nobg")
                             .resizable()
@@ -204,11 +207,18 @@ struct ChatMessageView: View {
                     }
                     
                     VStack(alignment: .leading) {
-                        Text(message.role.capitalized)
-                            .font(.system(size: 16))
-                            .fontWeight(.medium)
-                            .padding(.bottom, 2)
-                            .frame(height: 27)
+                        HStack {
+                            Text(message.role.capitalized)
+                                .font(.system(size: 16))
+                                .fontWeight(.medium)
+                                .padding(.bottom, 2)
+                                .frame(height: 27)
+                            
+                            ActivityIndicatorView(isVisible: .constant(true), type: .rotatingDots(count: 5))
+                                .frame(width: 20, height: 20)
+                                .rotationEffect(.degrees(-90))
+                                .showIf(showLoader)
+                        }
                         
                         Markdown(message.content)
                             .textSelection(.enabled)
