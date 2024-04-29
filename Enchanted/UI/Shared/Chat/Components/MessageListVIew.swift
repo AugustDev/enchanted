@@ -52,6 +52,7 @@ struct MessageListView: View {
                 ForEach(messages) { message in
                     ChatMessageView(
                         message: message,
+                        showLoader: conversationState == .loading && messages.last == message,
                         editMessage: $editMessage
                     )
                     .listRowInsets(EdgeInsets())
