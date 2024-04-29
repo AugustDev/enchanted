@@ -22,64 +22,58 @@ struct MessageListView: View {
         }
     }
     
-    var body: some View {
-        ScrollViewReader { scrollViewProxy in
-            ScrollView(.vertical, showsIndicators: false) {
-                LazyVStack {
-                    ForEach(messages, id:\.self) { message in
-                        let userContextMenu = ContextMenu(menuItems: {
-                            Button(action: {Clipboard.shared.setString(message.content)}) {
-                                Label("Copy", systemImage: "doc.on.doc")
-                            }
-                            
-                            if message.role == "user" {
-                                Button(action: {
-                                    withAnimation { editMessage = message }
-                                }) {
-                                    Label("Edit", systemImage: "pencil")
-                                }
-                            }
-                            
-                            if editMessage?.id == message.id {
-                                Button(action: {
-                                    withAnimation { editMessage = nil }
-                                }) {
-                                    Label("Unselect", systemImage: "pencil")
-                                }
-                            }
-                        })
-                        ChatMessageView(
-                            message: message,
-                            editMessage: $editMessage
-                        )
-                        .simultaneousGesture(DragGesture().onChanged { _ in })
-                        .id(message.id)
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
-                        .padding(.vertical, 10)
-                        .contextMenu(userContextMenu)
-                        .padding(.horizontal, 10)
-                        .runningBorder(animated: message.id == editMessage?.id)
-                    }
-                    .scrollContentBackground(.hidden)
-                    .onAppear {
-                        scrollToBottom(scrollViewProxy)
-                    }
-                    .onChange(of: messages) {
-                        scrollToBottom(scrollViewProxy)
-                    }
-                    .onChange(of: messages.last?.content) {
-                        scrollToBottom(scrollViewProxy)
-                    }
+    func createUserContextMenu(_ message: MessageSD) -> ContextMenu<TupleView<(Button<Label<Text, Image>>, Button<Label<Text, Image>>?, Button<Label<Text, Image>>?)>> {
+        ContextMenu(menuItems: {
+            Button(action: {Clipboard.shared.setString(message.content)}) {
+                Label("Copy", systemImage: "doc.on.doc")
+            }
+            
+            if message.role == "user" {
+                Button(action: {
+                    withAnimation { editMessage = message }
+                }) {
+                    Label("Edit", systemImage: "pencil")
                 }
             }
-        }
-        .scrollDismissesKeyboard(.interactively)
+            
+            if editMessage?.id == message.id {
+                Button(action: {
+                    withAnimation { editMessage = nil }
+                }) {
+                    Label("Unselect", systemImage: "pencil")
+                }
+            }
+        })
     }
     
-    private func scrollToBottom(_ proxy: ScrollViewProxy) {
-        guard messages.count > 0 else { return }
-        proxy.scrollTo(messages[messages.endIndex - 1].id, anchor: .bottom)
+    var body: some View {
+        ScrollViewReader { scrollViewProxy in
+            ScrollView {
+                ForEach(messages) { message in
+                    ChatMessageView(
+                        message: message,
+                        editMessage: $editMessage
+                    )
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+                    .padding(.vertical, 10)
+                    .contextMenu(createUserContextMenu(message))
+                    .padding(.horizontal, 10)
+                    .runningBorder(animated: message.id == editMessage?.id)
+                    .id(message)
+                }
+            }
+            .textSelection(.enabled)
+            .onAppear {
+                scrollViewProxy.scrollTo(messages.last, anchor: .bottom)
+            }
+            .onChange(of: messages) { oldMessages, newMessages in
+                scrollViewProxy.scrollTo(messages.last, anchor: .bottom)
+            }
+            .onChange(of: messages.last?.content) {
+                scrollViewProxy.scrollTo(messages.last, anchor: .bottom)
+            }
+        }
     }
 }
 
