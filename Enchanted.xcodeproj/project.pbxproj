@@ -36,6 +36,7 @@
 		FF15EF6A2B826C0300D4A541 /* SimpleFloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15EF692B826C0300D4A541 /* SimpleFloatingButton.swift */; };
 		FF1BC3C52BA0753400A58043 /* Splash in Frameworks */ = {isa = PBXBuildFile; productRef = FF1BC3C42BA0753400A58043 /* Splash */; };
 		FF1BC3C72BA0757700A58043 /* SplashSyntaxHighlighter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1BC3C62BA0757700A58043 /* SplashSyntaxHighlighter+Extension.swift */; };
+		FF226A652BE2A0EC00CC91F1 /* SelectTextSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF226A642BE2A0EC00CC91F1 /* SelectTextSheet.swift */; };
 		FF24B30E2B66BE8500AB618F /* RunningBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF24B30D2B66BE8500AB618F /* RunningBorder.swift */; };
 		FF2F03422B795E0B00349855 /* Clipboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2F03412B795E0B00349855 /* Clipboard.swift */; };
 		FF2F03442B79631800349855 /* Button+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2F03432B79631800349855 /* Button+Extension.swift */; };
@@ -122,6 +123,7 @@
 		FF1002742B278C170011A4DC /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		FF15EF692B826C0300D4A541 /* SimpleFloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleFloatingButton.swift; sourceTree = "<group>"; };
 		FF1BC3C62BA0757700A58043 /* SplashSyntaxHighlighter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplashSyntaxHighlighter+Extension.swift"; sourceTree = "<group>"; };
+		FF226A642BE2A0EC00CC91F1 /* SelectTextSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTextSheet.swift; sourceTree = "<group>"; };
 		FF24B30D2B66BE8500AB618F /* RunningBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningBorder.swift; sourceTree = "<group>"; };
 		FF2F03412B795E0B00349855 /* Clipboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clipboard.swift; sourceTree = "<group>"; };
 		FF2F03432B79631800349855 /* Button+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Extension.swift"; sourceTree = "<group>"; };
@@ -281,6 +283,14 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		FF226A632BE2A0E100CC91F1 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				FF226A642BE2A0EC00CC91F1 /* SelectTextSheet.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		FF38F84D2B7A7B5300546B56 /* MenuBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -340,6 +350,7 @@
 		FF66A51F2B77789300FAAC1E /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				FF226A632BE2A0E100CC91F1 /* Components */,
 				FFEC32A92B24797C003E5C04 /* ChatView_iOS.swift */,
 			);
 			path = iOS;
@@ -403,6 +414,7 @@
 			isa = PBXGroup;
 			children = (
 				FFEC32982B24779B003E5C04 /* Enchanted.entitlements */,
+				FFE2C8222B9A657A00BD82F3 /* Accessibility.plist */,
 				FFBBF4822B348345008D611C /* Info.plist */,
 				FFEC32962B24779B003E5C04 /* Assets.xcassets */,
 				FFEC32A12B24783B003E5C04 /* Application */,
@@ -414,7 +426,6 @@
 				FF1002422B25BAC50011A4DC /* Stores */,
 				FF1002412B25BAAE0011A4DC /* SwiftData */,
 				FFEC32A52B247879003E5C04 /* UI */,
-				FFE2C8222B9A657A00BD82F3 /* Accessibility.plist */,
 			);
 			path = Enchanted;
 			sourceTree = "<group>";
@@ -658,6 +669,7 @@
 				FF7FBE4C2B78E384000901F7 /* SamplePrompt.swift in Sources */,
 				FF38F8582B7AB1AD00546B56 /* PanelManager.swift in Sources */,
 				FF6D82172B9122F9001183A8 /* CompletionInstructionSD.swift in Sources */,
+				FF226A652BE2A0EC00CC91F1 /* SelectTextSheet.swift in Sources */,
 				FF10025A2B2624C40011A4DC /* ConversationHistoryListView.swift in Sources */,
 				FF10026D2B2751760011A4DC /* SettingsView.swift in Sources */,
 				FF33066C2B83BB31007B33E5 /* SidebarButton.swift in Sources */,
