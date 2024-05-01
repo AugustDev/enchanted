@@ -26,6 +26,7 @@ struct ChatView: View {
     var onSelectModel: @MainActor (_ model: LanguageModelSD?) -> ()
     var onConversationDelete: (_ conversation: ConversationSD) -> ()
     var onDeleteDailyConversations: (_ date: Date) -> ()
+    var userInitials: String
     
     @State private var message = ""
     @State private var editMessage: MessageSD?
@@ -46,6 +47,7 @@ struct ChatView: View {
                     MessageListView(
                         messages: messages,
                         conversationState: conversationState,
+                        userInitials: userInitials, 
                         editMessage: $editMessage
                     )
                 } else {
@@ -105,7 +107,8 @@ struct ChatView: View {
         modelSupportsImages: true,
         selectedModel: LanguageModelSD.sample[0], onSelectModel: {_ in},
         onConversationDelete: {_ in},
-        onDeleteDailyConversations: {_ in}
+        onDeleteDailyConversations: {_ in},
+        userInitials: "AM"
     )
 }
 #endif

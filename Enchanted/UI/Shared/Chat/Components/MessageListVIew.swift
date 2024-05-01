@@ -14,6 +14,7 @@ import AppKit
 struct MessageListView: View {
     var messages: [MessageSD]
     var conversationState: ConversationState
+    var userInitials: String
     @Binding var editMessage: MessageSD?
     
     func onEditMessageTap() -> (MessageSD) -> Void {
@@ -53,6 +54,7 @@ struct MessageListView: View {
                     ChatMessageView(
                         message: message,
                         showLoader: conversationState == .loading && messages.last == message,
+                        userInitials: userInitials,
                         editMessage: $editMessage
                     )
                     .listRowInsets(EdgeInsets())
@@ -82,6 +84,7 @@ struct MessageListView: View {
     MessageListView(
         messages: MessageSD.sample,
         conversationState: .loading,
+        userInitials: "AM",
         editMessage: .constant(MessageSD.sample[0])
     )
 }

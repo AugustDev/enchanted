@@ -20,6 +20,7 @@ struct ChatView: View {
     var onStopGenerateTap: @MainActor () -> ()
     var reachable: Bool
     var onSelectModel: @MainActor (_ model: LanguageModelSD?) -> ()
+    var userInitials: String
     
     private var selectedModel: LanguageModelSD?
     @State private var message = ""
@@ -44,7 +45,8 @@ struct ChatView: View {
         conversationState: ConversationState,
         onStopGenerateTap: @MainActor @escaping () -> Void,
         reachable: Bool,
-        modelSupportsImages: Bool = false
+        modelSupportsImages: Bool = false,
+        userInitials: String
     ) {
         self.conversation = conversation
         self.messages = messages
@@ -57,6 +59,7 @@ struct ChatView: View {
         self.reachable = reachable
         self.onSelectModel = onSelectModel
         self.selectedModel = selectedModel
+        self.userInitials = userInitials
     }
     
     private func onMessageSubmit() {
@@ -187,6 +190,7 @@ struct ChatView: View {
                 MessageListView(
                     messages: messages,
                     conversationState: conversationState,
+                    userInitials: userInitials,
                     editMessage: $editMessage
                 )
             } else {
@@ -231,7 +235,8 @@ struct ChatView: View {
         conversationState: .loading,
         onStopGenerateTap: {},
         reachable: false,
-        modelSupportsImages: true
+        modelSupportsImages: true, 
+        userInitials: "AM"
     )
 }
 
@@ -248,7 +253,8 @@ struct ChatView: View {
         conversationState: .completed,
         onStopGenerateTap: {},
         reachable: true,
-        modelSupportsImages: true
+        modelSupportsImages: true,
+        userInitials: "AM"
     )
 }
 #endif
