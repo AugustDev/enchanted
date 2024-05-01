@@ -15,6 +15,7 @@ struct SettingsView: View {
     @Binding var colorScheme: AppColorScheme
     @Binding var defaultOllamModel: String
     @Binding var ollamaBearerToken: String
+    @Binding var appUserInitials: String
     @State var ollamaStatus: Bool?
     var save: () -> ()
     var checkServer: () -> ()
@@ -120,6 +121,14 @@ struct SettingsView: View {
                         Label("Appearance", systemImage: "sun.max")
                             .foregroundStyle(Color.label)
                     }
+
+                    TextField("Initials", text: $appUserInitials)
+                        .disableAutocorrection(true)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+#if os(iOS)
+                        .keyboardType(.URL)
+                        .autocapitalization(.none)
+#endif
                     
                     Button(action: {deleteConversationsDialog.toggle()}) {
                         HStack {
@@ -154,6 +163,7 @@ struct SettingsView: View {
         colorScheme: .constant(.light),
         defaultOllamModel: .constant("llama2"),
         ollamaBearerToken: .constant("x"),
+        appUserInitials: .constant("AM"),
         save: {},
         checkServer: {},
         deleteAllConversations: {},

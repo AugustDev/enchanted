@@ -12,6 +12,7 @@ struct Chat: View, Sendable {
     @State private var conversationStore: ConversationStore
     @State private var appStore: AppStore
     @AppStorage("systemPrompt") private var systemPrompt: String = ""
+    @AppStorage("appUserInitials") private var userInitials: String = ""
     @AppStorage("defaultOllamaModel") private var defaultOllamaModel: String = ""
     @State var showMenu = false
     
@@ -109,7 +110,8 @@ struct Chat: View, Sendable {
                 selectedModel: languageModelStore.selectedModel,
                 onSelectModel: languageModelStore.setModel,
                 onConversationDelete: onConversationDelete,
-                onDeleteDailyConversations: conversationStore.deleteDailyConversations
+                onDeleteDailyConversations: conversationStore.deleteDailyConversations,
+                userInitials: userInitials
             )
 #else
             SideBarStack(sidebarWidth: 300,showSidebar: $showMenu, sidebar: {
@@ -133,7 +135,8 @@ struct Chat: View, Sendable {
                     conversationState: conversationStore.conversationState,
                     onStopGenerateTap: onStopGenerateTap,
                     reachable: appStore.isReachable,
-                    modelSupportsImages: languageModelStore.supportsImages
+                    modelSupportsImages: languageModelStore.supportsImages,
+                    userInitials: userInitials
                 )
             }
 #endif

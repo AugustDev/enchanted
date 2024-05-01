@@ -14,11 +14,13 @@ struct ChatMessageView: View {
     @Environment(\.colorScheme) var colorScheme
     var message: MessageSD
     var showLoader: Bool = false
+    var userInitials: String
     @Binding var editMessage: MessageSD?
     @State private var mouseHover = false
     
     var roleName: String  { 
-        message.role == "user" ? "AM" : "AI"
+        let userInitialsNotEmpty = userInitials != "" ? userInitials : "AM"
+        return message.role == "user" ? userInitialsNotEmpty.uppercased() : "AI"
     }
     
     var image: PlatformImage? {
@@ -271,7 +273,7 @@ struct ChatMessageView: View {
 
 #Preview {
     Group {
-        ChatMessageView(message: MessageSD.sample[0], editMessage: .constant(nil))
+        ChatMessageView(message: MessageSD.sample[0], userInitials: "AM", editMessage: .constant(nil))
             .previewLayout(.sizeThatFits)
     }
 }
