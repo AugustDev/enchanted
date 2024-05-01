@@ -165,9 +165,9 @@ struct ChatMessageView: View {
     private var codeHighlightColorScheme: Splash.Theme {
         switch colorScheme {
         case .dark:
-          return .wwdc17(withFont: .init(size: 16))
+            return .wwdc17(withFont: .init(size: 16))
         default:
-          return .sunset(withFont: .init(size: 16))
+            return .sunset(withFont: .init(size: 16))
         }
     }
     
@@ -256,7 +256,7 @@ struct ChatMessageView: View {
                 .showIf(mouseHover)
                 .showIf(message.role == "user")
             }
-        
+            
 #endif
         }
 #if os(macOS)
@@ -307,39 +307,44 @@ extension SwiftUI.Color {
 
 @ViewBuilder
 private func codeBlock(_ configuration: CodeBlockConfiguration) -> some View {
-  VStack(spacing: 0) {
-    HStack {
-      Text(configuration.language ?? "plain text")
-        .font(.system(.caption, design: .monospaced))
-        .fontWeight(.semibold)
-      Spacer()
-
-        Button(action: {
-            Clipboard.shared.setString(configuration.content)
-        }) {
-            Image(systemName: "clipboard")
-                .padding(7)
-        }
-        .buttonStyle(GrowingButton())
+    var language: String {
+        let language = configuration.language ?? "code"
+        return language != "" ? language : "code"
     }
-    .padding(.horizontal)
-    .padding(.vertical, 8)
-    .background(Color.secondaryBackground)
-
-    Divider()
-
-    ScrollView(.horizontal) {
-      configuration.label
-            .fixedSize(horizontal: false, vertical: true)
-            .relativeLineSpacing(.em(0.225))
-            .markdownTextStyle {
-                FontFamilyVariant(.monospaced)
-                FontSize(.em(0.85))
+    
+    VStack(spacing: 0) {
+        HStack {
+            Text(language)
+                .font(.system(size: 13, design: .monospaced))
+                .fontWeight(.semibold)
+            Spacer()
+            
+            Button(action: {
+                Clipboard.shared.setString(configuration.content)
+            }) {
+                Image(systemName: "clipboard")
+                    .padding(7)
             }
-            .padding(16)
+            .buttonStyle(GrowingButton())
+        }
+        .padding(.horizontal)
+        .padding(.vertical, 4)
+        .background(Color.secondaryBackground)
+        
+        Divider()
+        
+        ScrollView(.horizontal) {
+            configuration.label
+                .fixedSize(horizontal: false, vertical: true)
+                .relativeLineSpacing(.em(0.225))
+                .markdownTextStyle {
+                    FontFamilyVariant(.monospaced)
+                    FontSize(.em(0.85))
+                }
+                .padding(16)
+        }
     }
-  }
-  .background(Color.secondaryBackground)
-  .clipShape(RoundedRectangle(cornerRadius: 8))
-  .markdownMargin(top: .zero, bottom: .em(0.8))
+    .background(Color.secondaryBackground)
+    .clipShape(RoundedRectangle(cornerRadius: 8))
+    .markdownMargin(top: .zero, bottom: .em(0.8))
 }
