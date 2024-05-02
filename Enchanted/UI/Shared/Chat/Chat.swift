@@ -59,7 +59,9 @@ struct Chat: View, Sendable {
             await languageModelStore.setModel(model: conversation.model)
             Haptics.shared.mediumTap()
         }
-        showMenu.toggle()
+        withAnimation {
+            showMenu.toggle()
+        }
     }
     
     @MainActor func onStopGenerateTap() {
