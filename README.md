@@ -1,12 +1,10 @@
-![Enchanted banner](./assets/banner.png)
-![Swift](https://img.shields.io/badge/swift-F54A2A?style=for-the-badge&logo=swift&logoColor=white)
-![Release](https://img.shields.io/github/v/release/augustdev/enchanted?style=for-the-badge)
-![Stars](https://img.shields.io/github/stars/augustdev/enchanted.svg?style=for-the-badge)
-![iOS](https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=ios&logoColor=white)
-![iOS](https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=ios&logoColor=white)
-[<img src="https://img.shields.io/badge/App_Store-0D96F6?style=for-the-badge&logo=app-store&logoColor=white">](https://apps.apple.com/gb/app/enchanted-llm/id6474268307)
-[<img src="https://img.shields.io/badge/App_Store-0D96F6?style=for-the-badge&logo=app-store&logoColor=white">](https://twitter.com/amgauge)
-[<img src="https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2Famgauge&style=for-the-badge">](https://twitter.com/amgauge)
+[<img src="https://img.shields.io/badge/App_Store-0D96F6?&logo=app-store&logoColor=white">](https://apps.apple.com/gb/app/enchanted-llm/id6474268307)
+![Swift](https://img.shields.io/badge/swift-F54A2A?&logo=swift&logoColor=white)
+![Release](https://img.shields.io/github/v/release/augustdev/enchanted)
+![Stars](https://img.shields.io/github/stars/augustdev/enchanted.svg)
+[<img src="https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2Famgauge">](https://twitter.com/amgauge)
+![iOS](https://img.shields.io/badge/iOS-000000?&logo=os&logoColor=white)
+![macOS](https://img.shields.io/badge/macOS-000000?style=?&logo=os&logoColor=white)
 
 # Enchanted
 
@@ -58,9 +56,17 @@ https://github.com/AugustDev/enchanted/assets/5672094/2ef476e7-8fc5-4992-9152-6d
 
 ### iOS
 
-| Multimodal                                                                                                                        | Markdown\_                                                                                                                        |
-| --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="https://github.com/AugustDev/enchanted/assets/5672094/f2a7dafa-9470-4689-9f5a-27b6eb0e168d" width="1000" height="100%"> | <img src="https://github.com/AugustDev/enchanted/assets/5672094/9caefcb2-69eb-46d0-8d4f-b6269d7c2937" width="1000" height="100%"> |
+Multimodal
+
+<img src="https://github.com/AugustDev/enchanted/assets/5672094/f2a7dafa-9470-4689-9f5a-27b6eb0e168d" width="1000" height="100%">
+
+Markdown
+
+<img src="https://github.com/AugustDev/enchanted/assets/5672094/9caefcb2-69eb-46d0-8d4f-b6269d7c2937" width="1000" height="100%">
+
+Conversation history
+
+<img width="959" alt="Xnapper-2024-05-03-12 00 28" src="https://github.com/AugustDev/enchanted/assets/5672094/7dade8ec-e94d-4936-9237-f2f2bc1533f2">
 
 - Supports latest Ollama Chat API
 - Conversation history included in the API calls
