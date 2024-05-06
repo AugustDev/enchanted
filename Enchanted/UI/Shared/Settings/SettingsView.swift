@@ -16,6 +16,7 @@ struct SettingsView: View {
     @Binding var defaultOllamModel: String
     @Binding var ollamaBearerToken: String
     @Binding var appUserInitials: String
+    @Binding var pingInterval: String
     @State var ollamaStatus: Bool?
     var save: () -> ()
     var checkServer: () -> ()
@@ -101,6 +102,9 @@ struct SettingsView: View {
     #if os(iOS)
                         .autocapitalization(.none)
     #endif
+                    TextField("Ping Interval (seconds)", text: $pingInterval)
+                        .disableAutocorrection(true)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     
                     Section(header: Text("APP").font(.headline).padding(.top, 20)) {
                         
@@ -164,6 +168,7 @@ struct SettingsView: View {
         defaultOllamModel: .constant("llama2"),
         ollamaBearerToken: .constant("x"),
         appUserInitials: .constant("AM"),
+        pingInterval: .constant("5"),
         save: {},
         checkServer: {},
         deleteAllConversations: {},

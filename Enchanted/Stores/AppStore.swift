@@ -15,12 +15,16 @@ final class AppStore {
     
     private var cancellables = Set<AnyCancellable>()
     private var timer: Timer?
+    private var pingInterval: TimeInterval = 5
     @MainActor var isReachable: Bool = true
     @MainActor var notifications: [NotificationMessage] = []
     @MainActor var menuBarIcon: String? = nil
 
     init() {
-        startCheckingReachability()
+        if let storedIntervalString = UserDefaults.standard.string(forKey: "pingInterval") {
+            pingInterval = Double(storedIntervalString) ?? 5
+        }
+        startCheckingReachability(interval: pingInterval)
     }
     
     deinit {
