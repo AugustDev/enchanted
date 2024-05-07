@@ -18,6 +18,7 @@ struct Settings: View {
     @AppStorage("defaultOllamaModel") private var defaultOllamaModel: String = ""
     @AppStorage("ollamaBearerToken") private var ollamaBearerToken: String = ""
     @AppStorage("appUserInitials") private var appUserInitials: String = ""
+    @AppStorage("pingInterval") private var pingInterval: String = "5"
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -59,6 +60,7 @@ struct Settings: View {
             defaultOllamModel: $defaultOllamaModel, 
             ollamaBearerToken: $ollamaBearerToken,
             appUserInitials: $appUserInitials,
+            pingInterval: $pingInterval,
             save: save,
             checkServer: checkServer,
             deleteAllConversations: conversationStore.deleteAllConversations,
