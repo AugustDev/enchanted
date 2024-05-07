@@ -23,6 +23,10 @@ final class AppStore {
     init() {
         if let storedIntervalString = UserDefaults.standard.string(forKey: "pingInterval") {
             pingInterval = Double(storedIntervalString) ?? 5
+            
+            if pingInterval <= 0 {
+                pingInterval = .infinity
+            }
         }
         startCheckingReachability(interval: pingInterval)
     }
