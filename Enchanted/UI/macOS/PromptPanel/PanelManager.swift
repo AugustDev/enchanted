@@ -12,7 +12,6 @@ import AsyncAlgorithms
 
 final actor Printer {
     func write(_ message: String) {
-        print("clipboard printing", message)
         Clipboard.shared.setString(message)
         usleep(50000)
         Accessibility.simulatePasteCommand()

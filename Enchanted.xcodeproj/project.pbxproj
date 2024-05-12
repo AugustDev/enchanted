@@ -71,6 +71,7 @@
 		FF9300DE2B782A28000859F4 /* UnreachableAPIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9300DD2B782A28000859F4 /* UnreachableAPIView.swift */; };
 		FF9300E02B783945000859F4 /* InputFields_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9300DF2B783945000859F4 /* InputFields_macOS.swift */; };
 		FF9C920A2BF0B7B1004C8275 /* LanguageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9C92092BF0B7B1004C8275 /* LanguageModel.swift */; };
+		FF9C920C2BF0C088004C8275 /* OptionsMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9C920B2BF0C088004C8275 /* OptionsMenuView.swift */; };
 		FFB0327D2B312F3D0066A9DB /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB0327C2B312F3D0066A9DB /* RecordingView.swift */; };
 		FFB21A872B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB21A862B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift */; };
 		FFBBF4842B34881B008D611C /* SpeechRecogniser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBBF4832B34881B008D611C /* SpeechRecogniser.swift */; };
@@ -158,6 +159,7 @@
 		FF9300DF2B783945000859F4 /* InputFields_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFields_macOS.swift; sourceTree = "<group>"; };
 		FF9C92072BF0B464004C8275 /* EnchantedDebug.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = EnchantedDebug.entitlements; sourceTree = "<group>"; };
 		FF9C92092BF0B7B1004C8275 /* LanguageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageModel.swift; sourceTree = "<group>"; };
+		FF9C920B2BF0C088004C8275 /* OptionsMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsMenuView.swift; sourceTree = "<group>"; };
 		FFB0327C2B312F3D0066A9DB /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
 		FFB21A862B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardReadable+Extension.swift"; sourceTree = "<group>"; };
 		FFBBF4822B348345008D611C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				FF9300DB2B7823B0000859F4 /* EmptyConversaitonView.swift */,
 				FF1002532B261D460011A4DC /* MessageListVIew.swift */,
 				FF1002692B2731C60011A4DC /* ModelSelectorView.swift */,
+				FF9C920B2BF0C088004C8275 /* OptionsMenuView.swift */,
 				FFEC9BE62B813A8D00AFBA63 /* RemovableImage.swift */,
 				FF24B30D2B66BE8500AB618F /* RunningBorder.swift */,
 				FFBBF4892B350283008D611C /* SelectedImageView.swift */,
@@ -380,8 +383,8 @@
 		FF9300D62B778F23000859F4 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				FF9300D92B781D97000859F4 /* ToolbarView_macOS.swift */,
 				FF9300DF2B783945000859F4 /* InputFields_macOS.swift */,
+				FF9300D92B781D97000859F4 /* ToolbarView_macOS.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 				FF33066C2B83BB31007B33E5 /* SidebarButton.swift in Sources */,
 				FF1002542B261D460011A4DC /* MessageListVIew.swift in Sources */,
 				FF10024E2B25C2A70011A4DC /* ConversationSD.swift in Sources */,
+				FF9C920C2BF0C088004C8275 /* OptionsMenuView.swift in Sources */,
 				FF9C920A2BF0B7B1004C8275 /* LanguageModel.swift in Sources */,
 				FFEC32912B24779A003E5C04 /* EnchantedApp.swift in Sources */,
 				FF2F03422B795E0B00349855 /* Clipboard.swift in Sources */,
@@ -854,6 +858,7 @@
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
@@ -903,6 +908,7 @@
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
