@@ -27,6 +27,7 @@ struct ChatView: View {
     var onConversationDelete: (_ conversation: ConversationSD) -> ()
     var onDeleteDailyConversations: (_ date: Date) -> ()
     var userInitials: String
+    var copyChat: (_ json: Bool) -> ()
     
     @State private var message = ""
     @State private var editMessage: MessageSD?
@@ -79,7 +80,8 @@ struct ChatView: View {
                 modelsList: modelsList,
                 selectedModel: selectedModel,
                 onSelectModel: onSelectModel,
-                onNewConversationTap: onNewConversationTap
+                onNewConversationTap: onNewConversationTap, 
+                copyChat: copyChat
             )
         }
         .onChange(of: editMessage, initial: false) { _, newMessage in
@@ -108,7 +110,8 @@ struct ChatView: View {
         selectedModel: LanguageModelSD.sample[0], onSelectModel: {_ in},
         onConversationDelete: {_ in},
         onDeleteDailyConversations: {_ in},
-        userInitials: "AM"
+        userInitials: "AM",
+        copyChat: {_ in}
     )
 }
 #endif

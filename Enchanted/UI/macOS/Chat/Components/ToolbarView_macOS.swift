@@ -13,6 +13,7 @@ struct ToolbarView: View {
     var selectedModel: LanguageModelSD?
     var onSelectModel: @MainActor (_ model: LanguageModelSD?) -> ()
     var onNewConversationTap: () -> ()
+    var copyChat: (_ json: Bool) -> ()
     
     var body: some View {
         ModelSelectorView(
@@ -22,6 +23,8 @@ struct ToolbarView: View {
             showChevron: false
         )
         .frame(height: 20)
+        
+        MoreOptionsMenuView(copyChat: copyChat)
         
         Button(action: onNewConversationTap) {
             Image(systemName: "square.and.pencil")
@@ -40,7 +43,8 @@ struct ToolbarView: View {
         modelsList: LanguageModelSD.sample,
         selectedModel: LanguageModelSD.sample[0],
         onSelectModel: {_ in},
-        onNewConversationTap: {}
+        onNewConversationTap: {}, 
+        copyChat: {_ in}
     )
 }
 

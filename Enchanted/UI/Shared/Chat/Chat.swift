@@ -93,6 +93,35 @@ struct Chat: View, Sendable {
 #endif
     }
     
+    func copyChat(_ json: Bool) {
+        Task {
+            let messages = await ConversationStore.shared.messages
+            
+            if messages.count == 0 {
+                return
+            }
+            
+            if json {
+                let jsonArray = messages.map { message in
+                    return [
+                        "role": message.role,
+                        "content": message.content
+                    ]
+                }
+                let jsonEncoder = JSONEncoder()
+                jsonEncoder.outputFormatting = [.withoutEscapingSlashes]
+
+                if let jsonData = try? jsonEncoder.encode(jsonArray),
+                   let jsonString = String(data: jsonData, encoding: .utf8) {
+                    Clipboard.shared.setString(jsonString)
+                }
+            } else {
+                let body = messages.map{"\($0.role.capitalized): \($0.content)"}.joined(separator: "\n\n")
+                Clipboard.shared.setString(body)
+            }
+        }
+    }
+    
     var body: some View {
         Group {
 #if os(macOS)
@@ -113,7 +142,8 @@ struct Chat: View, Sendable {
                 onSelectModel: languageModelStore.setModel,
                 onConversationDelete: onConversationDelete,
                 onDeleteDailyConversations: conversationStore.deleteDailyConversations,
-                userInitials: userInitials
+                userInitials: userInitials,
+                copyChat: copyChat
             )
 #else
             SideBarStack(sidebarWidth: 300,showSidebar: $showMenu, sidebar: {
