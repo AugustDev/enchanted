@@ -12,12 +12,17 @@ import SwiftData
 final class LanguageModelSD: Identifiable {
     @Attribute(.unique) var name: String
     var isAvailable: Bool = false
+    var imageSupport: Bool = false
+    var modelProvider = ModelProvider.ollama
     
     @Relationship(deleteRule: .cascade, inverse: \ConversationSD.model)
     var conversations: [ConversationSD]? = []
     
-    init(name: String) {
+    
+    init(name: String, imageSupport: Bool = false, modelProvider: ModelProvider) {
         self.name = name
+        self.imageSupport = imageSupport
+        self.modelProvider = modelProvider
     }
     
     @Transient var isNotAvailable: Bool {
@@ -44,6 +49,12 @@ extension LanguageModelSD {
     }
     
     var supportsImages: Bool {
+        if imageSupport {
+            return true
+        }
+        
+        /// older technique to detect image modality
+        /// @deprecated
         let imageSupportedModels = ["llava"]
         for modelName in imageSupportedModels {
             if name.contains(modelName) {
@@ -54,8 +65,8 @@ extension LanguageModelSD {
     }
     
     static let sample: [LanguageModelSD] = [
-        .init(name: "Llama:latest"),
-        .init(name: "Mistral:latest")
+        .init(name: "Llama:latest", modelProvider: .ollama),
+        .init(name: "Mistral:latest", modelProvider: .ollama)
     ]
 }
 

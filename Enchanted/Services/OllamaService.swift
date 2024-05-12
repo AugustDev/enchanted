@@ -34,9 +34,16 @@ class OllamaService: @unchecked Sendable {
         }
     }
     
-    func getModels() async throws -> [String]  {
+    func getModels() async throws -> [LanguageModel]  {
         let response = try await ollamaKit.models()
-        return response.models.map{$0.name}
+        let models = response.models.map{
+            LanguageModel(
+                name: $0.name,
+                provider: .ollama,
+                imageSupport: $0.details.families?.contains("clip") ?? false
+            )
+        }
+        return models
     }
     
     func reachable() async -> Bool {
