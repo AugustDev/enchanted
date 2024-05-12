@@ -47,12 +47,13 @@ final class LanguageModelStore {
     }
     
     func loadModels() async throws {
-        let remoteModelNames = try await OllamaService.shared.getModels()
-        try await swiftDataService.saveModels(models: remoteModelNames.map{LanguageModelSD(name: $0)})
+        let remoteModels = try await OllamaService.shared.getModels()
+        try await swiftDataService.saveModels(models: remoteModels.map{LanguageModelSD(name: $0.name, imageSupport: $0.imageSupport, modelProvider: .ollama)})
         
         let storedModels = (try? await swiftDataService.fetchModels()) ?? []
         
         DispatchQueue.main.async {
+            let remoteModelNames = remoteModels.map { $0.name }
             self.models = storedModels.filter{remoteModelNames.contains($0.name)}
         }
     }
