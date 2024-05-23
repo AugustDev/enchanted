@@ -64,21 +64,34 @@ struct InputFieldsView: View {
                 .padding(5)
             }
             
-            TextField("Message", text: $message.animation(.easeOut(duration: 0.3)), axis: .vertical)
-                .focused($isFocusedInput)
-                .frame(minHeight: 40)
-                .font(.system(size: 14))
-                .textFieldStyle(.plain)
-                .onSubmit {
-                    if NSApp.currentEvent?.modifierFlags.contains(.shift) == true {
-                        message += "\n"
-                    } else {
-                        sendMessage()
+            ZStack(alignment: .trailing) {
+                TextField("Message", text: $message.animation(.easeOut(duration: 0.3)), axis: .vertical)
+                    .focused($isFocusedInput)
+                    .frame(minHeight: 40)
+                    .font(.system(size: 14))
+                    .textFieldStyle(.plain)
+                    .onSubmit {
+                        if NSApp.currentEvent?.modifierFlags.contains(.shift) == true {
+                            message += "\n"
+                        } else {
+                            sendMessage()
+                        }
                     }
+                /// TextField bypasses drop area
+                    .allowsHitTesting(!fileDropActive)
+                    .addCustomHotkeys(hotkeys)
+                    .padding(.trailing, 40)
+                
+                switch conversationState {
+                case .loading:
+                    SimpleFloatingButton(systemImage: "square.fill", onClick: onStopGenerateTap)
+                        .padding(.trailing, 6)
+                default:
+                    SimpleFloatingButton(systemImage: "paperplane.fill", onClick: { Task { sendMessage() } })
+                        .showIf(!message.isEmpty)
+                        .padding(.trailing, 6)
                 }
-            /// TextField bypasses drop area
-                .allowsHitTesting(!fileDropActive)
-                .addCustomHotkeys(hotkeys)
+            }
             
             SimpleFloatingButton(systemImage: "photo.fill", onClick: { fileSelectingActive.toggle() })
                 .showIf(selectedModel?.supportsImages ?? false)
@@ -97,15 +110,6 @@ struct InputFieldsView: View {
                         print(error)
                     }
                 })
-            
-            
-            switch conversationState {
-            case .loading:
-                SimpleFloatingButton(systemImage: "square.fill", onClick: onStopGenerateTap)
-            default:
-                SimpleFloatingButton(systemImage: "paperplane.fill", onClick: { Task { sendMessage() } })
-                    .showIf(!message.isEmpty)
-            }
         }
         .transition(.slide)
         .padding(.horizontal)
