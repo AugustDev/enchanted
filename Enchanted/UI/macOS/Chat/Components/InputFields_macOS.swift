@@ -80,16 +80,14 @@ struct InputFieldsView: View {
                 /// TextField bypasses drop area
                     .allowsHitTesting(!fileDropActive)
                     .addCustomHotkeys(hotkeys)
-                    .padding(.trailing, 40)
+                    .padding(.trailing, 30)
                 
                 switch conversationState {
                 case .loading:
                     SimpleFloatingButton(systemImage: "square.fill", onClick: onStopGenerateTap)
-                        .padding(.trailing, 6)
                 default:
                     SimpleFloatingButton(systemImage: "paperplane.fill", onClick: { Task { sendMessage() } })
                         .showIf(!message.isEmpty)
-                        .padding(.trailing, 6)
                 }
             }
             
