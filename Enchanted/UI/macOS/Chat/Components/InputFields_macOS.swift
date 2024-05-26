@@ -15,6 +15,7 @@ struct InputFieldsView: View {
     var selectedModel: LanguageModelSD?
     var onSendMessageTap: @MainActor (_ prompt: String, _ model: LanguageModelSD, _ image: Image?, _ trimmingMessageId: String?) -> ()
     @Binding var editMessage: MessageSD?
+    @State var isRecording = false
     
     @State private var selectedImage: Image?
     @State private var fileDropActive: Bool = false
@@ -31,6 +32,7 @@ struct InputFieldsView: View {
             editMessage?.id.uuidString
         )
         withAnimation {
+            isRecording = false
             isFocusedInput = false
             editMessage = nil
             selectedImage = nil
@@ -80,6 +82,12 @@ struct InputFieldsView: View {
                 .allowsHitTesting(!fileDropActive)
                 .addCustomHotkeys(hotkeys)
             
+            RecordingView(isRecording: $isRecording.animation()) { transcription in
+                withAnimation(.easeIn(duration: 0.3)) {
+                    self.message = transcription
+                }
+            }
+            
             SimpleFloatingButton(systemImage: "photo.fill", onClick: { fileSelectingActive.toggle() })
                 .showIf(selectedModel?.supportsImages ?? false)
                 .fileImporter(isPresented: $fileSelectingActive,
@@ -109,9 +117,8 @@ struct InputFieldsView: View {
         }
         .transition(.slide)
         .padding(.horizontal)
-        .padding(.vertical, 5)
         .overlay(
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 20)
                 .strokeBorder(
                     Color.gray2Custom,
                     style: StrokeStyle(lineWidth: 1)

@@ -5,12 +5,11 @@
 //  Created by Augustinas Malinauskas on 18/12/2023.
 //
 
-#if os(iOS)
 import SwiftUI
 import AVFoundation
 
 struct RecordingView: View {
-    @StateObject var speechRecognizer: SpeechRecognizer
+    @StateObject var speechRecognizer: SpeechRecognizer = SpeechRecognizer()
     @Binding var isRecording: Bool
     var onComplete: (_ transcription: String) -> () = {_ in}
     
@@ -28,10 +27,11 @@ struct RecordingView: View {
         if isRecording {
             speechRecognizer.stopTranscribing()
             onComplete(speechRecognizer.transcript)
+            print("recogniser transcript: ", speechRecognizer.transcript)
             isRecording = false
         } else {
             speechRecognizer.resetTranscript()
-            speechRecognizer.startTranscribing()
+            speechRecognizer.startTranscribing(onUpdate: onComplete)
             isRecording = true
         }
     }
@@ -58,6 +58,7 @@ struct RecordingView: View {
                     .foregroundStyle(Color(.systemGray))
             }
         }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
@@ -67,5 +68,3 @@ struct MeetingView_Previews: PreviewProvider {
         RecordingView(speechRecognizer: SpeechRecognizer(), isRecording: .constant(true))
     }
 }
-
-#endif

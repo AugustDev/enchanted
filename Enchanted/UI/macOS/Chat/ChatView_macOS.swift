@@ -33,6 +33,9 @@ struct ChatView: View {
     @State private var editMessage: MessageSD?
     @FocusState private var isFocusedInput: Bool
     
+    @StateObject var speechRecognizer = SpeechRecognizer()
+    @State var isRecording = false
+    
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
             SidebarView(

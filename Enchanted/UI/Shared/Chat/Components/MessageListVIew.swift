@@ -17,6 +17,7 @@ struct MessageListView: View {
     var userInitials: String
     @Binding var editMessage: MessageSD?
     @State private var messageSelected: MessageSD?
+    @StateObject private var speechSynthesizer = SpeechSynthesizer.shared
     
     func onEditMessageTap() -> (MessageSD) -> Void {
         return { message in
@@ -24,69 +25,91 @@ struct MessageListView: View {
         }
     }
     
+    func onReadAloud(_ message: String) {
+        Task {
+            await speechSynthesizer.speak(text: message)
+        }
+    }
+    
+    func stopReadingAloud() {
+        Task {
+            await speechSynthesizer.stopSpeaking()
+        }
+    }
+    
     var body: some View {
-        ScrollViewReader { scrollViewProxy in
-            ScrollView {
-                ForEach(messages) { message in
-                    
-                    let contextMenu = ContextMenu(menuItems: {
-                        Button(action: {Clipboard.shared.setString(message.content)}) {
-                            Label("Copy", systemImage: "doc.on.doc")
-                        }
+        VStack(spacing: 0) {
+            ReadingAloudView(onStopTap: stopReadingAloud)
+                .showIf(speechSynthesizer.isSpeaking)
+            
+            ScrollViewReader { scrollViewProxy in
+                ScrollView {
+                    ForEach(messages) { message in
                         
+                        let contextMenu = ContextMenu(menuItems: {
+                            Button(action: {Clipboard.shared.setString(message.content)}) {
+                                Label("Copy", systemImage: "doc.on.doc")
+                            }
+                            
 #if os(iOS)
-                        Button(action: { messageSelected = message }) {
-                            Label("Select Text", systemImage: "selection.pin.in.out")
-                        }
+                            Button(action: { messageSelected = message }) {
+                                Label("Select Text", systemImage: "selection.pin.in.out")
+                            }
+                            
+                            Button(action: {
+                                onReadAloud(message.content)
+                            }) {
+                                Label("Read Aloud", systemImage: "speaker.wave.3.fill")
+                            }
 #endif
-                        
-                        if message.role == "user" {
-                            Button(action: {
-                                withAnimation { editMessage = message }
-                            }) {
-                                Label("Edit", systemImage: "pencil")
+                            
+                            if message.role == "user" {
+                                Button(action: {
+                                    withAnimation { editMessage = message }
+                                }) {
+                                    Label("Edit", systemImage: "pencil")
+                                }
                             }
-                        }
-                        
-                        if editMessage?.id == message.id {
-                            Button(action: {
-                                withAnimation { editMessage = nil }
-                            }) {
-                                Label("Unselect", systemImage: "pencil")
+                            
+                            if editMessage?.id == message.id {
+                                Button(action: {
+                                    withAnimation { editMessage = nil }
+                                }) {
+                                    Label("Unselect", systemImage: "pencil")
+                                }
                             }
-                        }
-                    })
-                    
-                    ChatMessageView(
-                        message: message,
-                        showLoader: conversationState == .loading && messages.last == message,
-                        userInitials: userInitials,
-                        editMessage: $editMessage
-                    )
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
-                    .padding(.vertical, 10)
-                    .contextMenu(contextMenu)
-                    .padding(.horizontal, 10)
-                    .runningBorder(animated: message.id == editMessage?.id)
-                    .id(message)
+                        })
+                        
+                        ChatMessageView(
+                            message: message,
+                            showLoader: conversationState == .loading && messages.last == message,
+                            userInitials: userInitials,
+                            editMessage: $editMessage
+                        )
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                        .padding(.vertical, 10)
+                        .contextMenu(contextMenu)
+                        .padding(.horizontal, 10)
+                        .runningBorder(animated: message.id == editMessage?.id)
+                        .id(message)
+                    }
                 }
-            }
-            .textSelection(.enabled)
-            .onAppear {
-                scrollViewProxy.scrollTo(messages.last, anchor: .bottom)
-            }
-            .onChange(of: messages) { oldMessages, newMessages in
-                scrollViewProxy.scrollTo(messages.last, anchor: .bottom)
-            }
-            .onChange(of: messages.last?.content) {
-                scrollViewProxy.scrollTo(messages.last, anchor: .bottom)
-            }
+                .onAppear {
+                    scrollViewProxy.scrollTo(messages.last, anchor: .bottom)
+                }
+                .onChange(of: messages) { oldMessages, newMessages in
+                    scrollViewProxy.scrollTo(messages.last, anchor: .bottom)
+                }
+                .onChange(of: messages.last?.content) {
+                    scrollViewProxy.scrollTo(messages.last, anchor: .bottom)
+                }
 #if os(iOS)
-            .sheet(item: $messageSelected) { message in
-                SelectTextSheet(message: message)
-            }
+                .sheet(item: $messageSelected) { message in
+                    SelectTextSheet(message: message)
+                }
 #endif
+            }
         }
     }
 }
