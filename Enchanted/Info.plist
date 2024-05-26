@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>You can speak with enchanted with your voice.</string>
 	<key>NSAccessibilityUsageDescription</key>
 	<string>Enchanted can perform operatios on selected text such as fixing grammar, extending texts as well as custom commands.</string>
 	<key>NSAppTransportSecurity</key>

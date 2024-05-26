@@ -19,6 +19,9 @@ struct Settings: View {
     @AppStorage("ollamaBearerToken") private var ollamaBearerToken: String = ""
     @AppStorage("appUserInitials") private var appUserInitials: String = ""
     @AppStorage("pingInterval") private var pingInterval: String = "5"
+    @AppStorage("voiceIdentifier") private var voiceIdentifier: String = ""
+    
+    @StateObject private var speechSynthesiser = SpeechSynthesizer.shared
     
     @Environment(\.presentationMode) var presentationMode
     
@@ -32,7 +35,7 @@ struct Settings: View {
         
         OllamaService.shared.initEndpoint(url: ollamaUri, bearerToken: ollamaBearerToken)
         Task {
-            await Haptics.shared.mediumTap()
+            Haptics.shared.mediumTap()
             try? await languageModelStore.loadModels()
         }
         presentationMode.wrappedValue.dismiss()
@@ -61,10 +64,12 @@ struct Settings: View {
             ollamaBearerToken: $ollamaBearerToken,
             appUserInitials: $appUserInitials,
             pingInterval: $pingInterval,
+            voiceIdentifier: $voiceIdentifier,
             save: save,
             checkServer: checkServer,
             deleteAllConversations: conversationStore.deleteAllConversations,
-            ollamaLangugeModels: languageModelStore.models
+            ollamaLangugeModels: languageModelStore.models,
+            voices: speechSynthesiser.voices
         )
         .frame(maxWidth: 700)
         .onChange(of: defaultOllamaModel) { _, modelName in

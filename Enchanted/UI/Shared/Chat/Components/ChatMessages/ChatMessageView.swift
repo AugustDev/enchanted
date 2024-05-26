@@ -12,13 +12,15 @@ import ActivityIndicatorView
 
 struct ChatMessageView: View {
     @Environment(\.colorScheme) var colorScheme
+    @StateObject private var speechSynthesizer = SpeechSynthesizer.shared
     var message: MessageSD
     var showLoader: Bool = false
     var userInitials: String
     @Binding var editMessage: MessageSD?
     @State private var mouseHover = false
+    @State private var isSpeaking = false
     
-    var roleName: String  { 
+    var roleName: String  {
         let userInitialsNotEmpty = userInitials != "" ? userInitials : "AM"
         return message.role == "user" ? userInitialsNotEmpty.uppercased() : "AI"
     }
@@ -74,7 +76,9 @@ struct ChatMessageView: View {
                         }
                         
                         Markdown(message.content)
+#if os(macOS)
                             .textSelection(.enabled)
+#endif
                             .markdownCodeSyntaxHighlighter(.splash(theme: codeHighlightColorScheme))
                             .markdownTheme(MarkdownColours.enchantedTheme)
                         
@@ -102,19 +106,56 @@ struct ChatMessageView: View {
             
 #if os(macOS)
             HStack(spacing: 0) {
+                /// Copy button
                 Button(action: {Clipboard.shared.setString(message.content)}) {
                     Image(systemName: "doc.on.doc")
+                        .padding(8)
                 }
                 .buttonStyle(GrowingButton())
-                .padding(8)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .showIf(mouseHover)
                 
-                Button(action: {editMessage = message}) {
-                    Image(systemName: "pencil")
+                /// Play button
+                Button(action: {
+                    Task {
+                        await speechSynthesizer.stopSpeaking()
+                        await speechSynthesizer.speak(text: message.content, onFinished: { isSpeaking = false })
+                        DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
+                            isSpeaking = true
+                        }
+                    }
+                }) {
+                    Image(systemName: "speaker.wave.2.fill")
+                        .frame(width: 10)
+                        .padding(8)
                 }
                 .buttonStyle(GrowingButton())
-                .padding(8)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .showIf(mouseHover)
+                .showIf(!isSpeaking)
+                
+                /// Stop button
+                Button(action: {
+                    Task {
+                        isSpeaking = false
+                        await speechSynthesizer.stopSpeaking()
+                    }
+                }) {
+                    Image(systemName: "speaker.slash.fill")
+                        .frame(width: 10)
+                        .padding(8)
+                }
+                .buttonStyle(GrowingButton())
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .showIf(mouseHover)
+                .showIf(isSpeaking)
+                
+                /// Edit button
+                Button(action: {editMessage = message}) {
+                    Image(systemName: "pencil")
+                        .padding(8)
+                }
+                .buttonStyle(GrowingButton())
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .showIf(mouseHover)
                 .showIf(message.role == "user")

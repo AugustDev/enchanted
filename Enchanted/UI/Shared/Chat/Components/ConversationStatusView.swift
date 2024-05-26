@@ -12,14 +12,7 @@ struct ConversationStatusView: View {
     var state: ConversationState
     var body: some View {
         switch state {
-        case .loading: HStack {
-            Spacer() 
-            ActivityIndicatorView(isVisible: .constant(true), type: .opacityDots(count: 1, inset: 4))
-                 .frame(width: 21, height: 21)
-                 .foregroundColor(Color.labelCustom)
-
-            Spacer()
-        }
+        case .loading: EmptyView()
         case .completed: EmptyView()
         case .error(let message): HStack {
             Text(message)

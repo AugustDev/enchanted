@@ -44,7 +44,11 @@ struct EmptyConversaitonView: View, KeyboardReadable {
                 
                 LazyVGrid(columns: columns, alignment: .leading, spacing: 15) {
                     ForEach(0..<prompts.prefix(4).count, id: \.self) { index in
-                        Button(action: {sendPrompt(prompts[index].prompt)}) {
+                        Button(action: {
+                            withAnimation {
+                                sendPrompt(prompts[index].prompt)
+                            }
+                        }) {
                             VStack(alignment: .leading) {
                                 Text(prompts[index].prompt)
                                     .font(.system(size: 15))

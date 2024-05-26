@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct SettingsView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -17,13 +18,25 @@ struct SettingsView: View {
     @Binding var ollamaBearerToken: String
     @Binding var appUserInitials: String
     @Binding var pingInterval: String
+    @Binding var voiceIdentifier: String
     @State var ollamaStatus: Bool?
     var save: () -> ()
     var checkServer: () -> ()
     var deleteAllConversations: () -> ()
     var ollamaLangugeModels: [LanguageModelSD]
+    var voices: [AVSpeechSynthesisVoice]
     
     @State private var deleteConversationsDialog = false
+    
+    private func voiceQualityPrettify(_ quality: Int) -> String {
+        switch quality {
+        case 1: return "Default"
+        case 2: return "Enhanced"
+        case 3: return "Premium"
+        default: return "Unknown"
+        }
+        
+    }
     
     var body: some View {
         VStack {
@@ -37,7 +50,7 @@ struct SettingsView: View {
                             .foregroundStyle(Color(.label))
                     }
                     
-
+                    
                     Spacer()
                     
                     Button(action: save) {
@@ -99,24 +112,24 @@ struct SettingsView: View {
                     TextField("Bearer Token", text: $ollamaBearerToken)
                         .disableAutocorrection(true)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-    #if os(iOS)
+#if os(iOS)
                         .autocapitalization(.none)
-    #endif
+#endif
                     TextField("Ping Interval (seconds)", text: $pingInterval)
                         .disableAutocorrection(true)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     
                     Section(header: Text("APP").font(.headline).padding(.top, 20)) {
                         
-    #if os(iOS)
+#if os(iOS)
                         Toggle(isOn: $vibrations, label: {
                             Label("Vibrations", systemImage: "water.waves")
                                 .foregroundStyle(Color.label)
                         })
-    #endif
-                }
-            
-       
+#endif
+                    }
+                    
+                    
                     Picker(selection: $colorScheme) {
                         ForEach(AppColorScheme.allCases, id:\.self) { scheme in
                             Text(scheme.toString).tag(scheme.id)
@@ -125,7 +138,41 @@ struct SettingsView: View {
                         Label("Appearance", systemImage: "sun.max")
                             .foregroundStyle(Color.label)
                     }
-
+                    
+                    Picker(selection: $voiceIdentifier) {
+                        ForEach(voices, id:\.self) { voice in
+                            Text("\(voice.name) (\(voiceQualityPrettify(voice.quality.rawValue)))").tag(voice.identifier)
+                        }
+                    } label: {
+                        Label("Voice", systemImage: "waveform")
+                            .foregroundStyle(Color.label)
+                        
+#if os(macOS)
+                        Text("Download voices by going to Settings > Accessibility > Spoken Content > System Voice > Manage Voices.")
+#else
+                        Text("Download voices by going to Settings > Accessibility > Spoken Content > Voices.")
+#endif
+                        
+                        Button(action: {
+#if os(macOS)
+                            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.universalaccess?SpeakableItems") {
+                                NSWorkspace.shared.open(url)
+                            }
+#else
+                            let url = URL(string: "App-Prefs:root=General&path=ACCESSIBILITY")
+                            if let url = url, UIApplication.shared.canOpenURL(url) {
+                                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                            }
+#endif
+                            
+                        }) {
+                            
+                            Text("Open Settings")
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
+                    
+                    
                     TextField("Initials", text: $appUserInitials)
                         .disableAutocorrection(true)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -169,10 +216,12 @@ struct SettingsView: View {
         ollamaBearerToken: .constant("x"),
         appUserInitials: .constant("AM"),
         pingInterval: .constant("5"),
+        voiceIdentifier: .constant("sample"),
         save: {},
         checkServer: {},
         deleteAllConversations: {},
-        ollamaLangugeModels: LanguageModelSD.sample
+        ollamaLangugeModels: LanguageModelSD.sample,
+        voices: []
     )
 }
 

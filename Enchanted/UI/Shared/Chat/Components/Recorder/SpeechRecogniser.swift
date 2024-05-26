@@ -5,7 +5,7 @@
 //  Created by Augustinas Malinauskas on 21/12/2023.
 //
 
-#if os(iOS)
+//#if os(iOS)
 import Foundation
 import Speech
 
@@ -32,6 +32,7 @@ actor SpeechRecognizer: ObservableObject {
     private var request: SFSpeechAudioBufferRecognitionRequest?
     private var task: SFSpeechRecognitionTask?
     var recognizer: SFSpeechRecognizer?
+    private var onUpdate: ((String) -> ())?
     
     /**
      Initializes a new speech recognizer. If this is the first time you've used the class, it
@@ -50,6 +51,20 @@ actor SpeechRecognizer: ObservableObject {
         
         Task {
             do {
+                
+            
+                let authStatus = SFSpeechRecognizer.authorizationStatus()
+                
+                switch authStatus {
+                case .authorized:
+                   print("authorised")
+                case .denied, .restricted, .notDetermined:
+                    print("denicd")
+                @unknown default:
+                    print("wtf")
+                    break
+                }
+                
                 guard await SFSpeechRecognizer.hasAuthorizationToRecognize() else {
                     throw RecognizerError.notAuthorizedToRecognize
                 }
@@ -64,8 +79,13 @@ actor SpeechRecognizer: ObservableObject {
         }
     }
     
-    @MainActor func startTranscribing() {
+    private func setUpdateHandler(_ handler: @escaping (_ message: String) -> ()) {
+        onUpdate = handler
+    }
+    
+    @MainActor func startTranscribing(onUpdate: @escaping (_ message: String) -> ()) {
         Task {
+            await self.setUpdateHandler(onUpdate)
             await transcribe()
         }
     }
@@ -102,6 +122,7 @@ actor SpeechRecognizer: ObservableObject {
                 self?.recognitionHandler(audioEngine: audioEngine, result: result, error: error)
             })
         } catch {
+            print("error here")
             self.reset()
             self.transcribe(error)
         }
@@ -122,9 +143,11 @@ actor SpeechRecognizer: ObservableObject {
         let request = SFSpeechAudioBufferRecognitionRequest()
         request.shouldReportPartialResults = true
         
+#if os(iOS)
         let audioSession = AVAudioSession.sharedInstance()
         try audioSession.setCategory(.playAndRecord, mode: .measurement, options: .duckOthers)
         try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+#endif
         let inputNode = audioEngine.inputNode
         
         let recordingFormat = inputNode.outputFormat(forBus: 0)
@@ -155,6 +178,9 @@ actor SpeechRecognizer: ObservableObject {
     nonisolated private func transcribe(_ message: String) {
         Task { @MainActor in
             transcript = message
+            if !message.isEmpty {
+                await onUpdate?(message)
+            }
         }
     }
     nonisolated private func transcribe(_ error: Error) {
@@ -182,6 +208,7 @@ extension SFSpeechRecognizer {
 }
 
 
+#if os(iOS)
 extension AVAudioSession {
     func hasPermissionToRecord() async -> Bool {
         await withCheckedContinuation { continuation in
@@ -192,3 +219,4 @@ extension AVAudioSession {
     }
 }
 #endif
+//#endif
