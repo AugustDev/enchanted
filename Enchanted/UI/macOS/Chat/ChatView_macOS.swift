@@ -5,7 +5,7 @@
 //  Created by Augustinas Malinauskas on 10/02/2024.
 //
 
-#if os(macOS)
+#if os(macOS) || os(visionOS)
 import SwiftUI
 
 struct ChatView: View {
@@ -31,10 +31,8 @@ struct ChatView: View {
     
     @State private var message = ""
     @State private var editMessage: MessageSD?
-    @FocusState private var isFocusedInput: Bool
-    
-    @StateObject var speechRecognizer = SpeechRecognizer()
     @State var isRecording = false
+    @FocusState private var isFocusedInput: Bool
     
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
@@ -45,13 +43,29 @@ struct ChatView: View {
                 onConversationDelete: onConversationDelete,
                 onDeleteDailyConversations: onDeleteDailyConversations
             )
+            .toolbar {
+#if os(visionOS)
+                ToolbarItemGroup(placement:.navigationBarTrailing) {
+                    Button(action: {
+                        withAnimation(.easeIn(duration: 0.3)) {
+                            columnVisibility = .detailOnly
+                        }
+                    }) {
+                        Image(systemName: "sidebar.left")
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .showIf(columnVisibility != .detailOnly)
+                }
+                
+#endif
+            }
         } detail: {
             VStack(alignment: .center) {
                 if selectedConversation != nil {
                     MessageListView(
                         messages: messages,
                         conversationState: conversationState,
-                        userInitials: userInitials, 
+                        userInitials: userInitials,
                         editMessage: $editMessage
                     )
                 } else {
@@ -71,22 +85,46 @@ struct ChatView: View {
                     conversationState: conversationState,
                     onStopGenerateTap: onStopGenerateTap,
                     selectedModel: selectedModel,
-                    onSendMessageTap: onSendMessageTap, 
+                    onSendMessageTap: onSendMessageTap,
                     editMessage: $editMessage
                 )
                 .padding()
                 .frame(maxWidth: 800)
             }
+            .toolbar {
+                #if os(visionOS)
+                ToolbarItemGroup(placement: .topBarLeading) {
+                    Button(action: {
+                        withAnimation {
+                            columnVisibility = .automatic
+                        }
+                    }) {
+                        Image(systemName: "sidebar.left")
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .showIf(columnVisibility == .detailOnly)
+                    
+                    Text("Enchanted")
+                }
+                #else
+                ToolbarItem(placement: .navigation) {
+                    Text("Enchanted")
+                }
+                #endif
+
+                
+                ToolbarItemGroup(placement: .automatic) {
+                    ToolbarView(
+                        modelsList: modelsList,
+                        selectedModel: selectedModel,
+                        onSelectModel: onSelectModel,
+                        onNewConversationTap: onNewConversationTap,
+                        copyChat: copyChat
+                    )
+                }
+            }
         }
-        .toolbar {
-            ToolbarView(
-                modelsList: modelsList,
-                selectedModel: selectedModel,
-                onSelectModel: onSelectModel,
-                onNewConversationTap: onNewConversationTap, 
-                copyChat: copyChat
-            )
-        }
+        .navigationTitle("")
         .onChange(of: editMessage, initial: false) { _, newMessage in
             if let newMessage = newMessage {
                 message = newMessage.content

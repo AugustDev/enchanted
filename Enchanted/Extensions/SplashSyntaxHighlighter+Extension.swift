@@ -6,8 +6,9 @@
 //
 
 import MarkdownUI
-import Splash
 import SwiftUI
+import Splash
+
 
 struct SplashCodeSyntaxHighlighter: CodeSyntaxHighlighter {
   private let syntaxHighlighter: SyntaxHighlighter<TextOutputFormat>

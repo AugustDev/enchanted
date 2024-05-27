@@ -35,7 +35,7 @@ class Haptics: @unchecked Sendable {
         play(.medium)
     }
 }
-#elseif os(macOS)
+#else
 class Haptics {
     static let shared = Haptics()
     func lightTap() {}

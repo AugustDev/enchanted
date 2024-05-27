@@ -28,7 +28,7 @@ extension KeyboardReadable {
         .eraseToAnyPublisher()
     }
 }
-#elseif os(macOS)
+#elseif os(macOS) || os(visionOS)
 /// Mock protocol
 protocol KeyboardReadable {}
 #endif

@@ -14,7 +14,7 @@ import UIKit
 #endif
 
 
-class Clipboard {
+final class Clipboard: Sendable {
     static let shared = Clipboard()
     
     func setString(_ message: String) {
@@ -42,7 +42,7 @@ class Clipboard {
     }
     
     func getText() -> String? {
-#if os(iOS)
+#if os(iOS) || os(visionOS)
         return UIPasteboard.general.string
 #elseif os(macOS)
         return NSPasteboard.general.string(forType: .string)

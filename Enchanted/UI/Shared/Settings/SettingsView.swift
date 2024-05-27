@@ -28,16 +28,6 @@ struct SettingsView: View {
     
     @State private var deleteConversationsDialog = false
     
-    private func voiceQualityPrettify(_ quality: Int) -> String {
-        switch quality {
-        case 1: return "Default"
-        case 2: return "Enhanced"
-        case 3: return "Premium"
-        default: return "Unknown"
-        }
-        
-    }
-    
     var body: some View {
         VStack {
             ZStack {
@@ -73,11 +63,13 @@ struct SettingsView: View {
             
             Form {
                 Section(header: Text("Ollama").font(.headline)) {
+                    
                     TextField("Ollama server URI", text: $ollamaUri, onCommit: checkServer)
                         .textContentType(.URL)
                         .disableAutocorrection(true)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-#if os(iOS)
+#if !os(macOS)
+                        .padding(.top, 8)
                         .keyboardType(.URL)
                         .autocapitalization(.none)
 #endif
@@ -140,8 +132,8 @@ struct SettingsView: View {
                     }
                     
                     Picker(selection: $voiceIdentifier) {
-                        ForEach(voices, id:\.self) { voice in
-                            Text("\(voice.name) (\(voiceQualityPrettify(voice.quality.rawValue)))").tag(voice.identifier)
+                        ForEach(voices, id:\.self.identifier) { voice in
+                            Text(voice.prettyName).tag(voice.identifier)
                         }
                     } label: {
                         Label("Voice", systemImage: "waveform")

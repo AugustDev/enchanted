@@ -18,16 +18,13 @@ struct RecordingView: View {
             await speechRecognizer.userInit()
             await toggleTranscribing()
         }
-        #if os(iOS)
         Haptics.shared.mediumTap()
-        #endif
     }
     
     private func toggleTranscribing() async {
         if isRecording {
             speechRecognizer.stopTranscribing()
             onComplete(speechRecognizer.transcript)
-            print("recogniser transcript: ", speechRecognizer.transcript)
             isRecording = false
         } else {
             speechRecognizer.resetTranscript()
@@ -45,7 +42,7 @@ struct RecordingView: View {
                     Image(systemName: "square.fill")
                         .resizable()
                         .scaledToFit()
-                        .foregroundColor(Color.bgCustom)
+                        .foregroundColor(.white)
                         .frame(width: 8)
                 }
                 .clipShape(Circle())
@@ -59,6 +56,11 @@ struct RecordingView: View {
             }
         }
         .buttonStyle(PlainButtonStyle())
+        .onChange(of: isRecording) { oldValue, newValue in
+            if newValue == false {
+                speechRecognizer.stopTranscribing()
+            }
+        }
     }
 }
 

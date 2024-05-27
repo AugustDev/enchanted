@@ -1,5 +1,5 @@
 {
-  "originHash" : "833fa47aa42a8385a50e6f20c5125e66acefe26c9777986dddce89968d1daceb",
+  "originHash" : "2ecdf9d081540d56a3d35c3ac234eabac50668e7cc364d29a44a05e51449bba1",
   "pins" : [
     {
       "identity" : "activityindicatorview",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Alamofire/Alamofire.git",
       "state" : {
-        "revision" : "723fa5a6c65812aec4a0d7cc432ee198883b6e00",
-        "version" : "5.9.0"
+        "revision" : "f455c2975872ccd2d9c81594c658af65716e9b9a",
+        "version" : "5.9.1"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sindresorhus/KeyboardShortcuts",
       "state" : {
-        "revision" : "09e4a10ed6b65b3a40fe07b6bf0c84809313efc4",
-        "version" : "2.0.0"
+        "revision" : "2e5f15581fefb821d4b366e57d817be8bf12aa58",
+        "version" : "2.0.1"
       }
     },
     {
@@ -67,10 +67,10 @@
     {
       "identity" : "splash",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/JohnSundell/Splash",
+      "location" : "https://github.com/AugustDev/Splash",
       "state" : {
-        "revision" : "7f4df436eb78fe64fe2c32c58006e9949fa28ad8",
-        "version" : "0.16.0"
+        "branch" : "master",
+        "revision" : "c31eba0866102be9be29391dac641ecb46795702"
       }
     },
     {

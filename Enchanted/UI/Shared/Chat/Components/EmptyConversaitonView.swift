@@ -39,8 +39,11 @@ struct EmptyConversaitonView: View, KeyboardReadable {
                     )
                 
                 Text("How can I help you today?")
-                    .font(.system(size: 25))
+                    .font(.title2)
+                    .fontWeight(.light)
+                #if !os(visionOS)
                     .foregroundStyle(Color(.systemGray))
+                #endif
                 
                 LazyVGrid(columns: columns, alignment: .leading, spacing: 15) {
                     ForEach(0..<prompts.prefix(4).count, id: \.self) { index in

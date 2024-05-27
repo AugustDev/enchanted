@@ -5,7 +5,7 @@
 //  Created by Augustinas Malinauskas on 10/02/2024.
 //
 
-#if os(macOS)
+#if os(macOS) || os(visionOS)
 import SwiftUI
 
 struct ToolbarView: View {
@@ -32,8 +32,9 @@ struct ToolbarView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(height: 20)
-                .foregroundColor(Color.labelCustom)
+                .padding(5)
         }
+        .buttonStyle(PlainButtonStyle())
         .keyboardShortcut(KeyEquivalent("n"), modifiers: .command)
     }
 }

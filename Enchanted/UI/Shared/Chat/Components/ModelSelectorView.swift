@@ -22,6 +22,7 @@ struct ModelSelectorView: View {
                     }
                 }) {
                     Text(model.name)
+                        .font(.body)
                         .tag(model.name)
                 }
             }
@@ -30,17 +31,16 @@ struct ModelSelectorView: View {
                 if let selectedModel = selectedModel {
                     HStack(alignment: .bottom, spacing: 5) {
                         
-                        #if os(macOS)
+                        #if os(macOS) || os(visionOS)
                         Text(selectedModel.name)
-                            .font(.system(size: 14))
-                            .foregroundColor(Color.labelCustom)
+                            .font(.body)
                         #elseif os(iOS)
                         Text(selectedModel.prettyName )
-                            .font(.system(size: 14))
+                            .font(.body)
                             .foregroundColor(Color.labelCustom)
                         
                         Text(selectedModel.prettyVersion)
-                            .font(.system(size: 12))
+                            .font(.subheadline)
                             .foregroundColor(Color.gray3Custom)
                         #endif
                     }
