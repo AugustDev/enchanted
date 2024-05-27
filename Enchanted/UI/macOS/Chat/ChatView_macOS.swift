@@ -31,10 +31,8 @@ struct ChatView: View {
     
     @State private var message = ""
     @State private var editMessage: MessageSD?
-    @FocusState private var isFocusedInput: Bool
-    
-    @StateObject var speechRecognizer = SpeechRecognizer()
     @State var isRecording = false
+    @FocusState private var isFocusedInput: Bool
     
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
@@ -77,27 +75,23 @@ struct ChatView: View {
                 .padding()
                 .frame(maxWidth: 800)
             }
-        }
-//        .navigationTitle("")
-        .toolbar {
-            ToolbarItem(placement: .navigation) {
-                 Button(action: {
-                 }) {
-                     Image(systemName: "star.fill")
+            .toolbar {
+                ToolbarItem(placement: .navigation) {
+                    Text("Enchanted")
                  }
-             }
-            
-             
-             ToolbarItemGroup(placement: .automatic) {
-                 ToolbarView(
-                     modelsList: modelsList,
-                     selectedModel: selectedModel,
-                     onSelectModel: onSelectModel,
-                     onNewConversationTap: onNewConversationTap,
-                     copyChat: copyChat
-                 )
-             }
+                 
+                 ToolbarItemGroup(placement: .automatic) {
+                     ToolbarView(
+                         modelsList: modelsList,
+                         selectedModel: selectedModel,
+                         onSelectModel: onSelectModel,
+                         onNewConversationTap: onNewConversationTap,
+                         copyChat: copyChat
+                     )
+                 }
+            }
         }
+        .navigationTitle("")
         .onChange(of: editMessage, initial: false) { _, newMessage in
             if let newMessage = newMessage {
                 message = newMessage.content

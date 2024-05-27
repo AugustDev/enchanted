@@ -1,5 +1,5 @@
 {
-  "originHash" : "833fa47aa42a8385a50e6f20c5125e66acefe26c9777986dddce89968d1daceb",
+  "originHash" : "2ecdf9d081540d56a3d35c3ac234eabac50668e7cc364d29a44a05e51449bba1",
   "pins" : [
     {
       "identity" : "activityindicatorview",
@@ -67,10 +67,10 @@
     {
       "identity" : "splash",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/JohnSundell/Splash",
+      "location" : "https://github.com/AugustDev/Splash",
       "state" : {
-        "revision" : "7f4df436eb78fe64fe2c32c58006e9949fa28ad8",
-        "version" : "0.16.0"
+        "branch" : "master",
+        "revision" : "c31eba0866102be9be29391dac641ecb46795702"
       }
     },
     {

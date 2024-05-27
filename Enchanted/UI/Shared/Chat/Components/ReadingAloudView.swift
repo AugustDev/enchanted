@@ -14,28 +14,28 @@ struct ReadingAloudView: View {
     var body: some View {
         HStack {
             
-            Text("Reading Aloud")
-                .font(.system(size: 14))
-            
             Image(systemName: "speaker.wave.3")
                 .symbolEffect(.variableColor.iterative,  options: .repeat(100), value: animationsRunning)
                 .scaledToFit()
                 .frame(width: 18)
             
+            Text("Reading Aloud")
+                .font(.system(size: 14))
+            
             Spacer()
             
             Button(action: onStopTap) {
                 Image(systemName: "stop.fill")
-                    .foregroundColor(.black)
                     .font(.system(size: 15, weight: .semibold))
                     .padding(5)
             }
             .buttonStyle(GrowingButton())
             
         }
-        .padding()
+        .padding(.horizontal)
+        .padding(.vertical, 8)
         .background {
-            RoundedRectangle(cornerRadius: 8).fill(Color.gray5Custom)
+            RoundedRectangle(cornerRadius: 24).fill(.regularMaterial)
         }
         .padding()
         .onAppear {

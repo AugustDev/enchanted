@@ -38,14 +38,10 @@ struct MessageListView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            ReadingAloudView(onStopTap: stopReadingAloud)
-                .showIf(speechSynthesizer.isSpeaking)
-            
+        ZStack(alignment: .top) {
             ScrollViewReader { scrollViewProxy in
                 ScrollView {
                     ForEach(messages) { message in
-                        
                         let contextMenu = ContextMenu(menuItems: {
                             Button(action: {Clipboard.shared.setString(message.content)}) {
                                 Label("Copy", systemImage: "doc.on.doc")
@@ -89,8 +85,9 @@ struct MessageListView: View {
                         .listRowInsets(EdgeInsets())
                         .listRowSeparator(.hidden)
                         .padding(.vertical, 10)
-                        .contextMenu(contextMenu)
                         .padding(.horizontal, 10)
+                        .contentShape(Rectangle())
+                        .contextMenu(contextMenu)
                         .runningBorder(animated: message.id == editMessage?.id)
                         .id(message)
                     }
@@ -104,12 +101,20 @@ struct MessageListView: View {
                 .onChange(of: messages.last?.content) {
                     scrollViewProxy.scrollTo(messages.last, anchor: .bottom)
                 }
-#if os(iOS)
+#if os(iOS) || os(visionOS)
                 .sheet(item: $messageSelected) { message in
                     SelectTextSheet(message: message)
                 }
 #endif
             }
+            
+            ReadingAloudView(onStopTap: stopReadingAloud)
+                .frame(maxWidth: 400)
+                .showIf(speechSynthesizer.isSpeaking)
+                .transition(.asymmetric(
+                    insertion: AnyTransition.opacity.combined(with: .scale(scale: 0.7, anchor: .top)),
+                    removal: AnyTransition.opacity.combined(with: .scale(scale: 0.7, anchor: .top)))
+                )
         }
     }
 }

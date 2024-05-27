@@ -55,7 +55,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-com.apple.CoreData.ConcurrencyDebug 1"
+            argument = "-com.apple.CoreData.ConcurrencyDebug 0"
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>

@@ -72,6 +72,9 @@ struct Settings: View {
             voices: speechSynthesiser.voices
         )
         .frame(maxWidth: 700)
+        #if os(visionOS)
+        .frame(minWidth: 600, minHeight: 800)
+        #endif
         .onChange(of: defaultOllamaModel) { _, modelName in
             languageModelStore.setModel(modelName: modelName)
         }
