@@ -23,6 +23,8 @@ Note: You will need to run your own Ollama server to use the app. Read instructi
 
 [<img src="./assets/promo.png">](https://www.youtube.com/watch?v=zW3roZ_vM5Q)
 
+[Vision Pro Demo](https://www.youtube.com/watch?v=y4ZeGU5IdHA)
+
 ## Showcase
 
 ### Macbook
