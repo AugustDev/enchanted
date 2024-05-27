@@ -5,7 +5,7 @@
 //  Created by Augustinas Malinauskas on 10/02/2024.
 //
 
-#if os(macOS)
+#if os(macOS) || os(visionOS)
 import SwiftUI
 
 struct ChatView: View {
@@ -78,14 +78,25 @@ struct ChatView: View {
                 .frame(maxWidth: 800)
             }
         }
+//        .navigationTitle("")
         .toolbar {
-            ToolbarView(
-                modelsList: modelsList,
-                selectedModel: selectedModel,
-                onSelectModel: onSelectModel,
-                onNewConversationTap: onNewConversationTap, 
-                copyChat: copyChat
-            )
+            ToolbarItem(placement: .navigation) {
+                 Button(action: {
+                 }) {
+                     Image(systemName: "star.fill")
+                 }
+             }
+            
+             
+             ToolbarItemGroup(placement: .automatic) {
+                 ToolbarView(
+                     modelsList: modelsList,
+                     selectedModel: selectedModel,
+                     onSelectModel: onSelectModel,
+                     onNewConversationTap: onNewConversationTap,
+                     copyChat: copyChat
+                 )
+             }
         }
         .onChange(of: editMessage, initial: false) { _, newMessage in
             if let newMessage = newMessage {

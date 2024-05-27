@@ -5,7 +5,7 @@
 //  Created by Augustinas Malinauskas on 10/02/2024.
 //
 
-#if os(macOS)
+#if os(macOS) || os(visionOS)
 import SwiftUI
 
 struct ToolbarView: View {

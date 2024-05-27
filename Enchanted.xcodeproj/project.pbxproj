@@ -34,7 +34,7 @@
 		FF1002732B276EC10011A4DC /* AppColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002722B276EC10011A4DC /* AppColorScheme.swift */; };
 		FF1002752B278C170011A4DC /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002742B278C170011A4DC /* AppStore.swift */; };
 		FF15EF6A2B826C0300D4A541 /* SimpleFloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF15EF692B826C0300D4A541 /* SimpleFloatingButton.swift */; };
-		FF1BC3C52BA0753400A58043 /* Splash in Frameworks */ = {isa = PBXBuildFile; productRef = FF1BC3C42BA0753400A58043 /* Splash */; };
+		FF1BC3C52BA0753400A58043 /* Splash in Frameworks */ = {isa = PBXBuildFile; platformFilters = (ios, macos, ); productRef = FF1BC3C42BA0753400A58043 /* Splash */; };
 		FF1BC3C72BA0757700A58043 /* SplashSyntaxHighlighter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1BC3C62BA0757700A58043 /* SplashSyntaxHighlighter+Extension.swift */; };
 		FF226A652BE2A0EC00CC91F1 /* SelectTextSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF226A642BE2A0EC00CC91F1 /* SelectTextSheet.swift */; };
 		FF24B30E2B66BE8500AB618F /* RunningBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF24B30D2B66BE8500AB618F /* RunningBorder.swift */; };
@@ -75,7 +75,9 @@
 		FFB0327D2B312F3D0066A9DB /* RecordingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB0327C2B312F3D0066A9DB /* RecordingView.swift */; };
 		FFB21A872B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB21A862B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift */; };
 		FFB56F432C0353CF0020AFFD /* ReadingAloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB56F422C0353CF0020AFFD /* ReadingAloudView.swift */; };
-		FFB56F462C0383B80020AFFD /* ConversationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB56F452C0383B80020AFFD /* ConversationView.swift */; };
+		FFB56F462C0383B80020AFFD /* VoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB56F452C0383B80020AFFD /* VoiceView.swift */; };
+		FFBB2C7B2C03D8AD00509204 /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBB2C7A2C03D8AD00509204 /* Voice.swift */; };
+		FFBB2C7D2C047B6C00509204 /* Image+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBB2C7C2C047B6B00509204 /* Image+Extension.swift */; };
 		FFBBF4842B34881B008D611C /* SpeechRecogniser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBBF4832B34881B008D611C /* SpeechRecogniser.swift */; };
 		FFBBF4882B34F9C8008D611C /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBBF4872B34F9C8008D611C /* View+Extension.swift */; };
 		FFBBF48A2B350283008D611C /* SelectedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFBBF4892B350283008D611C /* SelectedImageView.swift */; };
@@ -168,7 +170,9 @@
 		FFB0327C2B312F3D0066A9DB /* RecordingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingView.swift; sourceTree = "<group>"; };
 		FFB21A862B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardReadable+Extension.swift"; sourceTree = "<group>"; };
 		FFB56F422C0353CF0020AFFD /* ReadingAloudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingAloudView.swift; sourceTree = "<group>"; };
-		FFB56F452C0383B80020AFFD /* ConversationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationView.swift; sourceTree = "<group>"; };
+		FFB56F452C0383B80020AFFD /* VoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceView.swift; sourceTree = "<group>"; };
+		FFBB2C7A2C03D8AD00509204 /* Voice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voice.swift; sourceTree = "<group>"; };
+		FFBB2C7C2C047B6B00509204 /* Image+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Extension.swift"; sourceTree = "<group>"; };
 		FFBBF4822B348345008D611C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FFBBF4832B34881B008D611C /* SpeechRecogniser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecogniser.swift; sourceTree = "<group>"; };
 		FFBBF4872B34F9C8008D611C /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
@@ -216,18 +220,18 @@
 		FF10022C2B2481790011A4DC /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				FFD57E2E2BF2901A003FEFF1 /* ChatMessages */,
 				FF10025F2B26499B0011A4DC /* ConversationStatusView.swift */,
 				FF9300DB2B7823B0000859F4 /* EmptyConversaitonView.swift */,
 				FF1002532B261D460011A4DC /* MessageListVIew.swift */,
 				FF1002692B2731C60011A4DC /* ModelSelectorView.swift */,
 				FF9C920B2BF0C088004C8275 /* OptionsMenuView.swift */,
+				FFB56F422C0353CF0020AFFD /* ReadingAloudView.swift */,
 				FFEC9BE62B813A8D00AFBA63 /* RemovableImage.swift */,
 				FF24B30D2B66BE8500AB618F /* RunningBorder.swift */,
 				FFBBF4892B350283008D611C /* SelectedImageView.swift */,
 				FF9300DD2B782A28000859F4 /* UnreachableAPIView.swift */,
+				FFD57E2E2BF2901A003FEFF1 /* ChatMessages */,
 				FFB0327B2B312F310066A9DB /* Recorder */,
-				FFB56F422C0353CF0020AFFD /* ReadingAloudView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -409,20 +413,21 @@
 			path = Recorder;
 			sourceTree = "<group>";
 		};
-		FFB56F442C0383A60020AFFD /* Conversation */ = {
+		FFB56F442C0383A60020AFFD /* Voice */ = {
 			isa = PBXGroup;
 			children = (
-				FFB56F452C0383B80020AFFD /* ConversationView.swift */,
+				FFB56F452C0383B80020AFFD /* VoiceView.swift */,
+				FFBB2C7A2C03D8AD00509204 /* Voice.swift */,
 			);
-			path = Conversation;
+			path = Voice;
 			sourceTree = "<group>";
 		};
 		FFD57E2E2BF2901A003FEFF1 /* ChatMessages */ = {
 			isa = PBXGroup;
 			children = (
 				FF10022F2B2482BA0011A4DC /* ChatMessageView.swift */,
-				FFD57E2F2BF29145003FEFF1 /* MarkdownColours.swift */,
 				FFD57E312BF291B2003FEFF1 /* CodeBlockView.swift */,
+				FFD57E2F2BF29145003FEFF1 /* MarkdownColours.swift */,
 			);
 			path = ChatMessages;
 			sourceTree = "<group>";
@@ -492,6 +497,7 @@
 				FFBBF4872B34F9C8008D611C /* View+Extension.swift */,
 				FFB21A862B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift */,
 				FF1BC3C62BA0757700A58043 /* SplashSyntaxHighlighter+Extension.swift */,
+				FFBB2C7C2C047B6B00509204 /* Image+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -539,7 +545,7 @@
 				FF38F8522B7AA9C400546B56 /* ApplicationEntry.swift */,
 				FFEC32A82B24795A003E5C04 /* Chat */,
 				FF15EF682B826BF400D4A541 /* Components */,
-				FFB56F442C0383A60020AFFD /* Conversation */,
+				FFB56F442C0383A60020AFFD /* Voice */,
 				FF10026B2B2751630011A4DC /* Settings */,
 				FF1002552B2624790011A4DC /* Sidebar */,
 			);
@@ -665,7 +671,7 @@
 				FF66A51D2B76949A00FAAC1E /* Helpers.swift in Sources */,
 				FF10026A2B2731C60011A4DC /* ModelSelectorView.swift in Sources */,
 				FF38F84F2B7A7B6700546B56 /* MenuBarControlView_macOS.swift in Sources */,
-				FFB56F462C0383B80020AFFD /* ConversationView.swift in Sources */,
+				FFB56F462C0383B80020AFFD /* VoiceView.swift in Sources */,
 				FFBBF48A2B350283008D611C /* SelectedImageView.swift in Sources */,
 				FFEC9BDF2B8131B900AFBA63 /* HotKeys.swift in Sources */,
 				FF2F03492B796A6500349855 /* HotkeyService.swift in Sources */,
@@ -680,6 +686,7 @@
 				FF2F03442B79631800349855 /* Button+Extension.swift in Sources */,
 				FF1002682B2668790011A4DC /* Date+Extension.swift in Sources */,
 				FF6D821E2B916053001183A8 /* UpsertCompletionView.swift in Sources */,
+				FFBB2C7B2C03D8AD00509204 /* Voice.swift in Sources */,
 				FF9300D42B778829000859F4 /* ChatView_macOS.swift in Sources */,
 				FF38F8512B7A919C00546B56 /* MenuBarControl_macOS.swift in Sources */,
 				FF38F85A2B7AB28300546B56 /* PromptPanelView.swift in Sources */,
@@ -688,6 +695,7 @@
 				FF10025C2B2625BE0011A4DC /* SidebarView.swift in Sources */,
 				FF1002392B24BBF20011A4DC /* Chat.swift in Sources */,
 				FFB0327D2B312F3D0066A9DB /* RecordingView.swift in Sources */,
+				FFBB2C7D2C047B6C00509204 /* Image+Extension.swift in Sources */,
 				FF6D82192B912804001183A8 /* CompletionButtonView.swift in Sources */,
 				FF10024A2B25BE740011A4DC /* LanguageModelSD.swift in Sources */,
 				FF6B7B132B3EE7AC00E8FEA3 /* Throttler.swift in Sources */,
@@ -861,7 +869,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 32;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Enchanted/Preview Content\"";
 				DEVELOPMENT_TEAM = JDDZ55DT74;
@@ -887,18 +895,18 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.6.7;
+				MARKETING_VERSION = 1.6.8;
 				PRODUCT_BUNDLE_IDENTIFIER = subj.Enchanted;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
@@ -911,7 +919,7 @@
 				CODE_SIGN_ENTITLEMENTS = Enchanted/Enchanted.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 32;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Enchanted/Preview Content\"";
 				DEVELOPMENT_TEAM = JDDZ55DT74;
@@ -937,18 +945,18 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.6.7;
+				MARKETING_VERSION = 1.6.8;
 				PRODUCT_BUNDLE_IDENTIFIER = subj.Enchanted;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};

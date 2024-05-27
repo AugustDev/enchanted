@@ -7,8 +7,11 @@
 
 import SwiftUI
 import MarkdownUI
-import Splash
 import ActivityIndicatorView
+#if os(visionOS)
+#else
+import Splash
+#endif
 
 struct ChatMessageView: View {
     @Environment(\.colorScheme) var colorScheme
@@ -29,6 +32,7 @@ struct ChatMessageView: View {
         message.image != nil ? PlatformImage(data: message.image!) : nil
     }
     
+#if !os(visionOS)
     private var codeHighlightColorScheme: Splash.Theme {
         switch colorScheme {
         case .dark:
@@ -37,6 +41,7 @@ struct ChatMessageView: View {
             return .sunset(withFont: .init(size: 16))
         }
     }
+#endif
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
@@ -79,7 +84,9 @@ struct ChatMessageView: View {
 #if os(macOS)
                             .textSelection(.enabled)
 #endif
+#if !os(visionOS)
                             .markdownCodeSyntaxHighlighter(.splash(theme: codeHighlightColorScheme))
+#endif
                             .markdownTheme(MarkdownColours.enchantedTheme)
                         
                         if let uiImage = image {

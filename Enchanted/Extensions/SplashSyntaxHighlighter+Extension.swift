@@ -6,8 +6,10 @@
 //
 
 import MarkdownUI
-import Splash
 import SwiftUI
+#if !os(visionOS)
+import Splash
+
 
 struct SplashCodeSyntaxHighlighter: CodeSyntaxHighlighter {
   private let syntaxHighlighter: SyntaxHighlighter<TextOutputFormat>
@@ -73,3 +75,4 @@ extension TextOutputFormat {
     }
   }
 }
+#endif

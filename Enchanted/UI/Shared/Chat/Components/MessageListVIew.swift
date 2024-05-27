@@ -51,7 +51,7 @@ struct MessageListView: View {
                                 Label("Copy", systemImage: "doc.on.doc")
                             }
                             
-#if os(iOS)
+#if os(iOS) || os(visionOS)
                             Button(action: { messageSelected = message }) {
                                 Label("Select Text", systemImage: "selection.pin.in.out")
                             }

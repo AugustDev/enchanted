@@ -7,8 +7,10 @@
 
 import SwiftUI
 
-#if os(iOS)
+#if os(iOS) || os(visionOS)
 typealias PlatformImage = UIImage
-#elseif os(macOS)
+#else
 typealias PlatformImage = NSImage
 #endif
+
+//Image(nsImage: nsImage)

@@ -42,7 +42,7 @@ class Clipboard {
     }
     
     func getText() -> String? {
-#if os(iOS)
+#if os(iOS) || os(visionOS)
         return UIPasteboard.general.string
 #elseif os(macOS)
         return NSPasteboard.general.string(forType: .string)

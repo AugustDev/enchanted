@@ -9,6 +9,11 @@ import Foundation
 import Combine
 import SwiftUI
 
+enum AppState {
+    case chat
+    case voice
+}
+
 @Observable
 final class AppStore {
     static let shared = AppStore()
@@ -19,6 +24,7 @@ final class AppStore {
     @MainActor var isReachable: Bool = true
     @MainActor var notifications: [NotificationMessage] = []
     @MainActor var menuBarIcon: String? = nil
+    var appState: AppState = .chat
 
     init() {
         if let storedIntervalString = UserDefaults.standard.string(forKey: "pingInterval") {

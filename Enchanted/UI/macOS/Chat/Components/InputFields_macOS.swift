@@ -5,7 +5,7 @@
 //  Created by Augustinas Malinauskas on 10/02/2024.
 //
 
-#if os(macOS)
+#if os(macOS) || os(visionOS)
 import SwiftUI
 
 struct InputFieldsView: View {
@@ -44,6 +44,7 @@ struct InputFieldsView: View {
         selectedImage = image
     }
     
+#if os(macOS)
     var hotkeys: [HotkeyCombination] {
         [
             HotkeyCombination(keyBase: [.command], key: .kVK_ANSI_V) {
@@ -54,6 +55,7 @@ struct InputFieldsView: View {
             }
         ]
     }
+#endif
     
     var body: some View {
         HStack(spacing: 20) {
@@ -71,6 +73,7 @@ struct InputFieldsView: View {
                 .frame(minHeight: 40)
                 .font(.system(size: 14))
                 .textFieldStyle(.plain)
+#if os(macOS)
                 .onSubmit {
                     if NSApp.currentEvent?.modifierFlags.contains(.shift) == true {
                         message += "\n"
@@ -78,9 +81,12 @@ struct InputFieldsView: View {
                         sendMessage()
                     }
                 }
+#endif
             /// TextField bypasses drop area
                 .allowsHitTesting(!fileDropActive)
+#if os(macOS)
                 .addCustomHotkeys(hotkeys)
+#endif
             
             RecordingView(isRecording: $isRecording.animation()) { transcription in
                 withAnimation(.easeIn(duration: 0.3)) {
@@ -96,9 +102,8 @@ struct InputFieldsView: View {
                     switch result {
                     case .success(let url):
                         guard url.startAccessingSecurityScopedResource() else { return }
-                        if let imageData = try? Data(contentsOf: url),
-                           let nsImage = NSImage(data: imageData) {
-                            selectedImage = Image(nsImage: nsImage)
+                        if let imageData = try? Data(contentsOf: url) {
+                            selectedImage = Image(data: imageData)
                         }
                         url.stopAccessingSecurityScopedResource()
                     case .failure(let error):
@@ -134,9 +139,7 @@ struct InputFieldsView: View {
             guard let provider = providers.first else { return false }
             _ = provider.loadDataRepresentation(for: .image) { data, error in
                 if error == nil, let data {
-                    if let nsImage = NSImage(data: data) {
-                        selectedImage = Image(nsImage: nsImage)
-                    }
+                    selectedImage = Image(data: data)
                 }
             }
             
