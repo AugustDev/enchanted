@@ -32,8 +32,9 @@ struct ToolbarView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(height: 20)
-                .foregroundColor(Color.labelCustom)
+                .padding(5)
         }
+        .buttonStyle(PlainButtonStyle())
         .keyboardShortcut(KeyEquivalent("n"), modifiers: .command)
     }
 }

@@ -14,7 +14,7 @@ import UIKit
 #endif
 
 
-class Clipboard {
+final class Clipboard: Sendable {
     static let shared = Clipboard()
     
     func setString(_ message: String) {

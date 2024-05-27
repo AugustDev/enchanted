@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct Settings: View {
     var languageModelStore = LanguageModelStore.shared
@@ -24,6 +25,9 @@ struct Settings: View {
     @StateObject private var speechSynthesiser = SpeechSynthesizer.shared
     
     @Environment(\.presentationMode) var presentationMode
+    
+    private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
+    @State private var cancellable: AnyCancellable?
     
     private func save() {
 #if os(iOS)
@@ -77,6 +81,15 @@ struct Settings: View {
         #endif
         .onChange(of: defaultOllamaModel) { _, modelName in
             languageModelStore.setModel(modelName: modelName)
+        }
+        .onAppear {
+            /// refresh voices in the background
+            cancellable = timer.sink { _ in
+                speechSynthesiser.fetchVoices()
+            }
+        }
+        .onDisappear {
+            cancellable?.cancel()
         }
     }
 }

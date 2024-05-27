@@ -43,13 +43,29 @@ struct ChatView: View {
                 onConversationDelete: onConversationDelete,
                 onDeleteDailyConversations: onDeleteDailyConversations
             )
+            .toolbar {
+#if os(visionOS)
+                ToolbarItemGroup(placement:.navigationBarTrailing) {
+                    Button(action: {
+                        withAnimation(.easeIn(duration: 0.3)) {
+                            columnVisibility = .detailOnly
+                        }
+                    }) {
+                        Image(systemName: "sidebar.left")
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .showIf(columnVisibility != .detailOnly)
+                }
+                
+#endif
+            }
         } detail: {
             VStack(alignment: .center) {
                 if selectedConversation != nil {
                     MessageListView(
                         messages: messages,
                         conversationState: conversationState,
-                        userInitials: userInitials, 
+                        userInitials: userInitials,
                         editMessage: $editMessage
                     )
                 } else {
@@ -69,26 +85,43 @@ struct ChatView: View {
                     conversationState: conversationState,
                     onStopGenerateTap: onStopGenerateTap,
                     selectedModel: selectedModel,
-                    onSendMessageTap: onSendMessageTap, 
+                    onSendMessageTap: onSendMessageTap,
                     editMessage: $editMessage
                 )
                 .padding()
                 .frame(maxWidth: 800)
             }
             .toolbar {
+                #if os(visionOS)
+                ToolbarItemGroup(placement: .topBarLeading) {
+                    Button(action: {
+                        withAnimation {
+                            columnVisibility = .automatic
+                        }
+                    }) {
+                        Image(systemName: "sidebar.left")
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .showIf(columnVisibility == .detailOnly)
+                    
+                    Text("Enchanted")
+                }
+                #else
                 ToolbarItem(placement: .navigation) {
                     Text("Enchanted")
-                 }
-                 
-                 ToolbarItemGroup(placement: .automatic) {
-                     ToolbarView(
-                         modelsList: modelsList,
-                         selectedModel: selectedModel,
-                         onSelectModel: onSelectModel,
-                         onNewConversationTap: onNewConversationTap,
-                         copyChat: copyChat
-                     )
-                 }
+                }
+                #endif
+
+                
+                ToolbarItemGroup(placement: .automatic) {
+                    ToolbarView(
+                        modelsList: modelsList,
+                        selectedModel: selectedModel,
+                        onSelectModel: onSelectModel,
+                        onNewConversationTap: onNewConversationTap,
+                        copyChat: copyChat
+                    )
+                }
             }
         }
         .navigationTitle("")

@@ -12,6 +12,7 @@
 		FF0146CD2B3DADCA00A2A9F6 /* HapticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0146CC2B3DADCA00A2A9F6 /* HapticsService.swift */; };
 		FF0611EA2C04A11800443B33 /* Magnet in Frameworks */ = {isa = PBXBuildFile; platformFilters = (macos, ); productRef = FF0611E92C04A11800443B33 /* Magnet */; };
 		FF0611F12C04A2FB00443B33 /* Splash in Frameworks */ = {isa = PBXBuildFile; productRef = FF0611F02C04A2FB00443B33 /* Splash */; };
+		FF0611F32C04BEFE00443B33 /* AVSpeechSynthesisVoice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0611F22C04BEFD00443B33 /* AVSpeechSynthesisVoice+Extension.swift */; };
 		FF1002302B2482BA0011A4DC /* ChatMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF10022F2B2482BA0011A4DC /* ChatMessageView.swift */; };
 		FF1002322B2483A20011A4DC /* Colours+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002312B2483A20011A4DC /* Colours+Extension.swift */; };
 		FF1002392B24BBF20011A4DC /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1002382B24BBF20011A4DC /* Chat.swift */; };
@@ -108,6 +109,7 @@
 		3396E0752BD877D500213816 /* Menus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menus.swift; sourceTree = "<group>"; };
 		FF0146CA2B3DA1DF00A2A9F6 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		FF0146CC2B3DADCA00A2A9F6 /* HapticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsService.swift; sourceTree = "<group>"; };
+		FF0611F22C04BEFD00443B33 /* AVSpeechSynthesisVoice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVSpeechSynthesisVoice+Extension.swift"; sourceTree = "<group>"; };
 		FF10022F2B2482BA0011A4DC /* ChatMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageView.swift; sourceTree = "<group>"; };
 		FF1002312B2483A20011A4DC /* Colours+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colours+Extension.swift"; sourceTree = "<group>"; };
 		FF1002382B24BBF20011A4DC /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
@@ -498,6 +500,7 @@
 				FFB21A862B7BD0BA00D148A4 /* KeyboardReadable+Extension.swift */,
 				FF1BC3C62BA0757700A58043 /* SplashSyntaxHighlighter+Extension.swift */,
 				FFBB2C7C2C047B6B00509204 /* Image+Extension.swift */,
+				FF0611F22C04BEFD00443B33 /* AVSpeechSynthesisVoice+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 				FF9300E02B783945000859F4 /* InputFields_macOS.swift in Sources */,
 				FF38F8562B7AB01E00546B56 /* FloatingPanel.swift in Sources */,
 				FF0146CB2B3DA1DF00A2A9F6 /* Settings.swift in Sources */,
+				FF0611F32C04BEFE00443B33 /* AVSpeechSynthesisVoice+Extension.swift in Sources */,
 				FF38F8532B7AA9C400546B56 /* ApplicationEntry.swift in Sources */,
 				FF6D82202B916CC3001183A8 /* CompletionsEditor.swift in Sources */,
 				FF38F85C2B7ABC2C00546B56 /* PromptPanel.swift in Sources */,

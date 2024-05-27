@@ -38,7 +38,7 @@ class SpeechSynthesizerDelegate: NSObject, AVSpeechSynthesizerDelegate {
     override init() {
         super.init()
         synthesizer.delegate = delegate
-        voices = listAllVoices()
+        fetchVoices()
     }
     
     func getVoiceIdentifier() -> String? {
@@ -103,10 +103,12 @@ class SpeechSynthesizerDelegate: NSObject, AVSpeechSynthesizerDelegate {
     }
     
     
-    func listAllVoices() -> [AVSpeechSynthesisVoice] {
+    func fetchVoices() {
         let voices = AVSpeechSynthesisVoice.speechVoices().sorted { (firstVoice: AVSpeechSynthesisVoice, secondVoice: AVSpeechSynthesisVoice) -> Bool in
             return firstVoice.quality.rawValue > secondVoice.quality.rawValue
         }
-        return voices
+        DispatchQueue.main.async {
+            self.voices = voices
+        }
     }
 }
