@@ -63,11 +63,13 @@ struct SettingsView: View {
             
             Form {
                 Section(header: Text("Ollama").font(.headline)) {
+                    
                     TextField("Ollama server URI", text: $ollamaUri, onCommit: checkServer)
                         .textContentType(.URL)
                         .disableAutocorrection(true)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-#if os(iOS)
+#if !os(macOS)
+                        .padding(.top, 8)
                         .keyboardType(.URL)
                         .autocapitalization(.none)
 #endif

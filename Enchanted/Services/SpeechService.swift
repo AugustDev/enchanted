@@ -107,6 +107,13 @@ class SpeechSynthesizerDelegate: NSObject, AVSpeechSynthesizerDelegate {
         let voices = AVSpeechSynthesisVoice.speechVoices().sorted { (firstVoice: AVSpeechSynthesisVoice, secondVoice: AVSpeechSynthesisVoice) -> Bool in
             return firstVoice.quality.rawValue > secondVoice.quality.rawValue
         }
+        
+        /// prevent state refresh if there are no new elements
+        let diff = self.voices.elementsEqual(voices, by: { $0.identifier == $1.identifier })
+        if diff {
+            return
+        }
+        
         DispatchQueue.main.async {
             self.voices = voices
         }

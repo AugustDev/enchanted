@@ -8,10 +8,7 @@
 import SwiftUI
 import MarkdownUI
 import ActivityIndicatorView
-#if os(visionOS)
-#else
 import Splash
-#endif
 
 struct ChatMessageView: View {
     @Environment(\.colorScheme) var colorScheme
@@ -28,11 +25,10 @@ struct ChatMessageView: View {
         return message.role == "user" ? userInitialsNotEmpty.uppercased() : "AI"
     }
     
-    var image: PlatformImage? {
-        message.image != nil ? PlatformImage(data: message.image!) : nil
+    var image: Image? {
+        message.image != nil ? Image(data: message.image!) : nil
     }
     
-#if !os(visionOS)
     private var codeHighlightColorScheme: Splash.Theme {
         switch colorScheme {
         case .dark:
@@ -41,76 +37,54 @@ struct ChatMessageView: View {
             return .sunset(withFont: .init(size: 16))
         }
     }
-#endif
     
     var body: some View {
-        ZStack(alignment: .topTrailing) {
-            VStack {
-                HStack(alignment: .top, spacing: 12) {
+        VStack(alignment: .trailing, spacing: 0) {
+            HStack(alignment: .firstTextBaseline) {
+                Group {
                     if message.role == "user" {
-                        ZStack {
-                            Circle()
-                                .foregroundColor(.green)
-                            
-                            Text(roleName)
-                                .font(.system(size: 11))
-                                .foregroundStyle(.background)
-                            
-                        }
-                        .frame(width: 24, height: 24)
-                        
+                        Spacer()
                     } else {
-                        Image("logo-nobg")
+                        if showLoader {
+                            ActivityIndicatorView(isVisible: .constant(true), type: .rotatingDots(count: 5))
+                                .frame(width: 24, height: 24)
+                                .rotationEffect(.degrees(90))
+                        } else {
+                            Image("logo-nobg")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 24, height: 24)
+                        }
+                    }
+                }
+                .offset(CGSize(width: 0, height: 6))
+                
+                VStack(alignment: .leading) {
+                    Markdown(message.content)
+#if os(macOS)
+                        .textSelection(.enabled)
+#endif
+                        .markdownCodeSyntaxHighlighter(.splash(theme: codeHighlightColorScheme))
+                        .markdownTheme(MarkdownColours.enchantedTheme)
+                    
+                    if let uiImage = image {
+                        uiImage
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 24, height: 24)
-                    }
-                    
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text(message.role.capitalized)
-                                .font(.system(size: 14))
-                                .fontWeight(.medium)
-                                .padding(.bottom, 2)
-                                .frame(height: 27)
-                            
-                            ActivityIndicatorView(isVisible: .constant(true), type: .rotatingDots(count: 5))
-                                .frame(width: 20, height: 20)
-                                .rotationEffect(.degrees(-90))
-                                .showIf(showLoader)
-                        }
+                            .frame(width: 100)
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
                         
-                        Markdown(message.content)
-#if os(macOS)
-                            .textSelection(.enabled)
-#endif
-#if !os(visionOS)
-                            .markdownCodeSyntaxHighlighter(.splash(theme: codeHighlightColorScheme))
-#endif
-                            .markdownTheme(MarkdownColours.enchantedTheme)
-                        
-                        if let uiImage = image {
-#if os(iOS)
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 100)
-                                .clipShape(RoundedRectangle(cornerRadius: 5))
-#elseif os(macOS)
-                            Image(nsImage: uiImage)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 100)
-                                .clipShape(RoundedRectangle(cornerRadius: 5))
-#endif
-                            
-                        }
                     }
-                    
+                }
+                .if(message.role == "user", transform: { v in
+                    v.padding()
+                        .background(RoundedRectangle(cornerRadius: 25).fill(.regularMaterial))
+                })
+                
+                if message.role != "user" {
                     Spacer()
                 }
             }
-            
 #if os(macOS)
             HStack(spacing: 0) {
                 /// Copy button
@@ -120,7 +94,6 @@ struct ChatMessageView: View {
                 }
                 .buttonStyle(GrowingButton())
                 .clipShape(RoundedRectangle(cornerRadius: 10))
-                .showIf(mouseHover)
                 
                 /// Play button
                 Button(action: {
@@ -138,7 +111,6 @@ struct ChatMessageView: View {
                 }
                 .buttonStyle(GrowingButton())
                 .clipShape(RoundedRectangle(cornerRadius: 10))
-                .showIf(mouseHover)
                 .showIf(!isSpeaking)
                 
                 /// Stop button
@@ -154,7 +126,6 @@ struct ChatMessageView: View {
                 }
                 .buttonStyle(GrowingButton())
                 .clipShape(RoundedRectangle(cornerRadius: 10))
-                .showIf(mouseHover)
                 .showIf(isSpeaking)
                 
                 /// Edit button
@@ -164,9 +135,9 @@ struct ChatMessageView: View {
                 }
                 .buttonStyle(GrowingButton())
                 .clipShape(RoundedRectangle(cornerRadius: 10))
-                .showIf(mouseHover)
                 .showIf(message.role == "user")
             }
+            .opacity(mouseHover ? 1 : 0.0001)
             
 #endif
         }
@@ -185,7 +156,10 @@ struct ChatMessageView: View {
         ChatMessageView(message: MessageSD.sample[0], userInitials: "AM", editMessage: .constant(nil))
             .previewLayout(.sizeThatFits)
         
-        ChatMessageView(message: MessageSD(content: "```python \nprint(5+5)\n```", role: "ai"), userInitials: "AM", editMessage: .constant(nil))
+        ChatMessageView(message: MessageSD.sample[1], userInitials: "AM", editMessage: .constant(nil))
+            .previewLayout(.sizeThatFits)
+        
+        ChatMessageView(message: MessageSD(content: "```python \nprint(5+5)\n```", role: "ai"), showLoader: true, userInitials: "AM", editMessage: .constant(nil))
             .previewLayout(.sizeThatFits)
     }
 }

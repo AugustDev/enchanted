@@ -24,6 +24,6 @@ extension AVSpeechSynthesisVoice {
             }
         }()
         
-        return "\(name) (\(qualityString)"
+        return "\(name) (\(qualityString))"
     }
 }

@@ -7,7 +7,6 @@
 
 import MarkdownUI
 import SwiftUI
-#if !os(visionOS)
 import Splash
 
 
@@ -75,4 +74,3 @@ extension TextOutputFormat {
     }
   }
 }
-#endif
