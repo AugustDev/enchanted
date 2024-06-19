@@ -5,10 +5,11 @@
 [<img src="https://img.shields.io/twitter/url?url=https%3A%2F%2Ftwitter.com%2Famgauge">](https://twitter.com/amgauge)
 ![iOS](https://img.shields.io/badge/iOS-000000?&logo=os&logoColor=white)
 ![macOS](https://img.shields.io/badge/macOS-000000?style=?&logo=os&logoColor=white)
+![visionOS](https://img.shields.io/badge/visionOS-000000?style=?&logo=os&logoColor=white)
 
 # Enchanted
 
-Enchanted is open source, [Ollama](https://github.com/jmorganca/ollama) compatible, elegant macOS/iOS/iPad app for working with privately hosted models such as Llama 2, Mistral, Vicuna, Starling and more. It's essentially ChatGPT app UI that connects to your private models. The goal of Enchanted is to deliver a product allowing unfiltered, secure, private and multimodal experience across all of your devices in iOS ecosystem (macOS, iOS, Watch, Vision Pro).
+Enchanted is open source, [Ollama](https://github.com/jmorganca/ollama) compatible, elegant macOS/iOS/visionOS app for working with privately hosted models such as Llama 2, Mistral, Vicuna, Starling and more. It's essentially ChatGPT app UI that connects to your private models. The goal of Enchanted is to deliver a product allowing unfiltered, secure, private and multimodal experience across all of your devices in iOS ecosystem (macOS, iOS, Watch, Vision Pro).
 
 If you like the project, consider leaving a ⭐️ and following on [𝕏](https://twitter.com/amgauge).
 
@@ -22,9 +23,11 @@ Note: You will need to run your own Ollama server to use the app. Read instructi
 
 [<img src="./assets/promo.png">](https://www.youtube.com/watch?v=zW3roZ_vM5Q)
 
+[Vision Pro Demo](https://www.youtube.com/watch?v=y4ZeGU5IdHA)
+
 ## Showcase
 
-### macOS
+### Macbook
 
 ![image](https://github.com/AugustDev/enchanted/assets/5672094/32a6a203-19a2-4cc1-adc9-cfac8445dd42)
 
@@ -54,7 +57,7 @@ https://github.com/AugustDev/enchanted/assets/5672094/8bdebd5e-2910-4855-bb10-91
 
 https://github.com/AugustDev/enchanted/assets/5672094/2ef476e7-8fc5-4992-9152-6df3847056d6
 
-### iOS
+### iPhone
 
 Multimodal
 
@@ -68,7 +71,16 @@ Conversation history
 
 <img width="959" alt="Xnapper-2024-05-03-12 00 28" src="https://github.com/AugustDev/enchanted/assets/5672094/7dade8ec-e94d-4936-9237-f2f2bc1533f2">
 
-- Supports latest Ollama Chat API
+### Vision Pro
+
+<img width="1534" alt="image" src="https://github.com/AugustDev/enchanted/assets/5672094/810f600a-4377-48e3-9c94-7bb90b78acaf">
+
+<img width="1496" alt="image" src="https://github.com/AugustDev/enchanted/assets/5672094/6014a0b4-03ed-4def-b26c-b9baefad3781">
+
+
+
+
+- Text to Speech (Read Aloud)
 - Conversation history included in the API calls
 - Dark/Light mode
 - Conversation history is stored on your device
@@ -79,6 +91,7 @@ Conversation history
 - Edit message content or submit message with different model
 - Delete single conversation / delete all conversations
 - macOS Spotlight panel <kbd>Ctrl</kbd>+<kbd>⌘</kbd>+<kbd>K</kbd>
+- All features works offline
 
 ## Usage instructions
 
