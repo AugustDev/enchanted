@@ -68,57 +68,64 @@ struct InputFieldsView: View {
                 .padding(5)
             }
             
-            TextField("Message", text: $message.animation(.easeOut(duration: 0.3)), axis: .vertical)
-                .focused($isFocusedInput)
-                .frame(minHeight: 40)
-                .font(.system(size: 14))
-                .textFieldStyle(.plain)
-#if os(macOS)
-                .onSubmit {
-                    if NSApp.currentEvent?.modifierFlags.contains(.shift) == true {
-                        message += "\n"
-                    } else {
-                        sendMessage()
-                    }
-                }
-#endif
-            /// TextField bypasses drop area
-                .allowsHitTesting(!fileDropActive)
-#if os(macOS)
-                .addCustomHotkeys(hotkeys)
-#endif
-            
-            RecordingView(isRecording: $isRecording.animation()) { transcription in
-                withAnimation(.easeIn(duration: 0.3)) {
-                    self.message = transcription
-                }
-            }
-            
-            SimpleFloatingButton(systemImage: "photo.fill", onClick: { fileSelectingActive.toggle() })
-                .showIf(selectedModel?.supportsImages ?? false)
-                .fileImporter(isPresented: $fileSelectingActive,
-                              allowedContentTypes: [.png, .jpeg, .tiff],
-                              onCompletion: { result in
-                    switch result {
-                    case .success(let url):
-                        guard url.startAccessingSecurityScopedResource() else { return }
-                        if let imageData = try? Data(contentsOf: url) {
-                            selectedImage = Image(data: imageData)
+            ZStack(alignment: .trailing) {
+                TextField("Message", text: $message.animation(.easeOut(duration: 0.3)), axis: .vertical)
+                    .focused($isFocusedInput)
+                    .font(.system(size: 14))
+                    .frame(maxWidth:.infinity, minHeight: 40)
+                    .clipped()
+                    .textFieldStyle(.plain)
+                    .onSubmit {
+                        if NSApp.currentEvent?.modifierFlags.contains(.shift) == true {
+                            message += "\n"
+                        } else {
+                            sendMessage()
                         }
-                        url.stopAccessingSecurityScopedResource()
-                    case .failure(let error):
-                        print(error)
                     }
-                })
-            
-            
-            switch conversationState {
-            case .loading:
-                SimpleFloatingButton(systemImage: "square.fill", onClick: onStopGenerateTap)
-            default:
-                SimpleFloatingButton(systemImage: "paperplane.fill", onClick: { Task { sendMessage() } })
-                    .showIf(!message.isEmpty)
+                /// TextField bypasses drop area
+                    .allowsHitTesting(!fileDropActive)
+                    .addCustomHotkeys(hotkeys)
+                    .padding(.trailing, 80)
+                
+                
+                HStack {
+                    RecordingView(isRecording: $isRecording.animation()) { transcription in
+                        withAnimation(.easeIn(duration: 0.3)) {
+                            self.message = transcription
+                        }
+                    }
+                    
+                    SimpleFloatingButton(systemImage: "photo.fill", onClick: { fileSelectingActive.toggle() })
+                        .showIf(selectedModel?.supportsImages ?? false)
+                        .fileImporter(isPresented: $fileSelectingActive,
+                                      allowedContentTypes: [.png, .jpeg, .tiff],
+                                      onCompletion: { result in
+                            switch result {
+                            case .success(let url):
+                                guard url.startAccessingSecurityScopedResource() else { return }
+                                if let imageData = try? Data(contentsOf: url) {
+                                    selectedImage = Image(data: imageData)
+                                }
+                                url.stopAccessingSecurityScopedResource()
+                            case .failure(let error):
+                                print(error)
+                            }
+                        })
+                    
+                    
+                    Group {
+                        switch conversationState {
+                        case .loading:
+                            SimpleFloatingButton(systemImage: "square.fill", onClick: onStopGenerateTap)
+                        default:
+                            SimpleFloatingButton(systemImage: "paperplane.fill", onClick: { Task { sendMessage() } })
+                                .showIf(!message.isEmpty)
+                        }
+                    }
+                    
+                }
             }
+            
         }
         .transition(.slide)
         .padding(.horizontal)
@@ -154,8 +161,9 @@ struct InputFieldsView: View {
 }
 
 #Preview {
-    InputFieldsView(
-        message: .constant(""),
+    @State var message = ""
+    return InputFieldsView(
+        message: $message,
         conversationState: .completed,
         onStopGenerateTap: {},
         onSendMessageTap: {_, _, _, _  in},
