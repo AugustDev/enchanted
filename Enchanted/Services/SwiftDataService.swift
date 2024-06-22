@@ -102,6 +102,11 @@ extension SwiftDataService {
         try modelContext.saveChanges()
     }
     
+    func deleteMessages() throws {
+        try modelContext.delete(model: MessageSD.self)
+        try modelContext.saveChanges()
+    }
+    
     func deleteConversations(_ date: Date) throws {
         let predicate = #Predicate<ConversationSD>{ $0.createdAt >=  date && $0.createdAt <= date}
         try modelContext.delete(model: ConversationSD.self, where: predicate)

@@ -75,6 +75,7 @@ struct InputFieldsView: View {
                     .frame(maxWidth:.infinity, minHeight: 40)
                     .clipped()
                     .textFieldStyle(.plain)
+#if os(macOS)
                     .onSubmit {
                         if NSApp.currentEvent?.modifierFlags.contains(.shift) == true {
                             message += "\n"
@@ -82,9 +83,12 @@ struct InputFieldsView: View {
                             sendMessage()
                         }
                     }
+#endif
                 /// TextField bypasses drop area
                     .allowsHitTesting(!fileDropActive)
+#if os(macOS)
                     .addCustomHotkeys(hotkeys)
+#endif
                     .padding(.trailing, 80)
                 
                 

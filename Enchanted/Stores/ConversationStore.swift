@@ -52,6 +52,7 @@ final class ConversationStore: Sendable {
                 self?.selectedConversation = nil
             }
             try? await swiftDataService.deleteConversations()
+            try? await swiftDataService.deleteMessages()
             try? await loadConversations()
         }
     }

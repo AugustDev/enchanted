@@ -22,7 +22,7 @@ struct SettingsView: View {
     @State var ollamaStatus: Bool?
     var save: () -> ()
     var checkServer: () -> ()
-    var deleteAllConversations: () -> ()
+    var deleteAll: () -> ()
     var ollamaLangugeModels: [LanguageModelSD]
     var voices: [AVSpeechSynthesisVoice]
     
@@ -177,7 +177,7 @@ struct SettingsView: View {
                         HStack {
                             Spacer()
                             
-                            Text("Delete All Conversations")
+                            Text("Clear All Data")
                                 .foregroundStyle(Color(.systemRed))
                                 .padding(.vertical, 6)
                             
@@ -190,7 +190,7 @@ struct SettingsView: View {
         }
         .preferredColorScheme(colorScheme.toiOSFormat)
         .confirmationDialog("Delete All Conversations?", isPresented: $deleteConversationsDialog) {
-            Button("Delete", role: .destructive) { deleteAllConversations() }
+            Button("Delete", role: .destructive) { deleteAll() }
             Button("Cancel", role: .cancel) { }
         } message: {
             Text("Delete All Conversations?")
@@ -211,7 +211,7 @@ struct SettingsView: View {
         voiceIdentifier: .constant("sample"),
         save: {},
         checkServer: {},
-        deleteAllConversations: {},
+        deleteAll: {},
         ollamaLangugeModels: LanguageModelSD.sample,
         voices: []
     )

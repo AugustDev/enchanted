@@ -11,6 +11,7 @@ import Combine
 struct Settings: View {
     var languageModelStore = LanguageModelStore.shared
     var conversationStore = ConversationStore.shared
+    var swiftDataService = SwiftDataService.shared
     
     @AppStorage("ollamaUri") private var ollamaUri: String = ""
     @AppStorage("systemPrompt") private var systemPrompt: String = ""
@@ -54,7 +55,10 @@ struct Settings: View {
     }
     
     private func deleteAll() {
-        conversationStore.deleteAllConversations()
+        Task {
+            try? await conversationStore.deleteAllConversations
+            try? await languageModelStore.deleteAllModels()
+        }
     }
     
     @State var ollamaStatus: Bool?
@@ -71,7 +75,7 @@ struct Settings: View {
             voiceIdentifier: $voiceIdentifier,
             save: save,
             checkServer: checkServer,
-            deleteAllConversations: conversationStore.deleteAllConversations,
+            deleteAll: deleteAll,
             ollamaLangugeModels: languageModelStore.models,
             voices: speechSynthesiser.voices
         )
