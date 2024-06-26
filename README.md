@@ -100,7 +100,7 @@ Enchanted requires Ollama v0.1.14 or later.
 ### Case 1. You run Ollama server with public access
 
 1. Download Enchanted app from the App Store.
-2. In App Setings specify your server endpoint.
+2. In App Settings specify your server endpoint.
 
 You're done! Make a prompt.
 
@@ -117,7 +117,7 @@ You're done! Make a prompt.
 
 3. Copy "Forwarding" URL that will look something like `https://b377-82-132-216-51.ngrok-free.app`. Your Ollama server API is now accessible through this temporary URL.
 4. Download Enchanted app from the App Store.
-5. In App Setings specify your server endpoint.
+5. In App Settings specify your server endpoint.
 
    You're done! Make a prompt.
 
