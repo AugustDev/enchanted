@@ -124,3 +124,7 @@ You're done! Make a prompt.
 # Contact
 
 For any questions please do not hesitate to contact me at augustinas@subj.org
+
+# Author
+
+Augustinas Malinauskas
