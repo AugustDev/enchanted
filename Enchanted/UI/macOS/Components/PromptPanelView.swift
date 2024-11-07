@@ -36,7 +36,7 @@ struct PromptPanelView: View {
     
     var imageSupportMissing: some View {
         HStack {
-            Text("This model does not support images. Supported models are llava and bakllava.")
+            Text("This model does not support images. Supported models are llava, bakllava and llama vision.")
                 .font(.caption2)
             Spacer()
         }
